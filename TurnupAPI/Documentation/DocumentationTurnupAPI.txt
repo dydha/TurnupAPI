@@ -1,0 +1,3053 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TurnupAPI</name>
+    </assembly>
+    <members>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.AccessDeniedModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.AccessDeniedModel.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ConfirmEmailModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ConfirmEmailChangeModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.ProviderDisplayName">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.ErrorMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ExternalLoginModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ForgotPasswordModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ForgotPasswordModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ForgotPasswordModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ForgotPasswordConfirmation">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.ForgotPasswordConfirmation.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.LockoutModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.LockoutModel.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.ExternalLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.ErrorMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginModel.InputModel.RememberMe">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.RememberMe">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.InputModel.TwoFactorCode">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWith2faModel.InputModel.RememberMachine">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWithRecoveryCodeModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWithRecoveryCodeModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.LoginWithRecoveryCodeModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.LoginWithRecoveryCodeModel.InputModel.RecoveryCode">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.InputModel.OldPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.InputModel.NewPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ChangePasswordModel.InputModel.ConfirmPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.DeletePersonalDataModel.RequirePassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.Disable2faModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.IsEmailConfirmed">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EmailModel.InputModel.NewEmail">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.SharedKey">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.AuthenticatorUri">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.RecoveryCodes">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.EnableAuthenticatorModel.InputModel.Code">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ExternalLoginsModel.CurrentLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ExternalLoginsModel.OtherLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ExternalLoginsModel.ShowRemoveButton">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ExternalLoginsModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.GenerateRecoveryCodesModel.RecoveryCodes">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.GenerateRecoveryCodesModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.IndexModel.Username">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.IndexModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.IndexModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.IndexModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.IndexModel.InputModel.PhoneNumber">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.Index">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.ChangePassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.DownloadPersonalData">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.DeletePersonalData">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.ExternalLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.PersonalData">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.TwoFactorAuthentication">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.IndexNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.EmailNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.ChangePasswordNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.DownloadPersonalDataNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.DeletePersonalDataNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.ExternalLoginsNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.PersonalDataNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.TwoFactorAuthenticationNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ManageNavPages.PageNavClass(Microsoft.AspNetCore.Mvc.Rendering.ViewContext,System.String)">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ResetAuthenticatorModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.SetPasswordModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.SetPasswordModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.SetPasswordModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.SetPasswordModel.InputModel.NewPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.SetPasswordModel.InputModel.ConfirmPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.Manage.ShowRecoveryCodesModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ShowRecoveryCodesModel.RecoveryCodes">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.ShowRecoveryCodesModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.Manage.ShowRecoveryCodesModel.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel.HasAuthenticator">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel.RecoveryCodesLeft">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel.Is2faEnabled">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel.IsMachineRemembered">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.Manage.TwoFactorAuthenticationModel.StatusMessage">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.ReturnUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.ExternalLogins">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterModel.InputModel.ConfirmPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterConfirmationModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterConfirmationModel.DisplayConfirmAccountLink">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.RegisterConfirmationModel.EmailConfirmationUrl">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResendEmailConfirmationModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ResendEmailConfirmationModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResendEmailConfirmationModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.Input">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel.Email">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel.Password">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel.ConfirmPassword">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordModel.InputModel.Code">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordConfirmationModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.Account.ResetPasswordConfirmationModel.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Areas.Identity.Pages.ErrorModel">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.ErrorModel.RequestId">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Areas.Identity.Pages.ErrorModel.ShowRequestId">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Areas.Identity.Pages.ErrorModel.OnGet">
+            <summary>
+                This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+                directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Controllers.ArtistController">
+            <summary>
+            Contrôleur de l'artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.#ctor(TurnupAPI.Interfaces.IArtistRepository,TurnupAPI.Interfaces.ILikeRepository)">
+            <summary>
+            Constructeur du contrôleur de l'artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.GetArtist(System.Int32)">
+            <summary>
+            Récupère un artiste par son ID.
+            </summary>
+            <param name="id">ID de l'artiste à récupérer.</param>
+            <returns>Le résultat de l'artiste.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.AddArtist(TurnupAPI.Forms.ArtistForm)">
+            <summary>
+            Ajoute un artiste.
+            </summary>
+            <param name="artistForm">Formulaire d'artiste.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.UpdateArtist(System.Int32,TurnupAPI.Models.Artist)">
+            <summary>
+            Met à jour  un artiste.
+            </summary>
+            <param name="artist">artiste.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.DeleteArtist(System.Int32)">
+            <summary>
+            Supprime  un artiste.
+            </summary>
+            <param name="artist">artiste.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.GetAllArtists">
+            <summary>
+            Retourne tous les  artistes
+            </summary>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.GetFavoriteArtists(System.String)">
+            <summary>
+            Retourne les artistes favoris d'un utilisateur.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.ArtistController.MapToArtist(TurnupAPI.Forms.ArtistForm)">
+            <summary>
+            Mappe un objet ArtistForm en un objet Artist.
+            </summary>
+            <param name="artistForm">Formulaire d'artiste.</param>
+            <returns>Un objet Artist mappé à partir du formulaire.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TurnupAPI.Controllers.ArtistController.MapToListArtistsDTO(System.Collections.Generic.List{TurnupAPI.Models.Artist})" -->
+        <member name="M:TurnupAPI.Controllers.ArtistController.MapToArtistDTO(TurnupAPI.Models.Artist)">
+            <summary>
+            Mappe un objet Artist en un objet ArtistDTO.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.#ctor(Microsoft.AspNetCore.Identity.UserManager{TurnupAPI.Areas.Identity.Data.Users},Microsoft.AspNetCore.Identity.SignInManager{TurnupAPI.Areas.Identity.Data.Users},Microsoft.Extensions.Configuration.IConfiguration,System.Text.Encodings.Web.HtmlEncoder,Microsoft.AspNetCore.Identity.IUserStore{TurnupAPI.Areas.Identity.Data.Users},Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            <summary>
+            Initialise une nouvelle instance du contrôleur d'authentification.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.Register(TurnupAPI.Forms.RegisterForm)">
+            <summary>
+            Inscrit un nouvel utilisateur.
+            </summary>
+            <param name="Input">Les informations d'inscription de l'utilisateur.</param>
+            <returns>Un résultat HTTP indiquant le succès de l'inscription.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.Login(TurnupAPI.Forms.LoginForm)">
+            <summary>
+            Connecte un utilisateur existant.
+            </summary>
+            <param name="model">Les informations de connexion de l'utilisateur.</param>
+            <returns>Un résultat HTTP indiquant le succès de la connexion.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.CreateUser">
+            <summary>
+            Crée un utilisateur.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.GetEmailStore">
+            <summary>
+            Connecte un utilisateur existant.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.AuthController.GenerateToken(TurnupAPI.Areas.Identity.Data.Users)">
+            <summary>
+            Génère un token jwt.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.GetLoggedUserAsync">
+            <summary>
+            Récucupère l'utilisateur connecté.
+            </summary>
+            <returns>retourne l'utilisateur connecté</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TurnupAPI.Controllers.BaseController.MapToListPlaylistDTO(System.Collections.Generic.List{TurnupAPI.Models.Playlist})" -->
+        <member name="M:TurnupAPI.Controllers.BaseController.MapToPlaylistDTO(TurnupAPI.Models.Playlist)">
+            <summary>
+            Convertit une Playlist en PlaylistDTO
+            </summary>
+            <returns>retourne une PlaylistDTO</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.MapToPlaylist(TurnupAPI.Forms.PlaylistForm,System.String)">
+            <summary>
+            Convertit une PlaylistForm en Playlist
+            </summary>
+            <returns>retourne une Playlist</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TurnupAPI.Controllers.BaseController.MapToListTrackDTO(System.Collections.Generic.List{TurnupAPI.Models.Track},System.String)" -->
+        <member name="M:TurnupAPI.Controllers.BaseController.MapToTrackDTO(TurnupAPI.Models.Track,System.String)">
+            <summary>
+            Convertit une Track en TrackDTO
+            </summary>
+            <returns>retourne une TrackDTO</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.CacheKeyForUserLastPlayingTracks(System.String)">
+            <summary>
+            Retourne le cacheKey de la dernière list de musique écoutée par l'utilisateur connecté.
+            </summary>
+            <returns>etourne le cacheKey de la dernière list de musique écoutée par l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.DeserializeData``1(System.Byte[])">
+            <summary>
+            Désérialise les données.
+            </summary>
+            <returns> Désérialise les données.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.SerializeData``1(``0)">
+            <summary>
+            Sérialise les données.
+            </summary>
+            <returns> Sérialise les données.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.BaseController.GetCacheOptions">
+             <summary>
+            Methode d'option pour les données mises en cache.
+             </summary>
+             <returns> Methode d'option pour les données mises en cache.</returns>
+        </member>
+        <member name="T:TurnupAPI.Controllers.LikeController">
+            <summary>
+            Contrôleur des likes.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.#ctor(TurnupAPI.Interfaces.ILikeRepository,TurnupAPI.Interfaces.IUserRepository,TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Constructeur du contrôleur de l'artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.GetLoggedUserAsync">
+            <summary>
+            Récucupère l'utilisateur connecté.
+            </summary>
+            <returns>retourne l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.GetLoggedUserFavoriteTracksIds">
+            <summary>
+            Récupère les id des tracks favoris d'un utilisateur.
+            </summary>
+            <returns>Retourne  les ids des tracks favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.LikeTrack(System.Int32)">
+            <summary>
+            Ajoute ou supprime un like a une musique.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.GetLoggedUserFavoritePlaylistsIds">
+            <summary>
+            Récupère les id des playlist favoris d'un utilisateur.
+            </summary>
+            <returns>Retourne  les ids des playlistfavoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.LikePlaylist(System.Int32)">
+            <summary>
+            Ajoute ou supprime un like a une playlist.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.GetLoggedUserFavoriteArtistsIds">
+            <summary>
+            Récupère les id des artistes favoris d'un utilisateur.
+            </summary>
+            <returns>Retourne  les ids des artistes favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.LikeController.LikeArtist(System.Int32)">
+            <summary>
+            Ajoute un artiste en favoris.
+            </summary>
+            <returns>Ajoute un artiste en favoris.</returns>
+        </member>
+        <member name="T:TurnupAPI.Controllers.PlaylistController">
+             <summary>
+            contrôleur de la playlist.
+             </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.#ctor(TurnupAPI.Interfaces.IPlaylistRepository,TurnupAPI.Interfaces.ITrackRepository,TurnupAPI.Data.TurnupContext,TurnupAPI.Interfaces.IUserRepository,TurnupAPI.Interfaces.ILikeRepository,System.Text.Encodings.Web.HtmlEncoder)">
+            <summary>
+            Constructeur du contrôleur de l'artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.GetPlaylist(System.Int32)">
+            <summary>
+            Récupère une playlist par son ID.
+            </summary>
+            <param name="id">ID de l playlist à récupérer.</param>
+            <returns>Retourne la playlist.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.AddPlaylist(TurnupAPI.Forms.PlaylistForm)">
+            <summary>
+            Ajoute une playlist.
+            </summary>
+            <param name="input">Formulaire de la playlist.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.UpdatePlaylist(System.Int32,TurnupAPI.DTO.PlaylistDTO)">
+            <summary>
+            Met à jour  une playlist.
+            </summary>
+            <param name="playlist">playlist.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.DeletePlaylist(System.Int32)">
+            <summary>
+            Supprime  une playlist.
+            </summary>
+            <param name="id">l'id de la playlist.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.GetUserPlaylists(System.String)">
+            <summary>
+            Retourne les playlists de l'utilisateur connecté.
+            </summary>
+            <returns>Une liste de playlist.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.GetAllPlaylists">
+            <summary>
+            Retourne toutes les playlists.
+            </summary>
+            <returns>Toutes les playlists.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.AddTrackToPlaylist(TurnupAPI.Forms.AddTrackToPlaylistForm)">
+            <summary>
+            Ajoute une musique à une playlist
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.PlaylistController.GetFavoritePlaylists(System.String)">
+            <summary>
+            Retourne les playlist favoris d'un utilisateur.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Controllers.TrackController">
+            <summary>
+            Contrôleur pour la gestion des artistes.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.#ctor(TurnupAPI.Interfaces.ITrackRepository,TurnupAPI.Interfaces.ITypesRepository,TurnupAPI.Interfaces.IArtistRepository,TurnupAPI.Interfaces.ILikeRepository,TurnupAPI.Data.TurnupContext,TurnupAPI.Interfaces.IUserRepository,Microsoft.Extensions.Caching.Distributed.IDistributedCache)">
+            <summary>
+            Constructeur du contrôleur de l'artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetTrack(System.Int32)">
+            <summary>
+            Récupère une Track par son ID.
+            </summary>
+            <param name="id">ID de la musique à récupérer.</param>
+            <returns>Retourne un objet Track.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.AddTrack(TurnupAPI.Forms.TrackForm)">
+            <summary>
+            Ajoute un objet Track.
+            </summary>
+            <param name="input">Formulaire de la playlist.</param>
+            <returns>Le résultat de l'opération.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.UpdateTrack(System.Int32,TurnupAPI.Models.Track)">
+            <summary>
+            Mise çà jour d'un objet Track.
+            </summary>
+            <param name="track"> l'objet rackDTO.</param>
+            <returns>Met à jour l'objet Track.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.DeleteTrack(System.Int32)">
+            <summary>
+            Suppression d'un objet Track.
+            </summary>
+            <param name="id"> l'id de l'objet Track</param>
+            <returns>Supprime un objet Track.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetAllTracks">
+            <summary>
+            Récupère tous les tracks.
+            </summary>
+            <returns>Retourne tous les Track</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.ListeningHistory(System.String)">
+            <summary>
+            Récupère l'historique d'écoute de l'utilisateur connecté.
+            </summary>
+            <returns>Retourne l'historique d'écoute de l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.Discovery">
+            <summary>
+            Récupère les musique non écouté par  l'utilisateur connecté.
+            </summary>
+            <returns>Retourne les musique non écouté par  l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.Popular">
+            <summary>
+            Récupère les musiques populaires avec le plus d'écoute.
+            </summary>
+            <returns>Retourne les musiques populaires</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.NewTracksPlaylist">
+            <summary>
+            Récupère les musiques récemment ajoutées.
+            </summary>
+            <returns>Retourne les musiques récemment ajoutées. </returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.Top20">
+            <summary>
+            Récupère le top 20 des musiques les plus écoutées.
+            </summary>
+            <returns>Retourne le top 20 des musiques les plus écoutées. </returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.DeleteTrackFromPlaylist(TurnupAPI.Forms.AddTrackToPlaylistForm)">
+            <summary>
+            Supprime une musique d'une liste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetTracksByArtist(System.Int32)">
+            <summary>
+             récupère et retourne les musique d'un artiste.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetTracksByTypes(System.Int32)">
+            <summary>
+             récupère et retourne les musiques d'un Type.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.PlayTrack(System.Int32)">
+            <summary>
+             Crée une nouvelle UserListennedTrack.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetTracksByPlaylist(System.Int32)">
+            <summary>
+            Retourne toutes les tracks d'une playlist.
+            </summary>
+            <returns>Toutes les musiques (Track) d'une  playlists.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetFavoriteTracks(System.String)">
+            <summary>
+            Récupère les tracks favoris d'un utilisateur.
+            </summary>
+            <param name="userId">ID de l'utilisateur.</param>
+            <returns>Retourne  les tracks favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.MapToTrack(TurnupAPI.Forms.TrackForm)">
+            <summary>
+            Mappe un objet TrackForm en un objet Track.
+            </summary>
+            <param name="input">Formulaire de l'objet  Track.</param>
+            <returns>Un objet Track mappé à partir du formulaire.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.AddTrackPrincipalArtist(System.Int32,System.Int32)">
+            <summary>
+            Méthode qui ajoute l'artist principal lors de la création d'un objet Track.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.AddTrackFeaturingArtists(System.Int32,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Méthode qui ajoute les artistes en featuring  lors de la création d'un objet Track.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.AddTrackTypes(System.Int32,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Méthode qui ajoute les types de la musique  lors de la création d'un objet Track.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.GetLastPlayingTracks">
+            <summary>
+            Méthode qui récupère la derniere liste de musique en lecture depuis le cache.
+            </summary>
+            <returns>retourne la dernière liste de musique en lecture de l'utilisateur connecté.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TrackController.SetLastPlayingTracks(TurnupBlazor.Models.PlaylingTracks)">
+            <summary>
+            Méthode qui met à jour la derniere liste de musique en lecture dansle cache.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Controllers.TypesController">
+            <summary>
+            Contrôleur pour la gestion des types.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.#ctor(TurnupAPI.Interfaces.ITypesRepository)">
+            <summary>
+            Initialise une nouvelle instance du contrôleur des types.
+            </summary>
+            <param name="typesRepository">Le repository des types.</param>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.GetTypes(System.Int32)">
+            <summary>
+            Récupère un type par son ID.
+            </summary>
+            <param name="id">L'ID du type à récupérer.</param>
+            <returns>Une réponse HTTP contenant le type trouvé ou une réponse NotFound si le type n'existe pas.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.AddTypes(TurnupAPI.Forms.TypeForm)">
+            <summary>
+            Ajoute un nouveau type.
+            </summary>
+            <param name="typeVM">Les informations du type à ajouter.</param>
+            <returns>Une réponse HTTP indiquant le succès de l'ajout ou une réponse BadRequest si les données ne sont pas valides.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.UpdateTypes(System.Int32,TurnupAPI.Models.Types)">
+            <summary>
+            Met à jour un type par son ID.
+            </summary>
+            <param name="id">L'ID du type à mettre à jour.</param>
+            <param name="type">Les nouvelles données du type.</param>
+            <returns>Une réponse HTTP NoContent en cas de succès ou une réponse BadRequest si l'ID ne correspond pas.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.DeleteTrack(System.Int32)">
+            <summary>
+            Supprime un type par son ID.
+            </summary>
+            <param name="id">L'ID du type à supprimer.</param>
+            <returns>Une réponse HTTP NoContent en cas de succès, une réponse NotFound si le type n'est pas trouvé, ou une réponse StatusCode 500 en cas d'erreur interne.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.TypesController.GetAllTypes">
+            <summary>
+            Récupère tous les types sous forme de DTO.
+            </summary>
+            <returns>Une réponse HTTP contenant la liste de tous les types ou une réponse NoContent si la liste est vide.</returns>
+        </member>
+        <member name="T:TurnupAPI.Controllers.UserController">
+            <summary>
+            Contrôleur pour la gestion des utilisateurs.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Controllers.UserController.#ctor(TurnupAPI.Interfaces.IUserRepository)">
+            <summary>
+            Initialise une nouvelle instance du contrôleur des utilisateurs.
+            </summary>
+            <param name="userRepository">Le repository des utilisateurs.</param>
+        </member>
+        <member name="M:TurnupAPI.Controllers.UserController.GetLoggedUser">
+            <summary>
+            Récupère l'utilisateur connecté.
+            </summary>
+            <returns>Une réponse HTTP contenant les informations de l'utilisateur connecté ou une réponse NotFound si l'utilisateur n'est pas trouvé.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.UserController.GetUser(System.String)">
+            <summary>
+            Récupère un utilisateur .
+            </summary>
+            <returns>Une réponse HTTP contenant les informations d'un utilisateur ou une réponse NotFound si l'utilisateur n'est pas trouvé.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.UserController.GetFormattedFullName(System.String,System.String)">
+            <summary>
+            Formate le nom complet en mettant en majuscule la première lettre du prénom et du nom.
+            </summary>
+            <param name="firstname">Le prénom de l'utilisateur.</param>
+            <param name="lastname">Le nom de l'utilisateur.</param>
+            <returns>Le nom complet formaté.</returns>
+        </member>
+        <member name="M:TurnupAPI.Controllers.UserController.MapToUserDTO(TurnupAPI.Areas.Identity.Data.Users)">
+            <summary>
+            Convertit un Users en UserDTO.
+            </summary>
+            <param name="user">L'utilisateur.</param>
+            <returns>Retourne un UserDTO.</returns>
+        </member>
+        <member name="T:TurnupAPI.DTO.ArtistDTO">
+            <summary>
+            Représente un objet de transfert de données (DTO) pour un artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.Id">
+            <summary>
+            Obtient l'identifiant unique de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.Name">
+            <summary>
+            Obtient ou définit le nom de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.Description">
+            <summary>
+            Obtient ou définit la description de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.Country">
+            <summary>
+            Obtient ou définit le pays d'origine de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.Picture">
+            <summary>
+            Obtient ou définit l'URL de l'image de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.IsLiked">
+             <summary>
+            Définit si l'utilisateur connecté aime cet artiste.
+             </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.ArtistDTO.FansNumber">
+            <summary>
+            Définit le nombre de fans de l'artiste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.DTO.PlaylistDTO">
+            <summary>
+            Représente un objet de transfert de données (DTO) pour une playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.Id">
+            <summary>
+            Obtient ou définit l'identifiant unique de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.Name">
+            <summary>
+            Obtient ou définit le nom de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.IsPrivate">
+            <summary>
+            Obtient ou définit une valeur indiquant si la playlist est privée.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.OwnerId">
+            <summary>
+            Obtient ou définit l'id du propriéraire de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.OwnerPicture">
+            <summary>
+            Obtient ou définit la photo du propriéraire de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.OwnerName">
+            <summary>
+            Obtient ou définit le nom du propriéraire de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.IsLiked">
+            <summary>
+            Obtient ou définit si la playlist est déjà aimé par l'utilisateur connecté.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.PlaylistDTO.CreatdAt">
+            <summary>
+            Obtient ou définit la date de création de la playlist.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.DTO.TrackDTO">
+            <summary>
+            Représente un objet de transfert de données (DTO) pour une piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.Id">
+            <summary>
+            Obtient ou définit l'identifiant unique de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.Title">
+            <summary>
+            Obtient ou définit le titre de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.Duration">
+            <summary>
+            Obtient ou définit la durée de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.Source">
+            <summary>
+            Obtient ou définit la source de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.ArtistName">
+            <summary>
+            Obtient ou définit le nom de l'artiste de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.FeaturingArtists">
+            <summary>
+            Obtient ou définit une liste des noms d'artistes en featuring sur la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.IsLiked">
+            <summary>
+            Obtient ou définit une valeur indiquant si la piste musicale est aimée par l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.ArtistPicture">
+            <summary>
+            Obtient ou définit l'URL de l'image de l'artiste de la piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TrackDTO.ListeningCount">
+            <summary>
+            Le nombre d'écoute de lamusique.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.DTO.TypesDTO">
+            <summary>
+            Représente un objet de transfert de données (DTO) pour un type.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TypesDTO.Id">
+            <summary>
+            Obtient ou définit l'identifiant unique du type.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TypesDTO.Name">
+            <summary>
+            Obtient ou définit le nom du type.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.DTO.TypesDTO.Picture">
+            <summary>
+            Obtient ou définit l'URL de l'image du type.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.UserDTO">
+            <summary>
+            Représente un objet de transfert de données (DTO) pour un utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.Id">
+            <summary>
+            Obtient ou définit l'identifiant unique de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.Gender">
+            <summary>
+            Obtient ou définit le genre de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.City">
+            <summary>
+            Obtient ou définit la ville de résidence de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.Country">
+            <summary>
+            Obtient ou définit le pays de résidence de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.Picture">
+            <summary>
+            Obtient ou définit l'image de profil de l'utilisateur sous forme de tableau d'octets.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.FullName">
+            <summary>
+            Obtient ou définit le nom complet de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.IsDarkTheme">
+            <summary>
+            Obtient ou définit une valeur indiquant si l'utilisateur utilise un thème sombre.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserDTO.BirthDate">
+            <summary>
+            Obtient ou définit la date de naissance de l'utilisateur.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.Album">
+            <summary>
+            Représente un album musical.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.Id">
+            <summary>
+            l'identifiant unique de l'album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.Name">
+            <summary>
+            le nom de l'album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.Description">
+            <summary>
+            la description de l'album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.ReleaseDate">
+            <summary>
+            La date de sortie de l'album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.Tracks">
+            <summary>
+            La liste des pistes associées à cet album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Album.Albums">
+            <summary>
+            La liste des artistes associés à cet album.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.Artist">
+            <summary>
+            Représente un artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Id">
+            <summary>
+            L'identifiant unique de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Name">
+            <summary>
+            Le nom de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Description">
+            <summary>
+            la description de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Country">
+            <summary>
+            le pays d'origine de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Picture">
+            <summary>
+            Le chemin de l'image de l'artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.UserFavoriteArtists">
+            <summary>
+            La liste des utilisateurs ayant cet artiste en favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.TrackArtists">
+            <summary>
+            la liste des pistes associées à cet artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Artist.Albums">
+            <summary>
+            la liste des albums associés à cet artiste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.ArtistAlbum">
+            <summary>
+            Représente une relation entre un artiste et un album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.ArtistAlbum.Id">
+            <summary>
+            L'identifiant unique de la relation artiste-album.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.ArtistAlbum.ArtsistId">
+            <summary>
+            L'identifiant de l'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.ArtistAlbum.Artist">
+            <summary>
+            L'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.ArtistAlbum.AlbumId">
+            <summary>
+            L'identifiant de l'album associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.ArtistAlbum.Album">
+            <summary>
+            L'album associé à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.Playlist">
+            <summary>
+            Représente une playlist de musique.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.Id">
+            <summary>
+            L'identifiant unique de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.Name">
+            <summary>
+            Le nom de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.CreatedAt">
+            <summary>
+            La date de création de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.IsPrivate">
+            <summary>
+            Obtient ou définit si la playlist est privée.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.UsersId">
+            <summary>
+            L'identifiant de l'utilisateur associé à cette playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.Users">
+            <summary>
+            L'utilisateur associé à cette playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.UserFavoritePlaylists">
+            <summary>
+            La liste des playlists favorites associées à cette playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Playlist.PlaylistTacks">
+            <summary>
+            Liste des pistes associées à cette playlist.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.PlaylistTrack">
+            <summary>
+            La relation entre une piste de musique et une playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.Id">
+            <summary>
+            Obtient ou définit l'identifiant unique de la relation piste-playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.AddedAt">
+            <summary>
+            La date à laquelle la piste a été ajoutée à la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.TrackId">
+            <summary>
+            L'identifiant de la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.Track">
+            <summary>
+            La piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.PlaylistId">
+            <summary>
+            L'identifiant de la playlist associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.PlaylistTrack.Playlist">
+            <summary>
+            La playlist associée à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.Track">
+            <summary>
+            Représente une piste de musique.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Id">
+            <summary>
+            L'identifiant unique de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Title">
+            <summary>
+            Le titre de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Minutes">
+            <summary>
+            Le nombre de minutes de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Seconds">
+            <summary>
+            Le nombre de secondes de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Source">
+            <summary>
+            La source de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.AddedAt">
+            <summary>
+            La date à laquelle la piste a été ajoutée.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.AlbumId">
+            <summary>
+            L'identifiant de l'album associé à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.Album">
+            <summary>
+            L'album associé à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.UserListennedTracks">
+            <summary>
+            La liste des écoutes utilisateur associées à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.UserFavoriteTracks">
+            <summary>
+            La liste des pistes favorites utilisateur associées à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.PlaylistTacks">
+            <summary>
+            La liste des relations piste-playlist associées à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.TrackTypes">
+            <summary>
+            La liste des types de piste associés à cette piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Track.TrackArtists">
+            <summary>
+            La liste des artistes associés à cette piste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.TrackArtist">
+            <summary>
+            Représente la relation entre une piste de musique et un artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.Id">
+            <summary>
+            L'identifiant unique de la relation piste-artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.TrackId">
+            <summary>
+            L'identifiant de la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.Track">
+            <summary>
+            La piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.ArtistId">
+            <summary>
+            L'identifiant de l'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.Artist">
+            <summary>
+            l'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackArtist.ArtistRole">
+            <summary>
+            le rôle de l'artiste dans cette piste (ex : rtiste principal, featuring).
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.TrackType">
+            <summary>
+            Représente la relation entre une piste de musique et un type de piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackType.Id">
+            <summary>
+            L'identifiant unique de la relation piste-type.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackType.TrackId">
+            <summary>
+            L'identifiant de la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackType.Track">
+            <summary>
+            La piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackType.TypeId">
+            <summary>
+            L'identifiant du type de piste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.TrackType.Type">
+            <summary>
+            Le type de piste associé à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.Types">
+            <summary>
+            Représente un type de piste de musique.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Types.Id">
+            <summary>
+            L'identifiant unique du type de piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Types.Name">
+            <summary>
+            Le nom du type de piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Types.Picture">
+            <summary>
+            Le chemin de l'image du type de piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.Types.TrackTypes">
+            <summary>
+            La liste des relations entre ce type de piste et les pistes associées.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.UserFavoriteArtist">
+            <summary>
+            Représente la relation entre un utilisateur et un artiste qu'il a ajouté en favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.Id">
+            <summary>
+            L'identifiant unique de la relation utilisateur-artiste favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.LikedAt">
+            <summary>
+            La date à laquelle l'artiste a été ajouté en favori par l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.UsersId">
+            <summary>
+            L'identifiant de l'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.Users">
+            <summary>
+            L'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.ArtistId">
+            <summary>
+            L'identifiant de l'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteArtist.Artist">
+            <summary>
+            l'artiste associé à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.UserFavoritePlaylist">
+            <summary>
+            Représente la relation entre un utilisateur et une playlist qu'il a ajoutée en favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.Id">
+            <summary>
+            L'identifiant unique de la relation utilisateur-playlist favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.LikedAt">
+            <summary>
+            La date à laquelle la playlist a été ajoutée en favori par l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.UsersId">
+            <summary>
+            L'identifiant de l'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.Users">
+            <summary>
+            L'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.PlaylistId">
+            <summary>
+            L'identifiant de la playlist associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoritePlaylist.Playlist">
+            <summary>
+            La playlist associée à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.UserFavoriteTrack">
+            <summary>
+            Représente la relation entre un utilisateur et une piste de musique qu'il a ajoutée en favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.Id">
+            <summary>
+            L'identifiant unique de la relation utilisateur-piste favori.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.LikedAt">
+            <summary>
+            la date à laquelle la piste a été ajoutée en favori par l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.UsersId">
+            <summary>
+            l'identifiant de l'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.Users">
+            <summary>
+            l'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.TrackId">
+            <summary>
+            l'identifiant de la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserFavoriteTrack.Track">
+            <summary>
+            la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Models.UserListennedTrack">
+            <summary>
+            Représente la relation entre un utilisateur et une piste de musique qu'il a écoutée.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.Id">
+            <summary>
+            L'identifiant unique de la relation utilisateur-piste écoutée.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.ListennedAt">
+            <summary>
+            La date à laquelle la piste a été écoutée par l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.UsersId">
+            <summary>
+            L'identifiant de l'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.Users">
+            <summary>
+            L'utilisateur associé à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.TrackId">
+            <summary>
+            l'identifiant de la piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Models.UserListennedTrack.Track">
+            <summary>
+            La piste associée à cette relation.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Enums.ArtistRole">
+            <summary>
+            Représente le rôle d'un artiste dans une piste musicale.
+            </summary>
+        </member>
+        <member name="F:TurnupAPI.Enums.ArtistRole.Principal">
+            <summary>
+            L'artiste principal de la piste.
+            </summary>
+        </member>
+        <member name="F:TurnupAPI.Enums.ArtistRole.Featuring">
+            <summary>
+            Un artiste en featuring dans la piste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Exceptions.ConflictException">
+            <summary>
+            Exception personnalisée pour signaler des conflits entre ressources.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Exceptions.DataAccessException">
+            <summary>
+            Exception personnalisée pour encapsuler toutes les erreurs liées à l'accès aux données, telles que les erreurs de base de données ou de connexion.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Exceptions.DuplicateException">
+            <summary>
+            Exception personnalisée pour signaler qu'une tentative de création d'une ressource en doublon a été détectée.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Exceptions.ExternalServiceException">
+            <summary>
+            Exception personnalisée pour gérer les erreurs liées aux services externes (API tierces).
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Exceptions.NotFoundException">
+            <summary>
+            Exception personnalisée pour signaler qu'une ressource n'a pas été trouvée.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.AddTrackToPlaylistForm">
+            <summary>
+            Représente un formulaire pour ajouter une piste à une playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.AddTrackToPlaylistForm.TrackId">
+            <summary>
+            Définit l'identifiant unique de la piste à ajouter.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.AddTrackToPlaylistForm.PlaylistId">
+            <summary>
+            Définit l'identifiant unique de la playlist à laquelle ajouter la piste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.ArtistForm">
+            <summary>
+            Représente un formulaire pour la création ou la mise à jour d'un artiste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.ArtistForm.Name">
+            <summary>
+            Définit le nom de l'artiste. Ce champ est requis.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.ArtistForm.Description">
+            <summary>
+            Définit la description de l'artiste. Ce champ est requis.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.ArtistForm.Country">
+            <summary>
+            Définit le pays d'origine de l'artiste. Ce champ est requis.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.ArtistForm.Picture">
+            <summary>
+            Définit l'image de l'artiste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.LoginForm">
+            <summary>
+            Représente un formulaire de connexion.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.LoginForm.Email">
+            <summary>
+            Définit l'adresse e-mail de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.LoginForm.Password">
+            <summary>
+            Définit le mot de passe de l'utilisateur.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.PlaylistForm">
+            <summary>
+            Représente un formulaire pour la création ou la mise à jour d'une playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.PlaylistForm.Name">
+            <summary>
+             Définit le nom de la playlist.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.PlaylistForm.IsPrivate">
+            <summary>
+            Définit une valeur indiquant si la playlist est privée.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.RegisterForm">
+            <summary>
+            Représente un formulaire d'inscription utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.FirstName">
+            <summary>
+            Définit le prénom de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.LastName">
+            <summary>
+            Définit le nom de famille de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Country">
+            <summary>
+            Définit le pays de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Gender">
+            <summary>
+            Définit le genre de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Birthdate">
+            <summary>
+            Définit la date de naissance de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Picture">
+            <summary>
+            Définit une image de profil de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Email">
+            <summary>
+            Définit l'adresse e-mail de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.Password">
+            <summary>
+            Définit le mot de passe de l'utilisateur.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.RegisterForm.ConfirmPassword">
+            <summary>
+            Définit la confirmation du mot de passe de l'utilisateur.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.TrackForm">
+            <summary>
+            Représente un formulaire de création de piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.Title">
+            <summary>
+            Définit le titre de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.Minutes">
+            <summary>
+            Définit la durée en minutes de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.Seconds">
+            <summary>
+            Définit la durée en secondes de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.Source">
+            <summary>
+            Définit la source de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.PrincipalArtistId">
+            <summary>
+            Définit l'ID de l'artiste principal de la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.FeaturingArtists">
+            <summary>
+            Définit la liste des IDs des artistes en featuring sur la piste.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TrackForm.TrackTypes">
+            <summary>
+            Définit la liste des IDs des types de la piste.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Forms.TypeForm">
+            <summary>
+            Représente un formulaire de création de type de piste musicale.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TypeForm.Name">
+            <summary>
+            Définit le nom du type.
+            </summary>
+        </member>
+        <member name="P:TurnupAPI.Forms.TypeForm.Picture">
+            <summary>
+            Définit l'image associée au type.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.IArtistRepository">
+            <summary>
+            Interface pour la gestion des opérations sur les artistes.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.AddAsync(TurnupAPI.Models.Artist)">
+            <summary>
+            Ajoute un artiste.
+            </summary>
+            <param name="artist">L'artiste à ajouter.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime un artiste par ID.
+            </summary>
+            <param name="id">L'ID de l'artiste à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetAsync(System.Int32)">
+            <summary>
+            Obtient un artiste par ID.
+            </summary>
+            <param name="id">L'ID de l'artiste à obtenir.</param>
+            <returns>L'artiste correspondant à l'ID spécifié.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetFilteredArtistAsync(System.Linq.Expressions.Expression{System.Func{TurnupAPI.Models.Artist,System.Boolean}})">
+            <summary>
+            Obtient un artiste via un filtre.
+            </summary>
+            <param name="filter">L'ID de l'artiste à obtenir.</param>
+            <returns>L'artiste correspondant à l'ID spécifié.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetAllAsync">
+            <summary>
+            Obtient la liste de tous les artistes.
+            </summary>
+            <returns>Une liste d'artistes.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.UpdateAsync(TurnupAPI.Models.Artist)">
+            <summary>
+            Met à jour les informations d'un artiste.
+            </summary>
+            <param name="artist">L'artiste avec les informations mises à jour.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetPrincipalArtistNameByTrackId(System.Int32)">
+            <summary>
+            retourne le nom de l'artiste principal d'une piste de musique (Track).
+            </summary>
+            <param name="trackId">L'id d'une piste de musique.</param>
+            <returns>Le nom d'un artiste</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetFeaturingArtistsNamesByTrackId(System.Int32)">
+            <summary>
+            retourne les nom des artistes en featuring d'une piste de musique (Track).
+            </summary>
+            <param name="trackId">L'id d'une piste de musique.</param>
+            <returns>Une liste de noms des artistes</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetPrincipalArtistPictureByTrackId(System.Int32)">
+            <summary>
+            retourne la photo de l'artiste principal d'une piste de musique (Track).
+            </summary>
+            <param name="trackId">L'id d'une piste de musique.</param>
+            <returns>Le photo d'un artiste</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IArtistRepository.GetArtistFans(System.Int32)">
+            <summary>
+            Retourne le nombre de fans d'un artiste.
+            </summary>
+            <param name="artistId">L'id de l'artiste.</param>
+            <returns>Retourne le nombre de fans d'un artiste.</returns>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.ILikeRepository">
+            <summary>
+            Interface pour la gestion des opérations de favoris (likes) sur les pistes, les artistes et les listes de lecture.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.AddTrackLikeAsync(TurnupAPI.Models.UserFavoriteTrack)">
+            <summary>
+            Ajoute un like pour une piste.
+            </summary>
+            <param name="uft">L'objet UserFavoriteTrack représentant le like sur la piste.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.RemoveTrackLikeAsync(TurnupAPI.Models.UserFavoriteTrack)">
+            <summary>
+            Supprime un like d'une piste.
+            </summary>
+            <param name="uft">L'objet UserFavoriteTrack représentant le like sur la piste à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoriteTracks(System.String)">
+            <summary>
+            Retourne toutes les track aimé par un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>les musique favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoriteTracksIdsList(System.String)">
+            <summary>
+            Retourne tous les ids des track aimé par un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne tous les ids des track aimé par un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetExistingTrackLike(System.String,System.Int32)">
+            <summary>
+            Retourne un existingTackLike.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne un userFavoriteTrack s'il existe sinon leve une exception</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.AddPlaylistLikeAsync(TurnupAPI.Models.UserFavoritePlaylist)">
+            <summary>
+            Ajoute un like pour une liste de lecture.
+            </summary>
+            <param name="ufp">L'objet UserFavoritePlaylist représentant le like sur la liste de lecture.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.RemovePlaylistLikeAsync(TurnupAPI.Models.UserFavoritePlaylist)">
+            <summary>
+            Supprime un like d'une playlist.
+            </summary>
+            <param name="ufp">L'objet UserFavoritePlaylist représentant le like sur la liste de lecture à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoritePlaylists(System.String)">
+            <summary>
+            Retourne toutes les playlists aimé par un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>les playlists favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoritePlaylistsIdsList(System.String)">
+            <summary>
+            Retourne tous les ids des playlist aimé par un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne tous les ids des playlist aimé par un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetExistingPlaylistLike(System.String,System.Int32)">
+            <summary>
+            Retourne un existingPlaylistLike.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <param name="playlistId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne un userFavoritePlaylist s'il existe sinon leve une exception</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.AddArtistLikeAsync(TurnupAPI.Models.UserFavoriteArtist)">
+            <summary>
+            Ajoute un like pour un artiste.
+            </summary>
+            <param name="ufa">L'objet UserFavoriteArtist représentant le like sur l'artiste.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.RemoveArtistLikeAsync(TurnupAPI.Models.UserFavoriteArtist)">
+            <summary>
+            Supprime un like d'un artiste.
+            </summary>
+            <param name="ufa">L'objet UserFavoriteArtist représentant le like sur l'artiste à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoriteArtists(System.String)">
+            <summary>
+            Retourne tous artistes favoris d'un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>les artistes favoris d'un utilisateur.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetUserFavoriteArtistsIdsList(System.String)">
+            <summary>
+            Retourne tous les ids des artistes favoris d'un utilisateur.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne tous les ids des artistes favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ILikeRepository.GetExistingArtistLike(System.String,System.Int32)">
+            <summary>
+            Retourne un existingArtistLike.
+            </summary>
+            <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
+            <param name="artistId"> userId représente l'identifiant de l'utilisateur.</param>
+            <returns>Retourne un userFavoriteArtist s'il existe sinon leve une exception</returns>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.IPlaylistRepository">
+            <summary>
+            Interface pour la gestion des opérations CRUD (Create, Read, Update, Delete) sur les playlist.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.AddAsync(TurnupAPI.Models.Playlist)">
+            <summary>
+            Ajoute une playlist.
+            </summary>
+            <param name="playlist">L'objet Playlist à ajouter.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime une playlist en fonction de son ID.
+            </summary>
+            <param name="id">L'ID de la playlist à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère une playlist en fonction de son ID.
+            </summary>
+            <param name="id">L'ID de la playlist à récupérer.</param>
+            <returns>Une tâche asynchrone qui renvoie l'objet Playlist correspondant à l'ID spécifié.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.GetFilteredPlaylistAsync(System.Linq.Expressions.Expression{System.Func{TurnupAPI.Models.Playlist,System.Boolean}})">
+            <summary>
+            Obtient une playlist via un filtre.
+            </summary>
+            <param name="filter">L'expression.</param>
+            <returns>La playlist correspondant à la recherche.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.GetAllAsync">
+            <summary>
+            Récupère toutes les listes de lecture.
+            </summary>
+            <returns>Une tâche asynchrone qui renvoie une liste de toutes les listes de lecture disponibles.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.UpdateAsync(TurnupAPI.Models.Playlist)">
+            <summary>
+            Met à jour les informations d'une playlist.
+            </summary>
+            <param name="playlist">L'objet Playlist contenant les informations mises à jour.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IPlaylistRepository.GetPlaylistByUserIdAsync(System.String)">
+            <summary>
+            Récupère toutes les playlists d'un utilisateur.
+            </summary>
+            <returns>Une tâche asynchrone qui renvoie une liste de toutes les playlists d'un utilisateur.</returns>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.ITrackRepository">
+            <summary>
+            Interface pour la gestion des opérations CRUD (Create, Read, Update, Delete) sur les pistes musicales.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.AddAsync(TurnupAPI.Models.Track)">
+            <summary>
+            Ajoute une piste musicale.
+            </summary>
+            <param name="track">L'objet Track à ajouter.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère une piste musicale en fonction de son ID.
+            </summary>
+            <param name="id">L'ID de la piste musicale à récupérer.</param>
+            <returns>Une tâche asynchrone qui renvoie l'objet Track correspondant à l'ID spécifié.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetTrackListeningNumber(System.Int32)">
+            <summary>
+            Retourne le nombre d'écoute d'une musique.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime une piste musicale en fonction de son ID.
+            </summary>
+            <param name="id">L'ID de la piste musicale à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.UpdateAsync(TurnupAPI.Models.Track)">
+            <summary>
+            Met à jour les informations d'une piste musicale.
+            </summary>
+            <param name="track">L'objet Track contenant les informations mises à jour.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetAllAsync">
+            <summary>
+            Récupère toutes les pistes musicales disponibles.
+            </summary>
+            <returns>Une tâche asynchrone qui renvoie une liste de toutes les pistes musicales.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetTracksByPlaylistAsync(System.Int32)">
+            <summary>
+            Récupère toutes les pistes musicales d'une playlist.
+            </summary>
+            <returns>Une tâche asynchrone qui renvoie une liste de toutes les pistes musicales d'une playlist.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetUserListeningHistory(System.String)">
+            <summary>
+            Récupère l'historique d'écoute de l'utilisateur connecté.
+            </summary>
+            <returns>Retourne l'historique d'écoute de l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetDiscoveryAsync(System.String)">
+            <summary>
+            Récupère les musique non écoutées par  l'utilisateur connecté.
+            </summary>
+            <returns>Retourne une suggestion de musique à l'utilisateur connecté</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetPopularTracksAsync">
+            <summary>
+            Récupère les musiques populaires : les plus écoutes.
+            </summary>
+            <returns>Retourne les musiques populaires : les plus écoutes</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.DeleteTrackFromPlaylistAsync(TurnupAPI.Forms.AddTrackToPlaylistForm,System.String)">
+            <summary>
+            Supprime une musique d'unr playlist.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITrackRepository.GetTracksByTypesAsync(System.Int32)">
+            <summary>
+            Récupère et retourne les musique d'un Types.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.ITypesRepository">
+            <summary>
+            Interface pour la gestion des opérations CRUD (Create, Read, Update, Delete) sur les types de musique.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITypesRepository.AddAsync(TurnupAPI.Models.Types)">
+            <summary>
+            Ajoute un type de musique.
+            </summary>
+            <param name="type">L'objet Types à ajouter.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITypesRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère un type de musique en fonction de son ID.
+            </summary>
+            <param name="id">L'ID du type de musique à récupérer.</param>
+            <returns>Une tâche asynchrone qui renvoie l'objet Types correspondant à l'ID spécifié.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITypesRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime un type de musique en fonction de son ID.
+            </summary>
+            <param name="id">L'ID du type de musique à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITypesRepository.UpdateAsync(TurnupAPI.Models.Types)">
+            <summary>
+            Met à jour les informations d'un type de musique.
+            </summary>
+            <param name="type">L'objet Types contenant les informations mises à jour.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.ITypesRepository.GetAllAsync">
+            <summary>
+            Récupère tous les types de musique disponibles.
+            </summary>
+            <returns>Une tâche asynchrone qui renvoie une liste de tous les types de musique.</returns>
+        </member>
+        <member name="T:TurnupAPI.Interfaces.IUserRepository">
+            <summary>
+            Interface pour la gestion des opérations liées aux utilisateurs.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IUserRepository.GetLoggedUserAsync(System.String)">
+            <summary>
+            Récupère un utilisateur connecté en fonction de son adresse e-mail.
+            </summary>
+            <param name="email">L'adresse e-mail de l'utilisateur à récupérer.</param>
+            <returns>Une tâche asynchrone qui renvoie l'objet Users correspondant à l'adresse e-mail spécifiée.</returns>
+        </member>
+        <member name="M:TurnupAPI.Interfaces.IUserRepository.GetUserAsync(System.String)">
+            <summary>
+            Récupère un utilisateur par son id.
+            </summary>
+            <param name="id">L'id de l'utilisateur.</param>
+            <returns>retourne un utilisateur.</returns>
+        </member>
+        <member name="T:TurnupAPI.Migrations.CreateIdentitySchema">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.CreateIdentitySchema.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.CreateIdentitySchema.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.CreateIdentitySchema.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.UsersUpdated">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.UsersUpdated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.UsersUpdated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.UsersUpdated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.ModelsUpdated">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsUpdated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsUpdated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsUpdated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.TrackUpdated">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.ModelsChanged">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChanged.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChanged.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChanged.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.TrackUpdated2">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackUpdated2.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.TrackSourceChanged">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackSourceChanged.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackSourceChanged.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.TrackSourceChanged.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.ModelsChangedAgain">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChangedAgain.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChangedAgain.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.ModelsChangedAgain.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Migrations.AllUpdated">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.AllUpdated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.AllUpdated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TurnupAPI.Migrations.AllUpdated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TurnupAPI.Repositories.ArtistRepository">
+            <summary>
+            Repository pour la gestion des artistes.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Constructeur de la classe.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.AddAsync(TurnupAPI.Models.Artist)">
+            <summary>
+            Ajoute un artiste dans la base de données.
+            </summary>
+            <param name="artist">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime un artiste de la base de données par son ID.
+            </summary>
+            <param name="id">L'ID de l'artiste à supprimer.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère un artiste par son ID.
+            </summary>
+            <param name="id">L'ID de l'artiste à récupérer.</param>
+            <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
+            <exception cref="T:TurnupAPI.Exceptions.NotFoundException">Si l'artiste n'est pas trouvé.</exception>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetFilteredArtistAsync(System.Linq.Expressions.Expression{System.Func{TurnupAPI.Models.Artist,System.Boolean}})">
+            <summary>
+            Récupère un artiste à base de filtre.
+            </summary>
+            <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
+            <exception cref="T:TurnupAPI.Exceptions.NotFoundException">Si l'artiste n'est pas trouvé.</exception>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetAllAsync">
+            <summary>
+            Récupère la liste de tous les artistes.
+            </summary>
+            <returns>La liste de tous les artistes ou une liste vide si aucun artiste n'est trouvé.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.UpdateAsync(TurnupAPI.Models.Artist)">
+            <summary>
+            Met à jour un artiste dans la base de données.
+            </summary>
+            <param name="artist">L'artiste à mettre à jour.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetPrincipalArtistNameByTrackId(System.Int32)">
+            <summary>
+            Retourne le nom de l'artiste principal d'une musique
+            </summary>
+            <returns>Le nom de l'artiste principal.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetPrincipalArtistPictureByTrackId(System.Int32)">
+            <summary>
+            Retourne la photo de l'artiste principal d'une musique
+            </summary>
+            <returns>La photo de l'artiste principal.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetFeaturingArtistsNamesByTrackId(System.Int32)">
+            <summary>
+            Retourne les noms des artistes en featuring d'une musique
+            </summary>
+            <returns>Les noms des artistes en featuring.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.ArtistRepository.GetArtistFans(System.Int32)">
+            <summary>
+            Retourne le nombre de fans d'un artiste.
+            </summary>
+            <returns>Retourne le nombre de fans d'un artiste.</returns>
+        </member>
+        <member name="T:TurnupAPI.Repositories.LikeRepository">
+            <summary>
+            Repository pour la gestion des likes.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Constructeur de la classe.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.AddTrackLikeAsync(TurnupAPI.Models.UserFavoriteTrack)">
+            <summary>
+            Ajoute un une Track en favoris dans la base de données.
+            </summary>
+            <param name="uft">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.RemoveTrackLikeAsync(TurnupAPI.Models.UserFavoriteTrack)">
+            <summary>
+            Supprime  une Track des favoris dans la base de données.
+            </summary>
+            <param name="uft">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoriteTracks(System.String)">
+            <summary>
+            Retourne la liste des musique en favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des musique en favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoriteTracksIdsList(System.String)">
+            <summary>
+            Retourne la liste  des ids des musique en favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des ids des musique en favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetExistingTrackLike(System.String,System.Int32)">
+            <summary>
+            Retourne un UserFavoriteTrack.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <param name="trackId">L'id de la musique.</param>
+            <returns>Retourne un UserFavoriteTrack.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.AddArtistLikeAsync(TurnupAPI.Models.UserFavoriteArtist)">
+            <summary>
+            Ajoute un un artiste en favoris dans la base de données.
+            </summary>
+            <param name="ufa">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.RemoveArtistLikeAsync(TurnupAPI.Models.UserFavoriteArtist)">
+            <summary>
+            Supprime  un artiste des favoris dans la base de données.
+            </summary>
+            <param name="ufa">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoriteArtists(System.String)">
+            <summary>
+            Retourne la liste des artistes favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des artistes en favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoriteArtistsIdsList(System.String)">
+            <summary>
+            Retourne la liste  des ids des artistes  favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des ids des artistes favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetExistingArtistLike(System.String,System.Int32)">
+            <summary>
+            Retourne un UserFavoritArtist.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <param name="artistId">L'id de l'artist.</param>
+            <returns>Retourne un UserFavoriteArtist.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.AddPlaylistLikeAsync(TurnupAPI.Models.UserFavoritePlaylist)">
+            <summary>
+            Ajoute un une playlist en favoris dans la base de données.
+            </summary>
+            <param name="ufp">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.RemovePlaylistLikeAsync(TurnupAPI.Models.UserFavoritePlaylist)">
+            <summary>
+            Supprime  une playlist des favoris dans la base de données.
+            </summary>
+            <param name="ufp">L'artiste à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoritePlaylists(System.String)">
+            <summary>
+            Retourne la liste des playlists en favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des playlists en favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetUserFavoritePlaylistsIdsList(System.String)">
+            <summary>
+            Retourne la liste  des ids des playlists en favoris d'un utilisateur.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <returns>La liste des ids des playlistsen favoris d'un utilisateur</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.LikeRepository.GetExistingPlaylistLike(System.String,System.Int32)">
+            <summary>
+            Retourne un UserFavoritePlaylist.
+            </summary>
+            <param name="userId">L'id de l'utilisateur.</param>
+            <param name="playlistId">L'id de la musique.</param>
+            <returns>Retourne un UserFavoritePlaylist.</returns>
+        </member>
+        <member name="T:TurnupAPI.Repositories.PlaylistRepository">
+            <summary>
+            Repository pour la gestion des playlists.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Constructeur de la classe.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.AddAsync(TurnupAPI.Models.Playlist)">
+            <summary>
+            Ajoute une playlistdans la base de données.
+            </summary>
+            <param name="playlist">La playlist à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime une playlist de la base de données par son ID.
+            </summary>
+            <param name="id">L'ID de l'artiste à supprimer.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère une playlist par son ID.
+            </summary>
+            <param name="id">L'ID de la playlist à récupérer.</param>
+            <returns>La playlist trouvé ou null si elle n'existe pas.</returns>
+            <exception cref="T:TurnupAPI.Exceptions.NotFoundException">Si l'artiste n'est pas trouvé.</exception>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.GetFilteredPlaylistAsync(System.Linq.Expressions.Expression{System.Func{TurnupAPI.Models.Playlist,System.Boolean}})">
+            <summary>
+            Récupère une playlis à base de filtre.
+            </summary>
+            <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
+            <exception cref="T:TurnupAPI.Exceptions.NotFoundException">Si la playlist n'est pas trouvée.</exception>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.GetAllAsync">
+            <summary>
+            Récupère la liste de toutes les playlists.
+            </summary>
+            <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.UpdateAsync(TurnupAPI.Models.Playlist)">
+            <summary>
+            Met à jour une playlist dans la base de données.
+            </summary>
+            <param name="playlist">La plalist à mettre à jour.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.PlaylistRepository.GetPlaylistByUserIdAsync(System.String)">
+            <summary>
+            Récupère la liste des playlists d'un utilisateur. 
+            </summary>
+            <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
+        </member>
+        <member name="T:TurnupAPI.Repositories.TrackRepository">
+            <summary>
+            Repository pour la gestion des Track.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Constructeur de la classe.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.AddAsync(TurnupAPI.Models.Track)">
+            <summary>
+            Ajoute un objet Track dans la base de données.
+            </summary>
+            <param name="track">L'objet Track à ajouter.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère une Track par son ID.
+            </summary>
+            <param name="id">L'ID de la track  à récupérer.</param>
+            <returns>La Track trouvée ou null si elle n'existe pas.</returns>
+            <exception cref="T:TurnupAPI.Exceptions.NotFoundException">Si l'artiste n'est pas trouvé.</exception>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime une Track de la base de données par son ID.
+            </summary>
+            <param name="id">L'ID de la Track à supprimer.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.UpdateAsync(TurnupAPI.Models.Track)">
+            <summary>
+            Met à jour une Track dans la base de données.
+            </summary>
+            <param name="track">La track à mettre à jour.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetAllAsync">
+            <summary>
+            Récupère la liste de toutes les tracks.
+            </summary>
+            <returns>La liste de toutes les tracks ou une liste vide si aucune playlist n'est trouvée.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetTracksByPlaylistAsync(System.Int32)">
+            <summary>
+            Récupère la liste de toutes les tracks d'une playlist.
+            </summary>
+            <returns>La liste de toutes les tracks ou une liste vide si aucune playlist n'est trouvée.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetUserListeningHistory(System.String)">
+            <summary>
+            Récupère l'historique d'écoute de l'utilisateur connecté.
+            </summary>
+            <returns>Retourne l'historique d'écoute de l'utilisateur connecté..</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetDiscoveryAsync(System.String)">
+            <summary>
+            Récupère les musique non écoutées par  l'utilisateur connecté.
+            </summary>
+            <returns>Retourne une suggestion de musique à l'utilisateur connecté</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TurnupAPI.Repositories.TrackRepository.GetPopularTracksAsync" -->
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetTrackListeningNumber(System.Int32)">
+            <summary>
+            Retourne le nombre d'écoute d'une musique.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.DeleteTrackFromPlaylistAsync(TurnupAPI.Forms.AddTrackToPlaylistForm,System.String)">
+            <summary>
+            Supprime une musique d'unr playlist.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TrackRepository.GetTracksByTypesAsync(System.Int32)">
+            <summary>
+            Récupère et retourne les musique d'un Types.
+            </summary>
+        </member>
+        <member name="T:TurnupAPI.Repositories.TypesRepository">
+            <summary>
+            Implémentation du repository pour la gestion des types.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Initialise une nouvelle instance de la classe <see cref="T:TurnupAPI.Repositories.TypesRepository"/>.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.AddAsync(TurnupAPI.Models.Types)">
+            <summary>
+            Ajoute un type à la base de données.
+            </summary>
+            <param name="type">Le type à ajouter.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.DeleteAsync(System.Int32)">
+            <summary>
+            Supprime un type de la base de données par son ID.
+            </summary>
+            <param name="id">L'ID du type à supprimer.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.GetAsync(System.Int32)">
+            <summary>
+            Récupère un type de la base de données par son ID.
+            </summary>
+            <param name="id">L'ID du type à récupérer.</param>
+            <returns>Le type récupéré.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.GetAllAsync">
+            <summary>
+            Récupère tous les types de la base de données.
+            </summary>
+            <returns>Une liste de tous les types.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repositories.TypesRepository.UpdateAsync(TurnupAPI.Models.Types)">
+            <summary>
+            Met à jour un type dans la base de données.
+            </summary>
+            <param name="type">Le type à mettre à jour.</param>
+            <returns>Une tâche asynchrone.</returns>
+        </member>
+        <member name="T:TurnupAPI.Repository.UserRepository">
+            <summary>
+            Implémentation du repository pour la gestion des utilisateurs.
+            </summary>
+        </member>
+        <member name="M:TurnupAPI.Repository.UserRepository.#ctor(TurnupAPI.Data.TurnupContext)">
+            <summary>
+            Initialise une nouvelle instance de la classe <see cref="T:TurnupAPI.Repository.UserRepository"/>.
+            </summary>
+            <param name="context">Le contexte de la base de données.</param>
+        </member>
+        <member name="M:TurnupAPI.Repository.UserRepository.GetLoggedUserAsync(System.String)">
+            <summary>
+            Récupère un utilisateur connecté par son adresse e-mail.
+            </summary>
+            <param name="email">L'adresse e-mail de l'utilisateur.</param>
+            <returns>L'utilisateur connecté.</returns>
+        </member>
+        <member name="M:TurnupAPI.Repository.UserRepository.GetUserAsync(System.String)">
+            <summary>
+            Récupère un utilisateur par son id.
+            </summary>
+            <param name="id">L'id de l'utilisateur.</param>
+            <returns>retourne un utilisateur.</returns>
+        </member>
+        <member name="T:TurnupBlazor.Models.PlaylingTracks">
+            <summary>
+            Représente une liste de lecture de pistes musicales.
+            </summary>
+        </member>
+        <member name="P:TurnupBlazor.Models.PlaylingTracks.Name">
+            <summary>
+            Obtient ou définit le nom de la liste de lecture.
+            </summary>
+        </member>
+        <member name="P:TurnupBlazor.Models.PlaylingTracks.Tracks">
+            <summary>
+            Obtient ou définit la liste des pistes musicales de la liste de lecture.
+            </summary>
+        </member>
+        <member name="P:TurnupBlazor.Models.PlaylingTracks.CurrentTrackIndex">
+            <summary>
+            Obtient ou définit l'index de la piste musicale actuellement en cours de lecture.
+            </summary>
+        </member>
+    </members>
+</doc>
