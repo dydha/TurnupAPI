@@ -22,6 +22,7 @@ namespace TurnupAPI.Controllers
     public class UserController : BaseController
     {
         private readonly UserManager<Users> _userManager;
+        private readonly ILogger<UserController> _logger;
         /// <summary>
         /// Initialise une nouvelle instance du contrôleur des utilisateurs.
         /// </summary>
@@ -30,10 +31,13 @@ namespace TurnupAPI.Controllers
             IUserRepository userRepository,
             UserManager<Users> userManager,
          TurnupContext context,
-          IMapper mapper
+          IMapper mapper,
+          ILogger<UserController> logger
+
             ) : base(userRepository,null,null,context,mapper)
         {
             _userManager = userManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -43,23 +47,16 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-logged-user")]
         public async Task<ActionResult<UserDTO>> GetLoggedUser()
         {
+            _logger.LogInformation("Requete pour récupérer l'utilisateur connecté.");
             try
             {
                 var user = await GetLoggedUserAsync();
-                try
-                {
-                   
-                    var userDTO = _mapper.Map<UserDTO>(user);
-                    return Ok(userDTO);
-                }
-                catch (NotFoundException)
-                {
-                    return NotFound();
-                }
-
+                var userDTO = _mapper.Map<UserDTO>(user);
+                return Ok(userDTO);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -74,27 +71,25 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-user/{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(string id)
         {
+            _logger.LogInformation("Requete pour récupérer un utilisateur.");
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest();
+            }
             try
             {
-               
-                if (string.IsNullOrEmpty(id))
-                {
-                    return NotFound() ;
-                }
-                try
-                {
-                    var user = await _userRepository.GetUserAsync(id);
-                    var userDTO = _mapper.Map<UserDTO>(user);
-                    return Ok(userDTO);
-                }
-                catch (NotFoundException)
-                {
-                    return NotFound();
-                }
-
+                var user = await _userRepository.GetUserAsync(id);
+                var userDTO = _mapper.Map<UserDTO>(user);
+                return Ok(userDTO);
+            }
+            catch (NotFoundException)
+            {
+                _logger.LogWarning( "L'utilisateur n'a pas été trouvé.");
+                return NotFound();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -105,16 +100,27 @@ namespace TurnupAPI.Controllers
         [HttpGet("load-logged-user-data")]
         public async Task<ActionResult<UserDataForm>> LoadLoggedUserData()
         {
-            var user = await GetLoggedUserAsync();
-            if(user != null)
+            _logger.LogInformation("Requete pour récupérer mes données d'un utilisateur.");
+            try
             {
-                return Ok(_mapper.Map<UserDataForm>(user));
+                var user = await GetLoggedUserAsync();
+                var userDTO = _mapper.Map<UserDataForm>(user);
+                return Ok(userDTO);
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Une erreur est survenue.");
+                //  Utiliser ex.Message pour obtenir le message d'erreur
+                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
+                // Utiliser ex.StackTrace pour obtenir la pile d'appels
+                return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
+            }
+
         }
         [HttpPost("update-user-informations")]
         public async Task<ActionResult> UpdateUserInformations([FromBody] UserDataForm input)
         {
+            _logger.LogInformation("Requete pour modifier les informations d'un utilisateur.");
             if(!ModelState.IsValid) 
             {
                return BadRequest(ModelState);
@@ -143,14 +149,14 @@ namespace TurnupAPI.Controllers
                     
                         loggedUser.IsDarkTheme = input.IsDarkTheme;
                     
-                _context.Users.Update(loggedUser);
+                     _context.Users.Update(loggedUser);
                     await _context.SaveChangesAsync();
                     return NoContent();
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    _logger.LogError(ex, "Une erreur est survenue.");
                     return StatusCode(501);
                 }
             
@@ -159,6 +165,7 @@ namespace TurnupAPI.Controllers
         [HttpPost("update-user-password")]
         public async Task<ActionResult> UpdateUserPassword([FromBody] ChangePasswordForm input)
         {
+            _logger.LogInformation("Requete pour modifier le mot de passe d'un utilisateur.");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -181,7 +188,7 @@ namespace TurnupAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(501);
             }
 
@@ -190,6 +197,7 @@ namespace TurnupAPI.Controllers
         [HttpPost("update-user-picture")]
         public async Task<ActionResult> UpdateUserPicture([FromForm] ChangePictureForm input)
         {
+            _logger.LogInformation("Requete pour modifier la photo de profil d'un utilisateur.");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -215,19 +223,12 @@ namespace TurnupAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(501);
             }
 
 
         }
-       
-        
-
-       
-           
-        
-       
        
     }
 }
