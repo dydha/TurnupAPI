@@ -27,6 +27,7 @@ namespace TurnupAPI.Controllers
         private readonly IPlaylistRepository _playlistRepository;
         private readonly ILikeRepository _likeRepository;
         private readonly HtmlEncoder _htmlEncoder;
+        private readonly ILogger<PlaylistController> _logger;
         /// <summary>
         /// Constructeur du contrôleur de l'artiste.
         /// </summary>
@@ -38,13 +39,15 @@ namespace TurnupAPI.Controllers
                 TurnupContext context,
                 IUserRepository userRepository,
                 ILikeRepository likeRepository,
-        HtmlEncoder htmlEncoder,
-         IMapper mapper
+                HtmlEncoder htmlEncoder,
+                 IMapper mapper,
+                 ILogger<PlaylistController> logger
             ) : base(userRepository, null, trackRepository,context, mapper)
         { 
             _playlistRepository = playlistRepository;
             _likeRepository = likeRepository;
             _htmlEncoder = htmlEncoder;
+            _logger = logger;
         }
        
         /// <summary>
@@ -58,6 +61,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation( "Requete pour récupérer une playlist par son id.");
                 var loggedUser = await GetLoggedUserAsync();
                 try
                 {
@@ -71,12 +75,14 @@ namespace TurnupAPI.Controllers
                 }
                 catch (NotFoundException)
                 {
+                    _logger.LogWarning("La playlist n'a pas été trouvée.");
                     return StatusCode(500, $"Internal Server Error");
                 }
 
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -97,13 +103,14 @@ namespace TurnupAPI.Controllers
             }
             try
             {
+                _logger.LogInformation("Création d'une playlist.");
                 input.Name =_htmlEncoder.Encode(input.Name!);
                 var loggedUser = await GetLoggedUserAsync();
                 try
                 {
                     var existingPlaylist = await _playlistRepository.GetFilteredPlaylistAsync(p => ((!string.IsNullOrEmpty(p.Name) && input.Name.ToLower().Equals(p.Name.ToLower())) && p.UsersId == loggedUser.Id));
-                  
-                     throw new DuplicateException();
+                    _logger.LogWarning( "L'auteur possède déjà une playlist avec ce nom.");
+                    return Conflict(); //StatusCode 409;
                 }
                 catch (NotFoundException)
                 {
@@ -116,16 +123,15 @@ namespace TurnupAPI.Controllers
                     }
                     catch (Exception ex)
                     {
+                        _logger.LogError(ex, "Une erreur est survenue.");
                         return StatusCode(500, $"Internal Server Error: {ex.Message}");
                     }
                 }
-                catch(DuplicateException)
-                {
-                    return Conflict(); //StatusCode 409;
-                }
+               
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -149,6 +155,7 @@ namespace TurnupAPI.Controllers
             }
             try
             {
+                _logger.LogInformation("Requete pour modifier une playlist.");
                 playlistDTO.Name= _htmlEncoder.Encode(playlistDTO.Name!);
                 var loggedUser = await GetLoggedUserAsync();
                 if(loggedUser.Id == playlistDTO.OwnerId)
@@ -163,22 +170,21 @@ namespace TurnupAPI.Controllers
                     }
                     catch (NotFoundException)
                     {
+                        _logger.LogWarning("La playlist n'existe pas.");
                         return NotFound();
                     }
                 }
                 else
                 {
+                    _logger.LogWarning( "Suppression impossible l'utilisateur connecté n'est pas l'auteur de la playlist.");
                     return Unauthorized(); //StatusCode 501
                 }
 
                 
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -196,6 +202,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour supprimer une playlist.");
                 var loggedUser = await GetLoggedUserAsync();
                 try
                 {
@@ -213,16 +220,14 @@ namespace TurnupAPI.Controllers
                 }
                 catch (NotFoundException)
                 {
+                    _logger.LogWarning( "La playlist n'existe pas.");
                     return NotFound(); // Return a 404 if the form is not found
                 }
 
             }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -241,6 +246,7 @@ namespace TurnupAPI.Controllers
                     return BadRequest();
             try
             {
+                _logger.LogInformation("Requete pour récupérer les playlists d'un utilisateurs.");
                 var user = await _userRepository.GetUserAsync(userId);
                 try
                 {
@@ -249,16 +255,13 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucune playlist n'a été trouvée.");
                     return NoContent(); // Return a 204
                 }
-            }
-           
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
+            }          
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -277,6 +280,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer toutes les playlists.");
                 var playlists = await _playlistRepository.GetAllAsync();
                 var playlistDTOs = MapToListPlaylistDTO(playlists);
                 return Ok(playlistDTOs);
@@ -284,10 +288,12 @@ namespace TurnupAPI.Controllers
             }
             catch (EmptyListException)
             {
+                _logger.LogWarning("Aucune playlist n'a été trouvée.");
                 return NoContent(); //StatusCode 204
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
@@ -307,6 +313,7 @@ namespace TurnupAPI.Controllers
             }
             try
             {
+                _logger.LogInformation("Requete pour ajouter une musique à une playlist.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                 try
                 {
@@ -315,9 +322,8 @@ namespace TurnupAPI.Controllers
 
                     try
                     {
-                        var track = await _trackRepository.GetAsync(input.TrackId);
-                        try
-                        {
+                           var track = await _trackRepository.GetAsync(input.TrackId);
+                       
                             var existingTrackInPlaylist = await _context.PlaylistTrack.Where(pt => pt.PlaylistId == playlist.Id && pt.TrackId == track.Id).FirstOrDefaultAsync();
                             if (existingTrackInPlaylist == null)
                             {
@@ -332,32 +338,27 @@ namespace TurnupAPI.Controllers
                             }
                             else
                             {
-                                throw new DuplicateException();
+                                return Conflict(); // StatusCode 409
                             }
                            
-                        }
-                        catch (DuplicateException)
-                        {
-                            return Conflict(); // StatusCode 409
-                        }
+                        
 
                     }
                     catch (NotFoundException)
                     {
+                        _logger.LogWarning("Aucune musique n'a été trouvée.");
                         return NotFound();
                     }
                 }
                 catch (NotFoundException)
                 {
+                    _logger.LogWarning("Aucune playlist n'a été trouvée.");
                     return NotFound();
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -372,18 +373,18 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer les playlists favoris d'un utilisateur.");
                 var favoritePlaylists = await _likeRepository.GetUserFavoritePlaylists(userId);
-               
-                    return Ok(MapToListPlaylistDTO(favoritePlaylists));
-                
-
+                  return Ok(MapToListPlaylistDTO(favoritePlaylists));               
             }
             catch (EmptyListException)
             {
+                _logger.LogWarning("Aucune playlist n'a été trouvée.");
                 return NoContent() ; //StatusCode 204
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }

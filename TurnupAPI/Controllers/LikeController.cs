@@ -22,6 +22,7 @@ namespace TurnupAPI.Controllers
     {
         private readonly ILikeRepository _likeRepository;
         private readonly IMemoryCache _memoryCache;
+        private readonly ILogger<LikeController> _logger;
         /// <summary>
         /// Constructeur du contrôleur de l'artiste.
         /// </summary>
@@ -31,11 +32,13 @@ namespace TurnupAPI.Controllers
                 IMemoryCache memoryCache,
                 IUserRepository userRepository,
                 TurnupContext context,
-                 IMapper mapper
+                 IMapper mapper,
+                 ILogger<LikeController> logger
             ) : base(userRepository,null,null,context,mapper)
         {
             _likeRepository = likeRepository;
             _memoryCache = memoryCache;
+            _logger = logger;
            
         }
       
@@ -50,6 +53,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation( "Requete pour récupérer les ids des artistes favoris d'un utilisateur.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                 try
                 {
@@ -59,15 +63,14 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning( "Aucun id n'a été trouvé.");
                     return NoContent(); //StatusCode 204
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+            
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -82,12 +85,14 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation( "Ajout/Suppression d'une musique aux/des favoris.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                 //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
                 try
                 {
                     var existingLike = await _likeRepository.GetExistingTrackLike(loggedUser.Id, trackId);
                     await _likeRepository.RemoveTrackLikeAsync(existingLike); // Si le loggedUser aime déjà la musique, on supprime le like     
+                  
                     return NoContent(); //Indique le dislike
                 }
                 catch (NotFoundException) // Si l'utilisateur connecté n'a pas cette musique en favoris.
@@ -104,6 +109,7 @@ namespace TurnupAPI.Controllers
                     }
                     catch (Exception ex)
                     {
+                        _logger.LogError(ex, "Une erreur est survenue.");
                         return StatusCode(500, $"Internal Server Error: {ex.Message}");
                     }
                 }
@@ -120,12 +126,9 @@ namespace TurnupAPI.Controllers
 
                
             }          
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -143,6 +146,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation( "Requete pour récupérer les ids des olaylists favoris d'un utilisateur.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                 try
                 {
@@ -152,15 +156,13 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucun id n'a été trouvé.");
                     return NoContent(); //StatusCode 204
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -176,6 +178,7 @@ namespace TurnupAPI.Controllers
         {    
                 try
                 {
+                    _logger.LogInformation("Requete pour ajouter/supprimer une playlist aux/des favoris.");
                     var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                                                                  //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
                     try
@@ -197,6 +200,7 @@ namespace TurnupAPI.Controllers
                         }
                         catch (Exception ex)
                         {
+                            _logger.LogError(ex, "Une erreur est survenue.");
                             return StatusCode(500, $"Internal Server Error: {ex.Message}");
                         }
 
@@ -204,12 +208,10 @@ namespace TurnupAPI.Controllers
 
                     return NoContent();
                 }
-                catch (NotFoundException)
-                {
-                    return NotFound();
-                }
+                
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Une erreur est survenue.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -231,6 +233,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer les ids des artistes favoris d'un utilisateur.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                try
                 {
@@ -240,15 +243,14 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucun id n'a été trouvé.");
                     return NoContent(); //StatusCode 204
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+           
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -265,6 +267,7 @@ namespace TurnupAPI.Controllers
           
             try
             {
+                _logger.LogInformation(, "Requete pour ajouter/supprimer un artiste aux/des favoris.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                                                              //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
                 try
@@ -290,18 +293,16 @@ namespace TurnupAPI.Controllers
                     }
                     catch (Exception ex)
                     {
+                        _logger.LogError(ex, "Une erreur est survenue.");
                         return StatusCode(500, $"Internal Server Error: {ex.Message}");
                     }
                 }
 
                
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
+            }          
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
