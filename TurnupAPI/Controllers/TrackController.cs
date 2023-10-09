@@ -140,11 +140,13 @@ namespace TurnupAPI.Controllers
             }
             try
             {
+                _logger.LogInformation("Requete pour modifier une musique.");
                 await _trackRepository.UpdateAsync(track);
                 return NoContent();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -162,15 +164,18 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour supprimer une musique.");
                 await _trackRepository.DeleteAsync(id);
                 return NoContent();
             }
             catch (NotFoundException)
             {
+                _logger.LogWarning("La musique n'a pas été trouvée.");
                 return NotFound(); // Return a 404 if the form is not found
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -187,6 +192,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer toutes les musiques.");
                 var loggedUser = await GetLoggedUserAsync();
                 try
                 {
@@ -196,16 +202,14 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
                     return NoContent(); //StatusCode 204;
                 }
             }
            
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex,"Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -224,7 +228,7 @@ namespace TurnupAPI.Controllers
             {
                 return BadRequest();
             }
-           
+            _logger.LogInformation("Requete pour l'historique d'écoute d'un utilisateur.");
             var cacheKey = CacheKeyForUserListeningHistory(userId);
             if(_memoryCache.TryGetValue(cacheKey, out  List<TrackDTO>? cachedData))
             {
@@ -247,15 +251,13 @@ namespace TurnupAPI.Controllers
                     }
                     catch (EmptyListException)
                     {
+                        _logger.LogWarning("Aucune musique n'a été trouvée.");
                         return NoContent(); //StatusCode 204
                     }
-                }
-                catch (NotFoundException)
-                {
-                    return NotFound(); // Return a 404 if the form is not found
-                }
+                }               
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex,"Une erreur s'est produite.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -274,6 +276,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer la playlist Dicovery.");
                 //Meme fonctionnement que la méthode qui retourne l'hisorique d'écoute de l'utilisateur connecté
                 var loggedUser = await GetLoggedUserAsync();
                 try
@@ -284,15 +287,13 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
                     return NoContent(); //StatusCode 204
                 }
-            }          
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
+            }                     
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -308,6 +309,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer la playlist Popular.");
                 var loggedUser = await GetLoggedUserAsync();
 
                 try
@@ -318,15 +320,13 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
                     return NoContent(); //StatusCode 204
                 }
-            }          
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
+            }  
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -343,17 +343,25 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer la playlist NewTrackPlaylist.");
                 var loggedUser = await GetLoggedUserAsync();
-                var tracks = (await _trackRepository.GetAllAsync()).OrderByDescending(t => t.AddedAt).Take(50).ToList();
-                var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
-                return Ok(tracksDTO);
+                
+                try
+                {
+                    var tracks = (await _trackRepository.GetAllAsync()).OrderByDescending(t => t.AddedAt).Take(50).ToList();
+                    var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                    return Ok(tracksDTO);
+                }
+                catch (EmptyListException)
+                {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
+                    return NoContent(); //StatusCode 204
+                }
             }           
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
+           
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -370,17 +378,24 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer la playlist Top20.");
                 var loggedUser = await GetLoggedUserAsync();
-                var tracks = (await _trackRepository.GetPopularTracksAsync()).Take(20).ToList();
-                var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
-                return Ok(tracksDTO);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
+               
+                try
+                {
+                    var tracks = (await _trackRepository.GetPopularTracksAsync()).Take(20).ToList();
+                    var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                    return Ok(tracksDTO);
+                }
+                catch (EmptyListException)
+                {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
+                    return NoContent(); //StatusCode 204
+                }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -396,17 +411,15 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour supprimer une musique d'une playlist");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                                                              //Je récpère la playlist
                 await _trackRepository.DeleteTrackFromPlaylistAsync(input, loggedUser.Id);
                 return NoContent();
             }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -420,12 +433,12 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-tracks-by-artist/{id}")]
         public async Task<ActionResult<List<TrackDTO>>> GetTracksByArtist(int id) //Id de l'artiste
         {
+            _logger.LogInformation("Requete pour récupérer toutes les musiques d'un artiste");
             var cacheKey = CacheKeyForArtistTracks(id);
             byte[]? data = await _distributedCache.GetAsync(cacheKey);
             if(data != null)
             {
                 var tracks = DeserializeData<List<TrackDTO>>(data);
-                Console.WriteLine("These tracks came from cache memory.");
                 return Ok(tracks);
             }
             else
@@ -440,20 +453,18 @@ namespace TurnupAPI.Controllers
                         var tracks = (await _trackRepository.GetAllAsync()).Where(t => ids.Contains(t.Id)).ToList();
                         var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
                         await _distributedCache.SetAsync(cacheKey, SerializeData(tracksDTO), GetCacheOptions());
-                        Console.WriteLine("These tracks do not came from cache memory.");
+
                         return Ok(tracksDTO);
                     }
                     catch (NotFoundException)
                     {
+                        _logger.LogWarning("L'artiste n'a pas été trouvé.");
                         return NotFound(); // Return a 404 if the form is not found
                     }
                 }
-                catch (NotFoundException)
-                {
-                    return NotFound(); // Return a 404 if the form is not found
-                }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Une erreur s'est produite.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -471,6 +482,7 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-tracks-by-types/{typesId}")]
         public async Task<ActionResult<List<TrackDTO>>> GetTracksByTypes(int typesId)
         {
+            _logger.LogInformation("Requete pour récupérer toutes les musiques d'un genre");
             var cacheKey = CacheKeyForTypesTracks(typesId);
             byte[]? data = _distributedCache.Get(cacheKey);
             if(data != null)
@@ -495,20 +507,19 @@ namespace TurnupAPI.Controllers
                         }
                         catch (EmptyListException)
                         {
+                            _logger.LogWarning("Aucune musique n'a été trouvée.");
                             return NoContent(); //StatusCode 204
                         }
                     }
                     catch (NotFoundException)
                     {
+                        _logger.LogWarning("Le type n'a pas été trouvé.");
                         return NotFound();
                     }
                 }
-                catch (NotFoundException)
-                {
-                    return NotFound(); // Return a 404 if the form is not found
-                }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Une erreur s'est produite.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -525,6 +536,7 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Une musique est en train de jouer.");
                 var loggedUser = await GetLoggedUserAsync();
                 try
                 {
@@ -540,6 +552,7 @@ namespace TurnupAPI.Controllers
                 }
                 catch (NotFoundException)
                 {
+                    _logger.LogWarning("La musique n'a pas été trouvée.");
                     return NotFound();
                 }
                 finally
@@ -552,12 +565,9 @@ namespace TurnupAPI.Controllers
                     }
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -590,20 +600,19 @@ namespace TurnupAPI.Controllers
                     }
                     catch (EmptyListException)
                     {
+                        _logger.LogWarning("Aucune musique n'a été trouvée.");
                         return NoContent();
                     }
                 }
                 catch (NotFoundException)
                 {
+                    _logger.LogWarning( "La playlist n'a pas été trouvée.");
                     return NotFound();
                 }
             }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
-            }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -618,6 +627,7 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-favorite-tracks/{userId}")]
         public async Task<ActionResult<List<TrackDTO>>> GetFavoriteTracks(string userId)
         {
+            _logger.LogInformation("Requete pour récupérer les musiques favoris d'un utilisateur.");
             // Utilisez userId comme clé de mise en cache
             var cacheKey = CacheKeyForUserFavoriteTracks(userId);
 
@@ -645,16 +655,14 @@ namespace TurnupAPI.Controllers
                     }
                     catch (EmptyListException)
                     {
+                        _logger.LogWarning("Aucune musique n'a été trouvée.");
                         return NoContent(); //StatusCode 204
                     }
 
                 }
-                catch (NotFoundException)
-                {
-                    return NotFound(); // Return a 404 if the form is not found
-                }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex,"Une erreur s'est produite.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -741,6 +749,7 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-last-playing-tracks")]
         public async Task<ActionResult<PlaylingTracks>> GetLastPlayingTracks()
         {
+            _logger.LogInformation("Requete pour récupérer la deniere liste de musique jouée par l'utilisateur connecté.");
             try
             {
                 var loggedUser = await GetLoggedUserAsync();
@@ -764,14 +773,12 @@ namespace TurnupAPI.Controllers
             }
             catch (EmptyListException)
             {
+                _logger.LogWarning("Aucune musique n'a été trouvée.");
                 return NoContent();
-            }
-            catch (NotFoundException)
-            {
-                return NotFound(); // Return a 404 if the form is not found
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,"Une erreur s'est produite.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -785,12 +792,22 @@ namespace TurnupAPI.Controllers
         [HttpPost("set-last-playing-tracks")]
         public async Task<ActionResult> SetLastPlayingTracks([FromBody] PlaylingTracks playingTracks)
         {
-           
-            var loggedUser = await GetLoggedUserAsync();
-            var userLastPlayingTracksCacheKey = CacheKeyForUserLastPlayingTracks(loggedUser.Id);
-            await _distributedCache.SetAsync(userLastPlayingTracksCacheKey, SerializeData(playingTracks), GetCacheOptions());
+            _logger.LogInformation("Requete pour enregistrer la derniere liste de musique jouée par l'utilisateur connecté.");
+            try
+            {
+                var loggedUser = await GetLoggedUserAsync();
+                var userLastPlayingTracksCacheKey = CacheKeyForUserLastPlayingTracks(loggedUser.Id);
+                await _distributedCache.SetAsync(userLastPlayingTracksCacheKey, SerializeData(playingTracks), GetCacheOptions());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Une erreur s'est produite.");
+                //  Utiliser ex.Message pour obtenir le message d'erreur
+                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
+                // Utiliser ex.StackTrace pour obtenir la pile d'appels
+                return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
+            }
 
-            
             return NoContent();
         }
 

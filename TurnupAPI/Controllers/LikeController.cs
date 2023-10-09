@@ -267,7 +267,7 @@ namespace TurnupAPI.Controllers
           
             try
             {
-                _logger.LogInformation(, "Requete pour ajouter/supprimer un artiste aux/des favoris.");
+                _logger.LogInformation( "Requete pour ajouter/supprimer un artiste aux/des favoris.");
                 var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
                                                              //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
                 try

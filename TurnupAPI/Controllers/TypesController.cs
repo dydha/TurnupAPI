@@ -22,6 +22,7 @@ namespace TurnupAPI.Controllers
     {
         private readonly ITypesRepository _typesRepository;
         private readonly IDistributedCache _distributedCache;
+        private readonly ILogger<TypesController> _logger;
         /// <summary>
         /// Initialise une nouvelle instance du contrôleur des types.
         /// </summary>
@@ -29,11 +30,13 @@ namespace TurnupAPI.Controllers
         public TypesController(
             ITypesRepository typesRepository,
             IDistributedCache distributedCache,
-             IMapper mapper
+             IMapper mapper,
+             ILogger<TypesController> logger
             ) : base(null,null,null,null,mapper)
         {
             _typesRepository = typesRepository;
             _distributedCache = distributedCache;
+            _logger = logger;
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-types/{id}")]
         public async Task<ActionResult<Types>> GetTypes(int id)
         {
-          
+            _logger.LogInformation("Requete pour récupérer un genre par son id.");
             try
             {
                 var track = await _typesRepository.GetAsync(id);
@@ -52,10 +55,12 @@ namespace TurnupAPI.Controllers
             }
             catch (NotFoundException)
             {
+                _logger.LogWarning("Aucun genre n'a été trouvé.");
                 return NotFound();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,"Une erreur s'est produite.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
@@ -68,6 +73,7 @@ namespace TurnupAPI.Controllers
         [HttpPost("add-types")]
         public async Task<ActionResult> AddTypes([FromForm] TypeForm typeVM)
         {
+            _logger.LogInformation("Requete pour ajouter un genre.");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -84,6 +90,7 @@ namespace TurnupAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
@@ -97,6 +104,7 @@ namespace TurnupAPI.Controllers
         [HttpPut("update-types/{id}")]
         public async Task<ActionResult> UpdateTypes(int id, Types type)
         {
+            _logger.LogInformation("Requete pour modifier un genre.");
             if (id != type.Id)
             {
                 return BadRequest();
@@ -112,8 +120,9 @@ namespace TurnupAPI.Controllers
         /// <param name="id">L'ID du type à supprimer.</param>
         /// <returns>Une réponse HTTP NoContent en cas de succès, une réponse NotFound si le type n'est pas trouvé, ou une réponse StatusCode 500 en cas d'erreur interne.</returns>
         [HttpDelete("delete-types/{id}")]
-        public async Task<ActionResult> DeleteTrack(int id)
+        public async Task<ActionResult> DeleteTypes(int id)
         {
+            _logger.LogInformation("Requete pour supprimer un genre.");
             try
             {
                 await _typesRepository.DeleteAsync(id);
@@ -121,10 +130,12 @@ namespace TurnupAPI.Controllers
             }
             catch (ArgumentNullException)
             {
+                _logger.LogWarning("Le genre n'existe pas.");
                 return NotFound();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur s'est produite.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
@@ -136,6 +147,7 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-all-types")]
         public async Task<ActionResult<List<TypesDTO>>> GetAllTypes()
         {
+            _logger.LogInformation("Requete pour récupérer tous les genres.");
             var cacheKey = CacheKeyForTypes();
             var data = await _distributedCache.GetAsync(cacheKey); // Je récupère les données.
             if (data != null) //Si les données nes sont pas null je désérialise les données avant de les retourner.
@@ -157,10 +169,12 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucun genre n'a été trouvé.");
                     return NoContent();
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Une erreur s'est produite.");
                     return StatusCode(500, $"Internal Server Error: {ex.Message}");
                 }
             }
