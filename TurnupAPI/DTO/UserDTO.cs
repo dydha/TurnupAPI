@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TurnupAPI.Models
+namespace TurnupAPI.DTO
 {
     /// <summary>
     /// Représente un objet de transfert de données (DTO) pour un utilisateur.

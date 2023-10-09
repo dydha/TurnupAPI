@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
@@ -27,8 +28,9 @@ namespace TurnupAPI.Controllers
         /// <param name="typesRepository">Le repository des types.</param>
         public TypesController(
             ITypesRepository typesRepository,
-            IDistributedCache distributedCache
-            ) : base(null,null,null,null)
+            IDistributedCache distributedCache,
+             IMapper mapper
+            ) : base(null,null,null,null,mapper)
         {
             _typesRepository = typesRepository;
             _distributedCache = distributedCache;
@@ -147,12 +149,7 @@ namespace TurnupAPI.Controllers
                 try
                 {
                     var types = await _typesRepository.GetAllAsync();
-                    var typesDTOs = types.Select(t => new TypesDTO
-                    {
-                        Id = t.Id,
-                        Name = t.Name,
-                        Picture = t.Picture,
-                    }).ToList();
+                    var typesDTOs = types.Select(t => _mapper.Map<TypesDTO>(t)).ToList();
 
                     await _distributedCache.SetAsync(cacheKey, SerializeData(typesDTOs), GetCacheOptions());
                     Console.WriteLine("These types do not came from cache memory.");

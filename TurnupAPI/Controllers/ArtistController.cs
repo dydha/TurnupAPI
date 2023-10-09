@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Data;
-using System.Text.Encodings.Web;
 using TurnupAPI.DTO;
 using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
@@ -30,8 +30,9 @@ namespace TurnupAPI.Controllers
         public ArtistController( 
             IArtistRepository artistRepository,
             ILikeRepository likeRepostory,
-            IDistributedCache distributedCache
-            ) : base(null,artistRepository,null,null)
+            IDistributedCache distributedCache,
+             IMapper mapper
+            ) : base(null,artistRepository,null,null,mapper)
         { 
             _likeRepository = likeRepostory;
             _distributedCache = distributedCache;
@@ -49,9 +50,9 @@ namespace TurnupAPI.Controllers
         {
             try
             {
-                Console.WriteLine(id);
                 var artist = await _artistRepository.GetAsync(id);
-                return Ok(MapToArtistDTO(artist));
+                var artistDTO = _mapper.Map<ArtistDTO>(artist);
+                return Ok(artistDTO);
             }
             catch (NotFoundException)
             {
@@ -87,7 +88,7 @@ namespace TurnupAPI.Controllers
             {
                 try
                 {
-                    var artist = MapToArtist(artistForm);
+                    var artist = _mapper.Map<Artist>(artistForm);
                     await _artistRepository.AddAsync(artist);
                     return Ok(new { Message = "Artist enregistré avec succès." });
                 }
@@ -183,10 +184,11 @@ namespace TurnupAPI.Controllers
             {
                 try
                 {
-                    var artists = (await _artistRepository.GetAllAsync()).Select(a => MapToArtistDTO(a)).ToList();
-                    await _distributedCache.SetAsync(cacheKey, SerializeData(artists), GetCacheOptions());
+                    var artists = await _artistRepository.GetAllAsync();
+                    var artistsDTO = MapToListArtistsDTO(artists);
+                    await _distributedCache.SetAsync(cacheKey, SerializeData(artistsDTO), GetCacheOptions());
                     Console.WriteLine("These artists do not came from cache memory.");
-                    return Ok(artists);
+                    return Ok(artistsDTO);
                 }
                 catch (EmptyListException)
                 {
@@ -231,26 +233,10 @@ namespace TurnupAPI.Controllers
         /// </summary>
         private List<ArtistDTO> MapToListArtistsDTO(List<Artist> artists)
         {
-            var artistsDTO = artists.Select(a => MapToArtistDTO(a)).ToList();
+            var artistsDTO = artists.Select(a => _mapper.Map<ArtistDTO>(a)).ToList();
             return artistsDTO;
         }
 
-        /// <summary>
-        /// Mappe un objet Artist en un objet ArtistDTO.
-        /// </summary>
-        private ArtistDTO MapToArtistDTO(Artist artist)
-        {
-           // Console.WriteLine(artist.UserFavoriteArtists.Count() + " nombre de fans");
-            return new ArtistDTO
-            {
-                Id = artist.Id,
-                Name = artist.Name,
-                Description = artist.Description,
-                Picture = artist.Picture,
-                Country = artist.Country,
-                FansNumber = artist.UserFavoriteArtists != null &&  artist.UserFavoriteArtists.Count > 0 ? artist.UserFavoriteArtists.Count : 0,
-            };
-            
-        }
+       
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -37,8 +38,9 @@ namespace TurnupAPI.Controllers
                 TurnupContext context,
                 IUserRepository userRepository,
                 ILikeRepository likeRepository,
-        HtmlEncoder htmlEncoder
-            ) : base(userRepository, null, trackRepository,context)
+        HtmlEncoder htmlEncoder,
+         IMapper mapper
+            ) : base(userRepository, null, trackRepository,context, mapper)
         { 
             _playlistRepository = playlistRepository;
             _likeRepository = likeRepository;
@@ -64,7 +66,7 @@ namespace TurnupAPI.Controllers
                     {
                         return Unauthorized(); //StatusCode 401;
                     }
-                    var playlistDTO = playlist != null ? MapToPlaylistDTO(playlist) :  throw new NotFoundException();
+                    var playlistDTO = playlist != null ? _mapper.Map<PlaylistDTO>(playlist) :  throw new NotFoundException();
                     return Ok(playlistDTO); 
                 }
                 catch (NotFoundException)
