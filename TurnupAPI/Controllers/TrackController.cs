@@ -30,7 +30,6 @@ namespace TurnupAPI.Controllers
         private readonly IDistributedCache _distributedCache;
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<TrackController> _logger;
-        private readonly IMapper _mapper;
         /// <summary>
         /// Constructeur du contrôleur de l'artiste.
         /// </summary>
@@ -46,14 +45,14 @@ namespace TurnupAPI.Controllers
             ILogger<TrackController> logger,
             IMapper mapper
 
-            ) : base(userRepository,artistRepository,trackRepository,context)
+            ) : base(userRepository,artistRepository,trackRepository,context, mapper)
         {
             _typesRepository = typesRepository;
             _likeRepository = likeRepository;
             _distributedCache = distributedCache;
             _memoryCache = memoryCache;
             _logger = logger;
-            _mapper = mapper;
+      
         }
        
         /// <summary>

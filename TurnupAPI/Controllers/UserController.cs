@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Metrics;
 using System.Security.Claims;
 using TurnupAPI.Areas.Identity.Data;
 using TurnupAPI.Data;
+using TurnupAPI.DTO;
 using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
-using TurnupAPI.Models;
+
 
 namespace TurnupAPI.Controllers
 {
@@ -18,12 +19,9 @@ namespace TurnupAPI.Controllers
     [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
-        private readonly IUserRepository _userRepository;
         private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
-        private readonly TurnupContext _context;
         /// <summary>
         /// Initialise une nouvelle instance du contrôleur des utilisateurs.
         /// </summary>
@@ -31,14 +29,11 @@ namespace TurnupAPI.Controllers
         public UserController(
             IUserRepository userRepository,
             UserManager<Users> userManager,
-         SignInManager<Users> signInManager,
-         TurnupContext context
-            )
+         TurnupContext context,
+          IMapper mapper
+            ) : base(userRepository,null,null,context,mapper)
         {
-            _userRepository = userRepository;
             _userManager = userManager;
-            _signInManager = signInManager;
-            _context = context;
         }
 
         /// <summary>
@@ -50,24 +45,11 @@ namespace TurnupAPI.Controllers
         {
             try
             {
-                var email = User.FindFirstValue(ClaimTypes.Email);
-                if (string.IsNullOrEmpty(email))
-                {
-                    return NotFound();
-                }
+                var user = await GetLoggedUserAsync();
                 try
                 {
-                    var user = await _userRepository.GetLoggedUserAsync(email);
-                    var userDTO = new UserDTO()
-                    {
-                        Id = user.Id,
-                        FullName = string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName) ? string.Empty : GetFormattedFullName(user.FirstName, user.LastName),
-                        Picture = user.Picture,
-                        Country = user.Country,
-                        Gender = user.Gender,
-                        BirthDate = user.Birthdate,
-                        IsDarkTheme = user.IsDarkTheme,
-                    };
+                   
+                    var userDTO = _mapper.Map<UserDTO>(user);
                     return Ok(userDTO);
                 }
                 catch (NotFoundException)
@@ -102,7 +84,7 @@ namespace TurnupAPI.Controllers
                 try
                 {
                     var user = await _userRepository.GetUserAsync(id);
-                    var userDTO = MapToUserDTO(user);
+                    var userDTO = _mapper.Map<UserDTO>(user);
                     return Ok(userDTO);
                 }
                 catch (NotFoundException)
@@ -126,7 +108,7 @@ namespace TurnupAPI.Controllers
             var user = await GetLoggedUserAsync();
             if(user != null)
             {
-                return Ok(MapToUserDataForm(user));
+                return Ok(_mapper.Map<UserDataForm>(user));
             }
             return NotFound();
         }
@@ -159,7 +141,7 @@ namespace TurnupAPI.Controllers
                         loggedUser.Birthdate = input.Birthdate;
                     }
                     
-                        loggedUser.IsDarkTheme = input.Theme;
+                        loggedUser.IsDarkTheme = input.IsDarkTheme;
                     
                 _context.Users.Update(loggedUser);
                     await _context.SaveChangesAsync();
@@ -240,66 +222,12 @@ namespace TurnupAPI.Controllers
 
         }
        
-        private async Task<Users> GetLoggedUserAsync()
-        {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            if (string.IsNullOrEmpty(email))
-            {
-                throw new DataAccessException();
-            }
-            else
-            {
-                var user = await _userRepository.GetLoggedUserAsync(email);
-                return user;
-            }
-        }
+        
 
-        private static UserDataForm MapToUserDataForm(Users user)
-        {
-            var userFORM = new UserDataForm()
-            {
- 
-                LastName = user.LastName,
-                FirstName = user.FirstName,
-                Country = user.Country,
-                Gender = user.Gender,
-                Birthdate = user.Birthdate,
-                Email = user.Email,
-                Theme = user.IsDarkTheme
-            };
-            return userFORM;
+       
            
-        }
-        /// <summary>
-        /// Formate le nom complet en mettant en majuscule la première lettre du prénom et du nom.
-        /// </summary>
-        /// <param name="firstname">Le prénom de l'utilisateur.</param>
-        /// <param name="lastname">Le nom de l'utilisateur.</param>
-        /// <returns>Le nom complet formaté.</returns>
-        private static string GetFormattedFullName(string firstname, string lastname)
-        {
-            string fullname = firstname.Substring(0, 1).ToUpper() + firstname.ToLower().Substring(1, firstname.Length - 1) + " " + lastname.Substring(0, 1).ToUpper() + lastname.ToLower().Substring(1, lastname.Length - 1);
-            return fullname;
-        }
-        /// <summary>
-        /// Convertit un Users en UserDTO.
-        /// </summary>
-        /// <param name="user">L'utilisateur.</param>
-        /// <returns>Retourne un UserDTO.</returns>
-        private static UserDTO MapToUserDTO(Users user) 
-        {
-            var userDTO = new UserDTO()
-            {
-                Id = user.Id,
-                FullName = string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName) ? string.Empty : GetFormattedFullName(user.FirstName, user.LastName),
-                Picture = user.Picture,             
-                Country = user.Country,
-                Gender = user.Gender,
-                BirthDate = user.Birthdate,
-                IsDarkTheme = user.IsDarkTheme,
-            };
-
-            return userDTO;
-        }
+        
+       
+       
     }
 }

@@ -43,7 +43,7 @@ namespace TurnupAPI.Forms
         /// </summary>
         [Required]
         public string? Email { get; set; }
-        [Required]
-        public bool Theme { get; set; }
+   
+        public bool IsDarkTheme { get; set; }
     }
 }

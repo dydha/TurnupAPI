@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
@@ -29,8 +30,9 @@ namespace TurnupAPI.Controllers
                 ILikeRepository likeRepository,
                 IMemoryCache memoryCache,
                 IUserRepository userRepository,
-                TurnupContext context
-            ) : base(userRepository,null,null,context)
+                TurnupContext context,
+                 IMapper mapper
+            ) : base(userRepository,null,null,context,mapper)
         {
             _likeRepository = likeRepository;
             _memoryCache = memoryCache;

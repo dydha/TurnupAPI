@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
@@ -12,7 +12,6 @@ using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
 using TurnupAPI.Models;
-using TurnupAPI.Repositories;
 
 namespace TurnupAPI.Controllers
 {
@@ -24,17 +23,20 @@ namespace TurnupAPI.Controllers
         protected readonly IArtistRepository _artistRepository;
         protected readonly ITrackRepository _trackRepository;
         protected readonly TurnupContext _context;
+        protected readonly IMapper _mapper;
         public BaseController(
             IUserRepository userRepository,
              IArtistRepository artistRepository,
              ITrackRepository trackRepository,
-             TurnupContext context
+             TurnupContext context,
+             IMapper mapper
             ) 
         {
             _userRepository = userRepository;
             _artistRepository = artistRepository;
             _trackRepository = trackRepository;
             _context = context;
+            _mapper = mapper;
         }
         /// <summary>
         /// Récucupère l'utilisateur connecté.
@@ -74,27 +76,10 @@ namespace TurnupAPI.Controllers
         /// <returns>retourne une List<PlaylistDTO></returns>
         protected List<PlaylistDTO> MapToListPlaylistDTO(List<Playlist> playlists)
         {
-            var playlistsDTO = playlists.Select(p => MapToPlaylistDTO(p)).ToList();
+            var playlistsDTO = playlists.Select(p => _mapper.Map<PlaylistDTO>(p)).ToList();
             return playlistsDTO;
         }
-        /// <summary>
-        /// Convertit une Playlist en PlaylistDTO
-        /// </summary>
-        /// <returns>retourne une PlaylistDTO</returns>
-        protected PlaylistDTO MapToPlaylistDTO(Playlist playlist)
-        {
-            var playlistDTO = new PlaylistDTO()
-            {
-                Id = playlist.Id,
-                Name = playlist.Name,
-                IsPrivate = playlist.IsPrivate,
-                CreatdAt = playlist.CreatedAt,
-                OwnerId = playlist.UsersId,
-                OwnerPicture = playlist.Users?.Picture,
-                OwnerName = playlist.Users?.FirstName + " " + playlist.Users?.LastName,
-            };
-            return playlistDTO;
-        }
+        
 
         /// <summary>
         /// Convertit une PlaylistForm en Playlist
