@@ -22,6 +22,7 @@ namespace TurnupAPI.Controllers
     {
         private readonly IDistributedCache _distributedCache;
         private readonly ILikeRepository _likeRepository;
+        private readonly ILogger<ArtistController> _logger;
       
         /// <summary>
         /// Constructeur du contrôleur de l'artiste.
@@ -31,11 +32,13 @@ namespace TurnupAPI.Controllers
             IArtistRepository artistRepository,
             ILikeRepository likeRepostory,
             IDistributedCache distributedCache,
+            ILogger<ArtistController> logger,
              IMapper mapper
             ) : base(null,artistRepository,null,null,mapper)
         { 
             _likeRepository = likeRepostory;
             _distributedCache = distributedCache;
+            _logger = logger;
         }
 
 
@@ -50,16 +53,19 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requete pour récupérer un artiste par son id.");
                 var artist = await _artistRepository.GetAsync(id);
                 var artistDTO = _mapper.Map<ArtistDTO>(artist);
                 return Ok(artistDTO);
             }
             catch (NotFoundException)
             {
+                _logger.LogWarning("L'artiste n'a pas été trouvé.");
                 return NotFound();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(500,ex.Message);
             }
         }
@@ -73,41 +79,43 @@ namespace TurnupAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Formulaire non valide.");
                 return BadRequest(ModelState);
             }
             try
             {
               
                 var existingArtist = await _artistRepository.GetFilteredArtistAsync(a => (!string.IsNullOrEmpty(a.Name) && !string.IsNullOrEmpty(artistForm.Name) && a.Name.ToLower().Equals(artistForm.Name.ToLower()))
-                                                                                                 && ((!string.IsNullOrEmpty(a.Country) && !string.IsNullOrEmpty(artistForm.Country) &&  a.Country.ToLower().Equals(artistForm.Country.ToLower()))));  
-                
-                throw new DuplicateException(); // Si l'artiste existe une exception est levée.
+                                                                                                 && ((!string.IsNullOrEmpty(a.Country) && !string.IsNullOrEmpty(artistForm.Country) &&  a.Country.ToLower().Equals(artistForm.Country.ToLower()))));
+                _logger.LogWarning("Un artiste avec ce nom existe déja.");
+                return Conflict(); // StatusCode 409
 
             }
             catch (NotFoundException) // Si l'artiste n'existe pas il est crée.
             {
                 try
                 {
+                    _logger.LogInformation("Ajout d'un nouvel artiste.");
                     var artist = _mapper.Map<Artist>(artistForm);
                     await _artistRepository.AddAsync(artist);
-                    return Ok(new { Message = "Artist enregistré avec succès." });
+                    return NoContent();
                 }
-                catch 
+              
+                catch (Exception ex)
                 {
-                    throw;
+                    _logger.LogError(ex, "Une erreur est survenue.");
+                    return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
                 }
                
             }
-            catch (DuplicateException)
-            {
-                return Conflict(); // StatusCode 409
-            }
+           
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
-                return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
+                return StatusCode(500);
             }
 
         }
@@ -121,19 +129,23 @@ namespace TurnupAPI.Controllers
         {
             if (id != artist.Id)
             {
+               
                 return BadRequest();
             }
             try
-            {         
+            {
+                _logger.LogInformation("Mise à jour d'un artiste.");
                 await _artistRepository.UpdateAsync(artist);
                 return NoContent();
             }
             catch (NotFoundException)
             {
+                _logger.LogWarning( "L'artiste n'a pas été trouvé.");
                 return NotFound();
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -150,15 +162,18 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Suppression d'un artiste.");
                 await _artistRepository.DeleteAsync(id);
                 return NoContent();
             }
             catch (NotFoundException)
             {
+                _logger.LogWarning("L'artiste n'a pas été trouvé.");
                 return NotFound(); // Return a 404 if the form is not found
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 //  Utiliser ex.Message pour obtenir le message d'erreur
                 // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                 // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -172,7 +187,8 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-all-artists")]
         public async Task<ActionResult<List<ArtistDTO>>> GetAllArtists()
         {
-           var cacheKey = CacheKeyForArtists();
+            _logger.LogInformation("Requete pour récupérer tous les artistes.");
+            var cacheKey = CacheKeyForArtists();
             byte[]? data = await _distributedCache.GetAsync(cacheKey);
             if(data != null)
             {
@@ -192,10 +208,12 @@ namespace TurnupAPI.Controllers
                 }
                 catch (EmptyListException)
                 {
+                    _logger.LogWarning("Aucun artiste n'a été trouvé.");
                     return NoContent(); // StatusCode 204
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Une erreur est survenue.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
@@ -212,30 +230,26 @@ namespace TurnupAPI.Controllers
         {
             try
             {
+                _logger.LogInformation( "Requete pour récupérer les artistes favoris d'un utilisateur.");
                 var favoriteArtists = await _likeRepository.GetUserFavoriteArtists(userId);
                  return Ok(MapToListArtistsDTO(favoriteArtists));           
 
             }
             catch (EmptyListException)
             {
+                _logger.LogWarning("Aucun artiste n'a été trouvé.");
                 return NoContent(); //StatusCode 204
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Une erreur est survenue.");
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
        
 
-        /// <summary>
-        /// Convertit un en List.
-        /// </summary>
-        private List<ArtistDTO> MapToListArtistsDTO(List<Artist> artists)
-        {
-            var artistsDTO = artists.Select(a => _mapper.Map<ArtistDTO>(a)).ToList();
-            return artistsDTO;
-        }
+       
 
        
     }
