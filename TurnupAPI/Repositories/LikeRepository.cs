@@ -88,6 +88,11 @@ namespace TurnupAPI.Repositories
             var favoriteTracksId = await _context.UserFavoriteTrack.Where(uft => uft.UsersId == userId).Select(uft => uft.TrackId).ToListAsync();
             return favoriteTracksId.Any() ? favoriteTracksId : throw new EmptyListException();
         }
+        public async Task<bool> IsLoggedUserLikeThisTrack(string userId, int trackId)
+        {
+            var loggedUserFavoriteTracksIds = (await GetUserFavoriteTracksIdsList(userId)).Contains(trackId);
+            return loggedUserFavoriteTracksIds;
+        }
         /// <summary>
         /// Retourne un UserFavoriteTrack.
         /// </summary>

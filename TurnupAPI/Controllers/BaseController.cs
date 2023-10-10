@@ -38,13 +38,15 @@ namespace TurnupAPI.Controllers
             _context = context;
             _mapper = mapper;
         }
+        protected string? GetLoggedUserEmail() => User.FindFirstValue(ClaimTypes.Email);
+       
         /// <summary>
         /// Récucupère l'utilisateur connecté.
         /// </summary>
         /// <returns>retourne l'utilisateur connecté</returns>
         protected async Task<Users> GetLoggedUserAsync()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
+            var email = GetLoggedUserEmail();
             if (string.IsNullOrEmpty(email))
             {
                 throw new DataAccessException();
@@ -54,6 +56,32 @@ namespace TurnupAPI.Controllers
                 var user = await _userRepository.GetLoggedUserAsync(email);
                 return user;
             }
+        }
+        /// <summary>
+        /// Récucupère l'id de l'utilisateur connecté.
+        /// </summary>
+        /// <returns>retourne l'utilisateur connecté</returns>
+        protected async Task<string> GetLoggedUserIdAsync()
+        {
+            var email = GetLoggedUserEmail();
+            if (!string.IsNullOrEmpty(email))
+            {
+                var userId = await _userRepository.GetLoggedUserIdAsync(email);
+                return userId;
+            }
+            else
+            {
+                throw new Exception();
+            }
+
+        }
+        /// <summary>
+        /// Convertit un en List.
+        /// </summary>
+        protected List<ArtistDTO> MapToListArtistsDTO(List<Artist> artists)
+        {
+            var artistsDTO = artists.Select(a => _mapper.Map<ArtistDTO>(a)).ToList();
+            return artistsDTO;
         }
         /// <summary>
         /// Mappe un objet ArtistForm en un objet Artist.

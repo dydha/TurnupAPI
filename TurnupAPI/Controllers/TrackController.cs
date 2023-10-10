@@ -193,12 +193,12 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour récupérer toutes les musiques.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
                     //Je récupère toutesles musiques
                     var tracks = await _trackRepository.GetAllAsync();
-                    return Ok(MapToListTrackDTO(tracks, loggedUser.Id)); // Je convertis la List<Track> en List<TrackDTO> avant d'etre retournée.
+                    return Ok(MapToListTrackDTO(tracks, loggedUserId)); // Je convertis la List<Track> en List<TrackDTO> avant d'etre retournée.
                 }
                 catch (EmptyListException)
                 {
@@ -537,33 +537,32 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Une musique est en train de jouer.");
-                var loggedUser = await GetLoggedUserAsync();
-                try
+                var loggedUserId = await GetLoggedUserIdAsync();
+                if(await _trackRepository.TrackExists(trackId)) 
                 {
-                    var track = await _trackRepository.GetAsync(trackId);
-                    var userLT = new UserListennedTrack
+                    var track = await _trackRepository.GetAsync(trackId); var userLT = new UserListennedTrack
                     {
-                        TrackId = track.Id,
-                        UsersId = loggedUser.Id,
+                        TrackId = trackId,
+                        UsersId = loggedUserId,
                     };
                     _context.UserListennedTrack.Add(userLT);
                     await _context.SaveChangesAsync();
-                    return NoContent();
-                }
-                catch (NotFoundException)
-                {
-                    _logger.LogWarning("La musique n'a pas été trouvée.");
-                    return NotFound();
-                }
-                finally
-                {
-                    var cacheKey = CacheKeyForUserListeningHistory(loggedUser.Id);
+
+
+                    var cacheKey = CacheKeyForUserListeningHistory(loggedUserId);
                     if (_memoryCache.TryGetValue(cacheKey, out _))
                     {
                         // La clé existe dans le cache, alors nous pouvons la supprimer
                         _memoryCache.Remove(cacheKey);
                     }
+                    return NoContent();
                 }
+                else
+                {
+                    return NotFound();
+                }
+                  
+
             }
             catch (Exception ex)
             {
@@ -795,8 +794,8 @@ namespace TurnupAPI.Controllers
             _logger.LogInformation("Requete pour enregistrer la derniere liste de musique jouée par l'utilisateur connecté.");
             try
             {
-                var loggedUser = await GetLoggedUserAsync();
-                var userLastPlayingTracksCacheKey = CacheKeyForUserLastPlayingTracks(loggedUser.Id);
+                var loggedUserId = await GetLoggedUserIdAsync();
+                var userLastPlayingTracksCacheKey = CacheKeyForUserLastPlayingTracks(loggedUserId);
                 await _distributedCache.SetAsync(userLastPlayingTracksCacheKey, SerializeData(playingTracks), GetCacheOptions());
             }
             catch (Exception ex)

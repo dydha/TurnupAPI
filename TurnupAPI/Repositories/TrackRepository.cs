@@ -223,5 +223,14 @@ namespace TurnupAPI.Repositories
 
             return (tracks != null && tracks.Count > 0) ? tracks : throw new EmptyListException();
         }
+
+        /// <summary>
+        ///Vérifie si une musique existe.
+        /// </summary>
+        public async Task<bool> TrackExists(int id)
+        {
+            var track = await _context.Track.FindAsync(id);
+            return track != null;
+        }
     }
 }

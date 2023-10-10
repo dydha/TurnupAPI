@@ -193,7 +193,6 @@ namespace TurnupAPI.Controllers
             if(data != null)
             {
                 var artists = DeserializeData<List<ArtistDTO>>(data);
-                Console.WriteLine("These artists came from cache memory.");
                 return Ok(artists);
             }
             else
@@ -203,7 +202,6 @@ namespace TurnupAPI.Controllers
                     var artists = await _artistRepository.GetAllAsync();
                     var artistsDTO = MapToListArtistsDTO(artists);
                     await _distributedCache.SetAsync(cacheKey, SerializeData(artistsDTO), GetCacheOptions());
-                    Console.WriteLine("These artists do not came from cache memory.");
                     return Ok(artistsDTO);
                 }
                 catch (EmptyListException)

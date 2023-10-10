@@ -37,6 +37,7 @@ namespace TurnupAPI.Interfaces
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne tous les ids des track aimé par un utilisateur</returns>
         Task<List<int>> GetUserFavoriteTracksIdsList(string userId);
+        Task<bool> IsLoggedUserLikeThisTrack(string userId, int trackId);
 
         /// <summary>
         /// Retourne un existingTackLike.

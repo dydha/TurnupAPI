@@ -33,6 +33,16 @@ namespace TurnupAPI.Repository
             return user ?? throw new NotFoundException();
         }
         /// <summary>
+        /// Récupère un utilisateur connecté par son adresse e-mail.
+        /// </summary>
+        /// <param name="email">L'adresse e-mail de l'utilisateur.</param>
+        /// <returns>L'utilisateur connecté.</returns>
+        public async Task<string> GetLoggedUserIdAsync(string email)
+        {
+            var userId = await (from u in _context.Users where u.Email == email select u.Id).FirstOrDefaultAsync() ;
+            return userId ?? throw new NotFoundException();
+        }
+        /// <summary>
         /// Récupère un utilisateur par son id.
         /// </summary>
         /// <param name="id">L'id de l'utilisateur.</param>

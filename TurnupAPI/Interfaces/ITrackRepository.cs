@@ -83,5 +83,9 @@ namespace TurnupAPI.Interfaces
         /// </summary>
 
         Task<List<Track>> GetTracksByTypesAsync(int typesId);
+        /// <summary>
+        /// Vérifie si une musique existe.
+        /// </summary>
+        Task<bool> TrackExists(int id);
     }
 }
