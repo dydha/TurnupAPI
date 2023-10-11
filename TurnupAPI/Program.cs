@@ -10,6 +10,7 @@ using TurnupAPI.Repositories;
 using TurnupAPI.Repository;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("TurnupContextConnection") ?? throw new InvalidOperationException("Connection string 'TurnupContextConnection' not found.");
@@ -36,7 +37,12 @@ builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 //Ajout de de MemoryCache
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddDefaultIdentity<Users>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TurnupContext>();
+
+builder.Services.AddDefaultIdentity<Users>(options => options.SignIn.RequireConfirmedAccount = true)
+                 .AddRoles<IdentityRole>()
+                 .AddEntityFrameworkStores<TurnupContext>()
+                 .AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,7 +55,7 @@ builder.Services.AddAuthentication(options =>
             options.TokenValidationParameters.ValidAudience = builder.Configuration["Jwt:Audience"];
             options.TokenValidationParameters.ValidateAudience = true;
             options.TokenValidationParameters.ValidIssuer = builder.Configuration["Jwt:Issuer"];
-            options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("Turnup_JWT_Key") !));
+            options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("Turnup_JWT_Key")!));
 
         });
 // Add services to the container.
@@ -85,7 +91,7 @@ builder.Services.AddSwaggerGen(c =>
         });
 });
 var app = builder.Build();
- 
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

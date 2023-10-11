@@ -62,11 +62,11 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation( "Requete pour récupérer une playlist par son id.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
                     var playlist = await _playlistRepository.GetAsync(id);
-                    if (playlist != null && playlist.IsPrivate && playlist.UsersId != loggedUser.Id)
+                    if (playlist != null && playlist.IsPrivate && playlist.UsersId != loggedUserId)
                     {
                         return Unauthorized(); //StatusCode 401;
                     }
@@ -105,10 +105,10 @@ namespace TurnupAPI.Controllers
             {
                 _logger.LogInformation("Création d'une playlist.");
                 input.Name =_htmlEncoder.Encode(input.Name!);
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
-                    var existingPlaylist = await _playlistRepository.GetFilteredPlaylistAsync(p => ((!string.IsNullOrEmpty(p.Name) && input.Name.ToLower().Equals(p.Name.ToLower())) && p.UsersId == loggedUser.Id));
+                    var existingPlaylist = await _playlistRepository.GetFilteredPlaylistAsync(p => ((!string.IsNullOrEmpty(p.Name) && input.Name.ToLower().Equals(p.Name.ToLower())) && p.UsersId == loggedUserId));
                     _logger.LogWarning( "L'auteur possède déjà une playlist avec ce nom.");
                     return Conflict(); //StatusCode 409;
                 }
@@ -116,7 +116,7 @@ namespace TurnupAPI.Controllers
                 {
                     try
                     {
-                        var playlist = MapToPlaylist(input, loggedUser.Id);
+                        var playlist = MapToPlaylist(input, loggedUserId);
                         Console.WriteLine(playlist.Name);
                         await _playlistRepository.AddAsync(playlist);
                         return NoContent();
@@ -157,8 +157,8 @@ namespace TurnupAPI.Controllers
             {
                 _logger.LogInformation("Requete pour modifier une playlist.");
                 playlistDTO.Name= _htmlEncoder.Encode(playlistDTO.Name!);
-                var loggedUser = await GetLoggedUserAsync();
-                if(loggedUser.Id == playlistDTO.OwnerId)
+                var loggedUserId = await GetLoggedUserIdAsync();
+                if(loggedUserId == playlistDTO.OwnerId)
                 {
                     try
                     {
@@ -203,11 +203,11 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour supprimer une playlist.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
                     var playlist = await _playlistRepository.GetAsync(id);
-                    if(playlist.UsersId == loggedUser.Id)
+                    if(playlist.UsersId == loggedUserId)
                     {
                         await _playlistRepository.DeleteAsync(id);
                         return NoContent();
@@ -314,7 +314,7 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour ajouter une musique à une playlist.");
-                var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
+                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
                 try
                 {
                     //Je récpère la playlist

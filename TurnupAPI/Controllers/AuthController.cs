@@ -36,7 +36,7 @@ namespace TurnupAPI.Controllers
             HtmlEncoder htmlEncoder,
             IUserStore<Users> userStore,
             IMemoryCache memoryCache
-            
+
             )
 
         {
@@ -71,7 +71,7 @@ namespace TurnupAPI.Controllers
             var user = CreateUser();
             user.FirstName = _htmlEncoder.Encode(Input.FirstName!);
             user.LastName = _htmlEncoder.Encode(Input.LastName!);
-            user.Gender =_htmlEncoder.Encode(Input.Gender!);         
+            user.Gender = _htmlEncoder.Encode(Input.Gender!);
             user.Country = _htmlEncoder.Encode(Input.Country!);
             user.Birthdate = Input.Birthdate;
             if (Input.Picture != null && Input.Picture.Length > 0)
@@ -87,7 +87,7 @@ namespace TurnupAPI.Controllers
             if (!string.IsNullOrEmpty(Input.Password))
             {
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                
+
             }
             return Ok(new { Message = "Utilisateur enregistré avec succès." });
         }
@@ -103,12 +103,12 @@ namespace TurnupAPI.Controllers
                 Image = captchaImageBytes,
             };
             // Convertissez les données binaires de l'image en chaîne base64
-           // string captchaImageBase64 = Convert.ToBase64String(captchaImageBytes);
+            // string captchaImageBase64 = Convert.ToBase64String(captchaImageBytes);
 
             // Vous pouvez également renvoyer captchaText si vous devez valider côté client
             return Ok(captcha);
         }
-        
+
         [HttpPost("validate-captcha")]
         public ActionResult<bool> ValidateCaptcha([FromBody] string input)
         {
@@ -127,27 +127,27 @@ namespace TurnupAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginForm model)
         {
-            if(!ModelState.IsValid || (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.Password))) 
+            if (!ModelState.IsValid || (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.Password)))
             {
                 return BadRequest(ModelState);
             }
-           
+
             var user = await _userManager.FindByNameAsync(model.Email!);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password!))
             {
 
-                return Ok(new { token = GenerateToken(user) });
+                return Ok(new { token = await GenerateToken(user) });
             }
             else
             {
                 return Unauthorized();
             }
-                              
+
         }
         /// <summary>
         /// Crée un utilisateur.
         /// </summary>
-       
+
         private Users CreateUser()
         {
             try
@@ -164,7 +164,7 @@ namespace TurnupAPI.Controllers
         /// <summary>
         /// Connecte un utilisateur existant.
         /// </summary>
-       
+
         private IUserEmailStore<Users> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
@@ -176,15 +176,23 @@ namespace TurnupAPI.Controllers
         /// <summary>
         /// Génère un token jwt.
         /// </summary>
-        private string GenerateToken(Users user)
+        private async  Task<string> GenerateToken(Users user)
         {
-            var claims = new[]
+            var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email !),
+               
             };
+            var roles = await _userManager.GetRolesAsync(user);
+
            
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Turnup_JWT_Key") !));
+             
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Turnup_JWT_Key")!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["Jwt:ExpireDays"]));
 
@@ -213,7 +221,7 @@ namespace TurnupAPI.Controllers
             return captchaText;
         }
 
-        private static  byte[] GenerateCaptchaImageBase64(string captchaText)
+        private static byte[] GenerateCaptchaImageBase64(string captchaText)
         {
             // Utilisez une bibliothèque de génération d'images (par exemple, System.Drawing.Common)
             // pour créer une image captcha à partir du texte

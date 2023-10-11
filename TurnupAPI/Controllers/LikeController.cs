@@ -46,37 +46,44 @@ namespace TurnupAPI.Controllers
         [HttpGet("logged-user-like-this-track/{trackId}")]
         public async Task<ActionResult<bool>> LoggedUserLikeThisTrack(int trackId)
         {
-            try
+            if(trackId > 0)
             {
-                Console.WriteLine($"L'id du track arrivé jusqu'à l'API : {trackId}");
-                _logger.LogInformation("Requete qui vérife si l'utilisateur connecté aime cette musique.");
-                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
-                    var trackExists = await _trackRepository.GetAsync(trackId);
-                    if (trackExists != null)
+                    Console.WriteLine($"L'id du track arrivé jusqu'à l'API : {trackId}");
+                    _logger.LogInformation("Requete qui vérife si l'utilisateur connecté aime cette musique.");
+                    var loggedUserId = await GetLoggedUserIdAsync();
+                    try
                     {
-                        var isLike = await _likeRepository.IsLoggedUserLikeThisTrack(loggedUserId, trackId);
-                        return Ok(isLike);
+                        var trackExists = await _trackRepository.GetAsync(trackId);
+                        if (trackExists != null)
+                        {
+                            var isLike = await _likeRepository.IsLoggedUserLikeThisTrack(loggedUserId, trackId);
+                            return Ok(isLike);
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Une erreur est survenue.");
+                        return NoContent();
+                    }
+
+                    return NoContent();
+
                 }
-                catch(Exception ex)
+
+                catch (Exception ex)
                 {
                     _logger.LogError(ex, "Une erreur est survenue.");
-                    return NoContent();
+                    //  Utiliser ex.Message pour obtenir le message d'erreur
+                    // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
+                    // Utiliser ex.StackTrace pour obtenir la pile d'appels
+                    return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
                 }
-                
-                return NoContent();
-              
             }
-
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
-                return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
+                return NoContent();
             }
         }
         /// <summary>
@@ -119,8 +126,7 @@ namespace TurnupAPI.Controllers
         public async Task<ActionResult> LikeTrack([FromBody] int trackId)
         {
             Console.WriteLine(trackId);
-           if(await _trackRepository.TrackExists(trackId))
-            {
+          
                 try
                 {
                     _logger.LogInformation("Ajout/Suppression d'une musique aux/des favoris.");
@@ -172,11 +178,7 @@ namespace TurnupAPI.Controllers
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
                     return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
                 }
-            }
-           else
-            {
-                return NoContent();
-            }
+           
         }
         //--------------------------------------------END TRACK-----------------------------------------
         //-------------------------------------------- PLAYLIST-----------------------------------------

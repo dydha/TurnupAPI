@@ -62,14 +62,16 @@ namespace TurnupAPI.Controllers
         /// <returns>Retourne un objet Track.</returns>
 
         [HttpGet("get-track/{id}")]
-        public async Task<ActionResult<Track>> GetTrack(int id)
+        public async Task<ActionResult<TrackDTO>> GetTrack(int id)
         {
             
             try    
             {
                 _logger.LogInformation("Requete pour récupérer une Track par son id.");
                 var track = await _trackRepository.GetAsync(id);
-                return Ok(track);
+                var loggedUserId = await GetLoggedUserIdAsync();
+                var trackDTO = MapToTrackDTO(track, loggedUserId);
+                return Ok(trackDTO);
             }
             catch (NotFoundException)
             {
@@ -278,11 +280,11 @@ namespace TurnupAPI.Controllers
             {
                 _logger.LogInformation("Requete pour récupérer la playlist Dicovery.");
                 //Meme fonctionnement que la méthode qui retourne l'hisorique d'écoute de l'utilisateur connecté
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
-                    var tracksFiltered = await _trackRepository.GetDiscoveryAsync(loggedUser.Id);
-                    var discorveryTracks = MapToListTrackDTO(tracksFiltered, loggedUser.Id);
+                    var tracksFiltered = await _trackRepository.GetDiscoveryAsync(loggedUserId);
+                    var discorveryTracks = MapToListTrackDTO(tracksFiltered, loggedUserId);
                     return Ok(discorveryTracks);
                 }
                 catch (EmptyListException)
@@ -310,12 +312,12 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour récupérer la playlist Popular.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
 
                 try
                 {
                     var tracks = (await _trackRepository.GetPopularTracksAsync()).ToList();
-                    var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                    var tracksDTO = MapToListTrackDTO(tracks, loggedUserId);
                     return Ok(tracksDTO);
                 }
                 catch (EmptyListException)
@@ -344,12 +346,12 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour récupérer la playlist NewTrackPlaylist.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 
                 try
                 {
                     var tracks = (await _trackRepository.GetAllAsync()).OrderByDescending(t => t.AddedAt).Take(50).ToList();
-                    var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                    var tracksDTO = MapToListTrackDTO(tracks, loggedUserId);
                     return Ok(tracksDTO);
                 }
                 catch (EmptyListException)
@@ -379,12 +381,12 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour récupérer la playlist Top20.");
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                
                 try
                 {
                     var tracks = (await _trackRepository.GetPopularTracksAsync()).Take(20).ToList();
-                    var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                    var tracksDTO = MapToListTrackDTO(tracks, loggedUserId);
                     return Ok(tracksDTO);
                 }
                 catch (EmptyListException)
@@ -412,9 +414,9 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation("Requete pour supprimer une musique d'une playlist");
-                var loggedUser = await GetLoggedUserAsync(); // Je récupère l'utilisateur connecté
+                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
                                                              //Je récpère la playlist
-                await _trackRepository.DeleteTrackFromPlaylistAsync(input, loggedUser.Id);
+                await _trackRepository.DeleteTrackFromPlaylistAsync(input, loggedUserId);
                 return NoContent();
             }
             catch (Exception ex)
@@ -445,13 +447,13 @@ namespace TurnupAPI.Controllers
             {
                 try
                 {
-                    var loggedUser = await GetLoggedUserAsync();
+                    var loggedUserId = await GetLoggedUserIdAsync();
                     try
                     {
                         var artist = await _artistRepository.GetAsync(id);
                         var ids = await _context.TrackArtist.Where(tt => tt.ArtistId == artist.Id).Select(tt => tt.TrackId).ToListAsync();
                         var tracks = (await _trackRepository.GetAllAsync()).Where(t => ids.Contains(t.Id)).ToList();
-                        var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                        var tracksDTO = MapToListTrackDTO(tracks, loggedUserId);
                         await _distributedCache.SetAsync(cacheKey, SerializeData(tracksDTO), GetCacheOptions());
 
                         return Ok(tracksDTO);
@@ -494,14 +496,14 @@ namespace TurnupAPI.Controllers
             {
                 try
                 {
-                    var loggedUser = await GetLoggedUserAsync();
+                    var loggedUserId = await GetLoggedUserIdAsync();
                     try
                     {
                         var type = await _typesRepository.GetAsync(typesId);
                         try
                         {
                             var tracks = await _trackRepository.GetTracksByTypesAsync(typesId);
-                            var tracksDTO = MapToListTrackDTO(tracks, loggedUser.Id);
+                            var tracksDTO = MapToListTrackDTO(tracks, loggedUserId);
                             await _distributedCache.SetAsync(cacheKey,SerializeData(tracksDTO), GetCacheOptions());
                             return Ok(tracksDTO);
                         }
@@ -584,18 +586,18 @@ namespace TurnupAPI.Controllers
         {
             try
             {
-                var loggedUser = await GetLoggedUserAsync();
+                var loggedUserId = await GetLoggedUserIdAsync();
                 try
                 {
                     var playlist = await _context.Playlist.FindAsync(playlistId);
-                    if (playlist != null && playlist.IsPrivate && playlist.UsersId != loggedUser.Id)
+                    if (playlist != null && playlist.IsPrivate && playlist.UsersId != loggedUserId)
                     {
                         return Unauthorized(); //StatusCode 401;
                     }
                     try
                     {
                         var playlistTracks = await _trackRepository.GetTracksByPlaylistAsync(playlistId);
-                        return Ok(MapToListTrackDTO(playlistTracks, loggedUser.Id));
+                        return Ok(MapToListTrackDTO(playlistTracks, loggedUserId));
                     }
                     catch (EmptyListException)
                     {
@@ -638,30 +640,26 @@ namespace TurnupAPI.Controllers
             }
             else
             {
+
                 try
                 {
-                    var user = await _userRepository.GetUserAsync(userId);
-                    try
-                    {
-                        var favoriteTracks = await _likeRepository.GetUserFavoriteTracks(user.Id);
+                    var favoriteTracks = await _likeRepository.GetUserFavoriteTracks(userId);
 
-                        var trackDTOs = MapToListTrackDTO(favoriteTracks, user.Id);
-                        // Mettre la réponse en cache avec une durée d'expiration
-                        var cacheEntryOptions = GetMemoryCacheOptions();
+                    var trackDTOs = MapToListTrackDTO(favoriteTracks, userId);
+                    // Mettre la réponse en cache avec une durée d'expiration
+                    var cacheEntryOptions = GetMemoryCacheOptions();
 
-                        _memoryCache.Set(cacheKey, trackDTOs, cacheEntryOptions);
-                        return Ok(trackDTOs);
-                    }
-                    catch (EmptyListException)
-                    {
-                        _logger.LogWarning("Aucune musique n'a été trouvée.");
-                        return NoContent(); //StatusCode 204
-                    }
-
+                    _memoryCache.Set(cacheKey, trackDTOs, cacheEntryOptions);
+                    return Ok(trackDTOs);
+                }
+                catch (EmptyListException)
+                {
+                    _logger.LogWarning("Aucune musique n'a été trouvée.");
+                    return NoContent(); //StatusCode 204
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex,"Une erreur s'est produite.");
+                    _logger.LogError(ex, "Une erreur s'est produite.");
                     //  Utiliser ex.Message pour obtenir le message d'erreur
                     // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
                     // Utiliser ex.StackTrace pour obtenir la pile d'appels
