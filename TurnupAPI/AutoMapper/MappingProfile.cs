@@ -19,12 +19,22 @@ namespace TurnupAPI.AutoMapper
                 });
             CreateMap<Users, UserDataForm>();
             CreateMap<Artist, ArtistDTO>()
-                .ForMember( dest => dest.FansNumber, opt =>
+                .ForMember(dest => dest.FansNumber, opt =>
                 {
                     opt.MapFrom(src => (src.UserFavoriteArtists != null && src.UserFavoriteArtists.Any() ? src.UserFavoriteArtists.Count : 0));
 
+                })
+                 .ForMember(dest => dest.TracksCount, opt =>
+                 {
+                     opt.MapFrom(src => (src.TrackArtists != null && src.TrackArtists.Any() ? src.TrackArtists.Count : 0));
+
+                 });
+            CreateMap<ArtistForm, Artist>()
+                .ForMember(dest => dest.Picture, opt =>
+                {
+                    opt.MapFrom(src => $"picture/{src.Picture}");
+
                 });
-            CreateMap<ArtistForm, Artist>();
             CreateMap<Playlist, PlaylistDTO>()
                  .ForMember(dest => dest.OwnerId, opt =>
                  {
@@ -41,8 +51,8 @@ namespace TurnupAPI.AutoMapper
                     opt.MapFrom(src => string.IsNullOrEmpty(src.Users!.FirstName) || string.IsNullOrEmpty(src.Users.LastName)
                         ? string.Empty : GetFormattedFullName(src.Users.FirstName, src.Users.LastName));
                 });
-            CreateMap<Types, TypesDTO>();
-            CreateMap<Track, TrackDTO>();
+            CreateMap<Types, TypesDTO>().ReverseMap();
+            CreateMap<Track, TrackDTO>().ReverseMap();
         
         }
         /// <summary>

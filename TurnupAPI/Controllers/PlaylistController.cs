@@ -62,30 +62,22 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation( "Requete pour récupérer une playlist par son id.");
-                var loggedUserId = await GetLoggedUserIdAsync();
-                try
+                var loggedUserId = await GetLoggedUserIdAsync();            
+                if(!string.IsNullOrEmpty(loggedUserId)) 
                 {
                     var playlist = await _playlistRepository.GetAsync(id);
-                    if (playlist != null && playlist.IsPrivate && playlist.UsersId != loggedUserId)
+                    if (playlist is not null && LoggedUserNotAuthorizedToSeeThisPlaylist(playlist, loggedUserId))
                     {
                         return Unauthorized(); //StatusCode 401;
                     }
-                    var playlistDTO = playlist != null ? _mapper.Map<PlaylistDTO>(playlist) :  throw new NotFoundException();
-                    return Ok(playlistDTO); 
+                    var playlistDTO = playlist is not  null ? _mapper.Map<PlaylistDTO>(playlist) : new PlaylistDTO();
+                    return Ok(playlistDTO);
                 }
-                catch (NotFoundException)
-                {
-                    _logger.LogWarning("La playlist n'a pas été trouvée.");
-                    return StatusCode(500, $"Internal Server Error");
-                }
-
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -106,35 +98,28 @@ namespace TurnupAPI.Controllers
                 _logger.LogInformation("Création d'une playlist.");
                 input.Name =_htmlEncoder.Encode(input.Name!);
                 var loggedUserId = await GetLoggedUserIdAsync();
-                try
+                if (!string.IsNullOrEmpty(loggedUserId))
                 {
                     var existingPlaylist = await _playlistRepository.GetFilteredPlaylistAsync(p => ((!string.IsNullOrEmpty(p.Name) && input.Name.ToLower().Equals(p.Name.ToLower())) && p.UsersId == loggedUserId));
-                    _logger.LogWarning( "L'auteur possède déjà une playlist avec ce nom.");
-                    return Conflict(); //StatusCode 409;
-                }
-                catch (NotFoundException)
-                {
-                    try
+                    if (existingPlaylist is not null) 
+                    {
+                        _logger.LogWarning("L'auteur possède déjà une playlist avec ce nom.");
+                        return Conflict(); //StatusCode 409;
+                    }
+                    else
                     {
                         var playlist = MapToPlaylist(input, loggedUserId);
-                        Console.WriteLine(playlist.Name);
                         await _playlistRepository.AddAsync(playlist);
                         return NoContent();
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Une erreur est survenue.");
-                        return StatusCode(500, $"Internal Server Error: {ex.Message}");
-                    }
+                   
                 }
-               
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
+                            
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -158,36 +143,33 @@ namespace TurnupAPI.Controllers
                 _logger.LogInformation("Requete pour modifier une playlist.");
                 playlistDTO.Name= _htmlEncoder.Encode(playlistDTO.Name!);
                 var loggedUserId = await GetLoggedUserIdAsync();
-                if(loggedUserId == playlistDTO.OwnerId)
+                if (!string.IsNullOrEmpty(loggedUserId))
                 {
-                    try
+                    if (loggedUserId.Equals(playlistDTO.OwnerId))
                     {
+                        string message = string.Empty;
                         var playlist = await _playlistRepository.GetAsync(playlistDTO.Id);
-                        playlist.Name = playlistDTO.Name;
-                        playlist.IsPrivate = playlistDTO.IsPrivate;
-                        await _playlistRepository.UpdateAsync(playlist);
-                        return NoContent();
+                        if(playlist is not null)
+                        {
+                            playlist.Name = playlistDTO.Name;
+                            playlist.IsPrivate = playlistDTO.IsPrivate;
+                            bool result = await _playlistRepository.UpdateAsync(playlist);
+                            message = result ? "Playlist mis à jour avec succès" : "La playlist n'a pas pu etre mis à jour.";
+                                
+                        }
+                        return Ok(message);
                     }
-                    catch (NotFoundException)
+                    else
                     {
-                        _logger.LogWarning("La playlist n'existe pas.");
-                        return NotFound();
+                        _logger.LogWarning("Suppression impossible l'utilisateur connecté n'est pas l'auteur de la playlist.");
+                        return Unauthorized(); //StatusCode 501
                     }
                 }
-                else
-                {
-                    _logger.LogWarning( "Suppression impossible l'utilisateur connecté n'est pas l'auteur de la playlist.");
-                    return Unauthorized(); //StatusCode 501
-                }
-
-                
+                throw new Exception("L'utilisateur n'a pas été trouvé.");    
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -204,33 +186,32 @@ namespace TurnupAPI.Controllers
             {
                 _logger.LogInformation("Requete pour supprimer une playlist.");
                 var loggedUserId = await GetLoggedUserIdAsync();
-                try
+               if(!string.IsNullOrEmpty(loggedUserId)) 
                 {
                     var playlist = await _playlistRepository.GetAsync(id);
-                    if(playlist.UsersId == loggedUserId)
+                    if(playlist is not null)
                     {
-                        await _playlistRepository.DeleteAsync(id);
-                        return NoContent();
+                        if (playlist.UsersId == loggedUserId)
+                        {
+                            await _playlistRepository.DeleteAsync(id);
+                            return NoContent();
+                        }
+                        else
+                        {
+                            return StatusCode(401);
+                        }
                     }
                     else
                     {
-                        return StatusCode(401);
+                        return NotFound();
                     }
-                    
                 }
-                catch (NotFoundException)
-                {
-                    _logger.LogWarning( "La playlist n'existe pas.");
-                    return NotFound(); // Return a 404 if the form is not found
-                }
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -240,31 +221,33 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <returns>Une liste de playlist.</returns>
         [HttpGet("get-user-playlists/{userId}")]
-        public async Task<ActionResult<List<PlaylistDTO>>> GetUserPlaylists(string userId)
+        public async Task<ActionResult<IEnumerable<PlaylistDTO>>> GetUserPlaylists(string userId)
         {
             if(string.IsNullOrEmpty(userId))
-                    return BadRequest();
+            {
+                return BadRequest();
+            }
             try
             {
                 _logger.LogInformation("Requete pour récupérer les playlists d'un utilisateurs.");
+                var playlistsMapped = Enumerable.Empty<PlaylistDTO>();
                 var user = await _userRepository.GetUserAsync(userId);
-                try
+                if(user is not null)
                 {
                     var playlists = (await _playlistRepository.GetAllAsync()).Where(p => p.UsersId == user.Id).ToList();
-                    return Ok(MapToListPlaylistDTO(playlists));
+                    if(playlists is not null && playlists.Any())
+                    {
+                        playlistsMapped = MapToListPlaylistDTO(playlists);
+                    }
+
+                    return Ok(playlistsMapped);
                 }
-                catch (EmptyListException)
-                {
-                    _logger.LogWarning("Aucune playlist n'a été trouvée.");
-                    return NoContent(); // Return a 204
-                }
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
+
             }          
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
 
@@ -276,20 +259,19 @@ namespace TurnupAPI.Controllers
         /// <returns>Toutes les playlists.</returns>
 
         [HttpGet("get-all-playlists")]
-        public async Task<ActionResult<List<PlaylistDTO>>> GetAllPlaylists()
+        public async Task<ActionResult<IEnumerable<PlaylistDTO>>> GetAllPlaylists()
         {
             try
             {
                 _logger.LogInformation("Requete pour récupérer toutes les playlists.");
+                var playlistDTOs = Enumerable.Empty<PlaylistDTO>();
                 var playlists = await _playlistRepository.GetAllAsync();
-                var playlistDTOs = MapToListPlaylistDTO(playlists);
+                if(playlists.Any())
+                {
+                    playlistDTOs = MapToListPlaylistDTO(playlists);
+                }
                 return Ok(playlistDTOs);
 
-            }
-            catch (EmptyListException)
-            {
-                _logger.LogWarning("Aucune playlist n'a été trouvée.");
-                return NoContent(); //StatusCode 204
             }
             catch (Exception ex)
             {
@@ -315,53 +297,40 @@ namespace TurnupAPI.Controllers
             {
                 _logger.LogInformation("Requete pour ajouter une musique à une playlist.");
                 var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                try
+                if(!string.IsNullOrEmpty(loggedUserId))
                 {
-                    //Je récpère la playlist
                     var playlist = await _playlistRepository.GetAsync(input.PlaylistId);
+                    var track = await _trackRepository.GetAsync(input.TrackId);
 
-                    try
+                    if(playlist is not null && track is not null) 
                     {
-                           var track = await _trackRepository.GetAsync(input.TrackId);
-                       
-                            var existingTrackInPlaylist = await _context.PlaylistTrack.Where(pt => pt.PlaylistId == playlist.Id && pt.TrackId == track.Id).FirstOrDefaultAsync();
-                            if (existingTrackInPlaylist == null)
+                        var existingTrackInPlaylist = await _context.PlaylistTrack.Where(pt => pt.PlaylistId == playlist.Id && pt.TrackId == track.Id).FirstOrDefaultAsync();
+                        if (existingTrackInPlaylist is null)
+                        {
+                            var newPlaylistTrack = new PlaylistTrack
                             {
-                                var newPlaylistTrack = new PlaylistTrack
-                                {
-                                    TrackId = track.Id,
-                                    PlaylistId = playlist.Id,
-                                };
-                                _context.PlaylistTrack.Add(newPlaylistTrack);
-                                await _context.SaveChangesAsync();
-                                return NoContent();
-                            }
-                            else
-                            {
-                                return Conflict(); // StatusCode 409
-                            }
-                           
-                        
-
+                                TrackId = track.Id,
+                                PlaylistId = playlist.Id,
+                            };
+                            _context.PlaylistTrack.Add(newPlaylistTrack);
+                            await _context.SaveChangesAsync();
+                            return NoContent();
+                        }
+                        else
+                        {
+                            return Conflict(); // StatusCode 409
+                        }
                     }
-                    catch (NotFoundException)
+                    else
                     {
-                        _logger.LogWarning("Aucune musique n'a été trouvée.");
-                        return NotFound();
+                        return NotFound();  
                     }
                 }
-                catch (NotFoundException)
-                {
-                    _logger.LogWarning("Aucune playlist n'a été trouvée.");
-                    return NotFound();
-                }
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -369,18 +338,23 @@ namespace TurnupAPI.Controllers
         /// Retourne les playlist favoris d'un utilisateur.
         /// </summary>
         [HttpGet("get-favorite-playlists/{userId}")]
-        public async Task<ActionResult<List<PlaylistDTO>>> GetFavoritePlaylists(string userId)
+        public async Task<ActionResult<IEnumerable<PlaylistDTO>>> GetFavoritePlaylists(string userId)
         {
             try
             {
                 _logger.LogInformation("Requete pour récupérer les playlists favoris d'un utilisateur.");
-                var favoritePlaylists = await _likeRepository.GetUserFavoritePlaylists(userId);
-                  return Ok(MapToListPlaylistDTO(favoritePlaylists));               
-            }
-            catch (EmptyListException)
-            {
-                _logger.LogWarning("Aucune playlist n'a été trouvée.");
-                return NoContent() ; //StatusCode 204
+                var user = await _userRepository.GetUserAsync(userId);
+                if(user is not null)
+                {
+                    var faoritePlaylistsMapped = Enumerable.Empty<PlaylistDTO>();
+                    var favoritePlaylists = await _likeRepository.GetUserFavoritePlaylists(userId);
+                    if(favoritePlaylists.Any())
+                    {
+                        faoritePlaylistsMapped = MapToListPlaylistDTO(favoritePlaylists);
+                    }
+                    return Ok(faoritePlaylistsMapped);
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -388,5 +362,6 @@ namespace TurnupAPI.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+       
     }
 }

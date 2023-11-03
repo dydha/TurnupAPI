@@ -15,7 +15,7 @@ namespace TurnupAPI.Models
         /// <summary>
         /// Le nom de l'artiste.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// la description de l'artiste.
@@ -25,12 +25,12 @@ namespace TurnupAPI.Models
         /// <summary>
         /// le pays d'origine de l'artiste.
         /// </summary>
-        public string? Country { get; set; }
+        public string Country { get; set; } = null!;
 
         /// <summary>
         /// Le chemin de l'image de l'artiste.
         /// </summary>
-        public string? Picture { get; set; }
+        public string Picture { get; set; } = null!;
 
         //------------RELATIONS---------------
 

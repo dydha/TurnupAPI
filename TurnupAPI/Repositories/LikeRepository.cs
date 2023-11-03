@@ -29,64 +29,63 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="uft">L'artiste à ajouter.</param>
         public async Task AddTrackLikeAsync(UserFavoriteTrack uft)
-        {
-          
-            try
-            {
+        {                  
                 _context.UserFavoriteTrack.Add(uft);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+                await _context.SaveChangesAsync();         
         }
 
         /// <summary>
         /// Supprime  une Track des favoris dans la base de données.
         /// </summary>
         /// <param name="uft">L'artiste à ajouter.</param>
-        public async Task RemoveTrackLikeAsync(UserFavoriteTrack uft)
+        public async Task<bool> RemoveTrackLikeAsync(UserFavoriteTrack uft)
         {
-           
-            try
+
+            var result = false;
+            var existingUft = await _context.UserFavoriteTrack.FirstOrDefaultAsync(u =>  u.Id == uft.Id);
+            if (existingUft is not null) { }
             {
                 _context.UserFavoriteTrack.Remove(uft);
                 await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
+            
         }
         /// <summary>
         /// Retourne la liste des musique en favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des musique en favoris d'un utilisateur</returns>
-        public async  Task<List<Track>> GetUserFavoriteTracks(string userId)
+        public async  Task<IEnumerable<Track>> GetUserFavoriteTracks(string userId, int offset, int limit)
         {
-            var tracks = await _context.Track.ToListAsync();
-            var favoriteTracks = (from track in tracks
-                                  join ft in _context.UserFavoriteTrack on track.Id equals ft.TrackId
-                                  where ft.UsersId == userId
-                                  select track).ToList();
-            return (favoriteTracks != null &&  favoriteTracks.Any() )? favoriteTracks : throw new EmptyListException();
+            var tracks = Enumerable.Empty<Track>();
+            var userFavoriteTracksIds = await GetUserFavoriteTracksIdsList(userId);
+            if(userFavoriteTracksIds.Any()) 
+            {
+                 tracks = await _context.Track
+                                .Where(t => userFavoriteTracksIds.Contains(t.Id))
+                                .Skip(offset)
+                                .Take(limit)
+                                .AsNoTracking()
+                                .ToListAsync();
+            }
+            return tracks ;
+         
         }
         /// <summary>
         /// Retourne la liste  des ids des musique en favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des ids des musique en favoris d'un utilisateur</returns>
-        public async Task<List<int>> GetUserFavoriteTracksIdsList(string userId)
+        public async Task<IEnumerable<int>> GetUserFavoriteTracksIdsList(string userId)
         {
             var tracks = await _context.Track.ToListAsync();
-            var favoriteTracksId = await _context.UserFavoriteTrack.Where(uft => uft.UsersId == userId).Select(uft => uft.TrackId).ToListAsync();
-            return favoriteTracksId.Any() ? favoriteTracksId : throw new EmptyListException();
+            var favoriteTracksId = await _context.UserFavoriteTrack
+                                            .Where(uft => uft.UsersId == userId)
+                                            .Select(uft => uft.TrackId)
+                                            .ToListAsync();
+            return favoriteTracksId is not null &&  favoriteTracksId.Any() ? favoriteTracksId : Enumerable.Empty<int>();
         }
         public async Task<bool> IsLoggedUserLikeThisTrack(string userId, int trackId)
         {
@@ -99,10 +98,13 @@ namespace TurnupAPI.Repositories
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <param name="trackId">L'id de la musique.</param>
         /// <returns>Retourne un UserFavoriteTrack.</returns>
-        public async Task<UserFavoriteTrack> GetExistingTrackLike(string userId, int trackId)
+        public async Task<UserFavoriteTrack?> GetExistingTrackLike(string userId, int trackId)
         {
-            var existingLike = await _context.UserFavoriteTrack.Where(uft => uft.UsersId == userId && uft.TrackId == trackId).FirstOrDefaultAsync();
-            return existingLike ?? throw new NotFoundException();
+            var existingLike = await _context.UserFavoriteTrack
+                                                .Where(uft => uft.UsersId == userId && uft.TrackId == trackId)
+                                                .AsNoTracking()
+                                                .FirstOrDefaultAsync();
+            return existingLike;
         }
         //----------------------END LIKE TRACK--------------------------------
         //----------------------LIKE ARTIST--------------------------------
@@ -111,64 +113,61 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="ufa">L'artiste à ajouter.</param>
         public async Task AddArtistLikeAsync(UserFavoriteArtist ufa)
-        {
-           
-            try
-            {
+        {         
                 _context.UserFavoriteArtist.Remove(ufa);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            
         }
 
         /// <summary>
         /// Supprime  un artiste des favoris dans la base de données.
         /// </summary>
         /// <param name="ufa">L'artiste à ajouter.</param>
-        public async Task RemoveArtistLikeAsync(UserFavoriteArtist ufa)
+        public async Task<bool> RemoveArtistLikeAsync(UserFavoriteArtist ufa)
         {
-           
-            try
+            bool result = false;
+            var existingUfa = await _context.UserFavoriteArtist.FirstOrDefaultAsync(u => u.Id == ufa.Id);
+            if(existingUfa is not  null) 
             {
                 _context.UserFavoriteArtist.Remove(ufa);
                 await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
+           
         }
         /// <summary>
         /// Retourne la liste des artistes favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des artistes en favoris d'un utilisateur</returns>
-        public async Task<List<Artist>> GetUserFavoriteArtists(string userId)
+        public async Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId)
         {
-            var artists = await _context.Artist.ToListAsync();
-            var favoriteArtists = (from artist in artists
-                                     join ufa in _context.UserFavoriteArtist on artist.Id equals ufa.ArtistId
-                                     where ufa.UsersId == userId
-                                     select artist).ToList();
-            return favoriteArtists.Any() ? favoriteArtists : throw new EmptyListException();
+            var artists = Enumerable.Empty<Artist>();
+            var userFavoriteArtistsIds = await GetUserFavoriteArtistsIdsList(userId);
+            if(userFavoriteArtistsIds.Any()) 
+            {
+                 artists = await _context.Artist
+                            .Where(a => userFavoriteArtistsIds.Contains(a.Id))
+                            .AsNoTracking()
+                            .ToListAsync();
+            }
+            return artists;
+            
         }
         /// <summary>
         /// Retourne la liste  des ids des artistes  favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des ids des artistes favoris d'un utilisateur</returns>
-        public async Task<List<int>> GetUserFavoriteArtistsIdsList(string userId)
+        public async Task<IEnumerable<int>> GetUserFavoriteArtistsIdsList(string userId)
         {
             var artists = await _context.Artist.ToListAsync();
-            var favoriteArtistsId = await _context.UserFavoriteArtist.Where(ufa => ufa.UsersId == userId).Select(ufa => ufa.ArtistId).ToListAsync();
-            return favoriteArtistsId.Any() ? favoriteArtistsId : throw new EmptyListException();
+            var favoriteArtistsIds = await _context.UserFavoriteArtist
+                                            .Where(ufa => ufa.UsersId == userId)
+                                            .Select(ufa => ufa.ArtistId)
+                                            .ToListAsync();
+            return favoriteArtistsIds is not null &&  favoriteArtistsIds.Any() ? favoriteArtistsIds : Enumerable.Empty<int>();
         }
         /// <summary>
         /// Retourne un UserFavoritArtist.
@@ -176,10 +175,13 @@ namespace TurnupAPI.Repositories
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <param name="artistId">L'id de l'artist.</param>
         /// <returns>Retourne un UserFavoriteArtist.</returns>
-        public async Task<UserFavoriteArtist> GetExistingArtistLike(string userId, int artistId)
+        public async Task<UserFavoriteArtist?> GetExistingArtistLike(string userId, int artistId)
         {
-            var existingLike = await _context.UserFavoriteArtist.Where(ufa => ufa.UsersId == userId && ufa.ArtistId == artistId).FirstOrDefaultAsync();
-            return existingLike ?? throw new NotFoundException();
+            var existingLike = await _context.UserFavoriteArtist
+                                                .Where(ufa => ufa.UsersId == userId && ufa.ArtistId == artistId)
+                                                .AsNoTracking()
+                                                .FirstOrDefaultAsync();
+            return existingLike;
         }
         //----------------------END LIKE ARTIST--------------------------------
         //----------------------LIKE PLAYLIST--------------------------------
@@ -188,38 +190,25 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="ufp">L'artiste à ajouter.</param>
         public async Task AddPlaylistLikeAsync(UserFavoritePlaylist ufp)
-        {
-           
-            try
-            {
-                _context.UserFavoritePlaylist.Remove(ufp);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+        {       
+            _context.UserFavoritePlaylist.Remove(ufp);
+            await _context.SaveChangesAsync();        
         }
         /// <summary>
         /// Supprime  une playlist des favoris dans la base de données.
         /// </summary>
         /// <param name="ufp">L'artiste à ajouter.</param>
-        public async Task RemovePlaylistLikeAsync(UserFavoritePlaylist ufp)
+        public async Task<bool> RemovePlaylistLikeAsync(UserFavoritePlaylist ufp)
         {
-           
-            try
+            var result = false;
+            var existingUfp = await _context.UserFavoritePlaylist.FirstOrDefaultAsync(u => u.Id == ufp.Id);
+            if(existingUfp is not null) 
             {
                 _context.UserFavoritePlaylist.Remove(ufp);
                 await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
         }
 
         /// <summary>
@@ -227,25 +216,32 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des playlists en favoris d'un utilisateur</returns>
-        public async Task<List<Playlist>> GetUserFavoritePlaylists(string userId)
+        public async Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId)
         {
-            var playlists = await _context.Playlist.ToListAsync();
-            var favoritePlaylists = (from playlist in playlists
-                                  join ufp in _context.UserFavoritePlaylist on playlist.Id equals ufp.PlaylistId
-                                  where ufp.UsersId == userId
-                                  select playlist).ToList();
-            return favoritePlaylists.Any() ? favoritePlaylists : throw new EmptyListException();
+            var playlists = Enumerable.Empty<Playlist>();
+           var userFavoritePlaylistsIds = await GetUserFavoritePlaylistsIdsList(userId);
+            if(userFavoritePlaylistsIds.Any())
+            {
+                playlists = await _context.Playlist
+                                .Where(p => userFavoritePlaylistsIds.Contains(p.Id))
+                                .AsNoTracking()
+                                .ToListAsync();
+            }
+            return playlists;
         }
         /// <summary>
         /// Retourne la liste  des ids des playlists en favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des ids des playlistsen favoris d'un utilisateur</returns>
-        public async Task<List<int>> GetUserFavoritePlaylistsIdsList(string userId)
+        public async Task<IEnumerable<int>> GetUserFavoritePlaylistsIdsList(string userId)
         {
             var tracks = await _context.Track.ToListAsync();
-            var favoriteTracksId = await _context.UserFavoriteTrack.Where(uft => uft.UsersId == userId).Select(uft => uft.TrackId).ToListAsync();
-            return favoriteTracksId.Any() ? favoriteTracksId : throw new EmptyListException();
+            var favoritePlaylistsIds = await _context.UserFavoriteTrack
+                                                .Where(uft => uft.UsersId == userId)
+                                                .Select(uft => uft.TrackId)
+                                                .ToListAsync();
+            return favoritePlaylistsIds is not null && favoritePlaylistsIds.Any() ? favoritePlaylistsIds : Enumerable.Empty<int>();
         }
         /// <summary>
         /// Retourne un UserFavoritePlaylist.
@@ -253,10 +249,12 @@ namespace TurnupAPI.Repositories
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <param name="playlistId">L'id de la musique.</param>
         /// <returns>Retourne un UserFavoritePlaylist.</returns>
-        public async Task<UserFavoritePlaylist> GetExistingPlaylistLike(string userId, int playlistId)
+        public async Task<UserFavoritePlaylist?> GetExistingPlaylistLike(string userId, int playlistId)
         {
-            var existingLike = await _context.UserFavoritePlaylist.Where(ufp => ufp.UsersId == userId && ufp.PlaylistId == playlistId).FirstOrDefaultAsync();
-            return existingLike ?? throw new NotFoundException();
+            var existingLike = await _context.UserFavoritePlaylist
+                                                .FirstOrDefaultAsync(ufp => ufp.UsersId == userId && ufp.PlaylistId == playlistId);
+                                                
+            return existingLike;
         }
         //----------------------END LIKE PLAYLIST--------------------------------
     }

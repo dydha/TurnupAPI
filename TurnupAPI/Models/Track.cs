@@ -16,7 +16,7 @@ namespace TurnupAPI.Models
         /// <summary>
         /// Le titre de la piste.
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
 
         /// <summary>
         /// Le nombre de minutes de la piste.
@@ -31,7 +31,7 @@ namespace TurnupAPI.Models
         /// <summary>
         /// La source de la piste.
         /// </summary>
-        public string? Source { get; set; }
+        public string Source { get; set; } = null!;
 
         /// <summary>
         /// La date à laquelle la piste a été ajoutée.

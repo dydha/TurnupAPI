@@ -22,21 +22,21 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="uft">L'objet UserFavoriteTrack représentant le like sur la piste à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task RemoveTrackLikeAsync(UserFavoriteTrack uft);
+        Task<bool> RemoveTrackLikeAsync(UserFavoriteTrack uft);
 
         /// <summary>
         /// Retourne toutes les track aimé par un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>les musique favoris d'un utilisateur.</returns>
-        Task<List<Track>> GetUserFavoriteTracks(string userId);
+        Task<IEnumerable<Track>> GetUserFavoriteTracks(string userId, int offset, int limit);
 
         /// <summary>
         /// Retourne tous les ids des track aimé par un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne tous les ids des track aimé par un utilisateur</returns>
-        Task<List<int>> GetUserFavoriteTracksIdsList(string userId);
+        Task<IEnumerable<int>> GetUserFavoriteTracksIdsList(string userId);
         Task<bool> IsLoggedUserLikeThisTrack(string userId, int trackId);
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace TurnupAPI.Interfaces
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne un userFavoriteTrack s'il existe sinon leve une exception</returns>
 
-        Task<UserFavoriteTrack> GetExistingTrackLike(string userId, int trackId);
+        Task<UserFavoriteTrack?> GetExistingTrackLike(string userId, int trackId);
 
         //-----------------END TRACK---------------------------------
         //-----------------Playlist---------------------------------
@@ -61,21 +61,21 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="ufp">L'objet UserFavoritePlaylist représentant le like sur la liste de lecture à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task RemovePlaylistLikeAsync(UserFavoritePlaylist ufp);
+        Task<bool> RemovePlaylistLikeAsync(UserFavoritePlaylist ufp);
 
         /// <summary>
         /// Retourne toutes les playlists aimé par un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>les playlists favoris d'un utilisateur.</returns>
-        Task<List<Playlist>> GetUserFavoritePlaylists(string userId);
+        Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId);
 
         /// <summary>
         /// Retourne tous les ids des playlist aimé par un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne tous les ids des playlist aimé par un utilisateur</returns>
-        Task<List<int>> GetUserFavoritePlaylistsIdsList(string userId);
+        Task<IEnumerable<int>> GetUserFavoritePlaylistsIdsList(string userId);
 
         /// <summary>
         /// Retourne un existingPlaylistLike.
@@ -84,7 +84,7 @@ namespace TurnupAPI.Interfaces
         /// <param name="playlistId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne un userFavoritePlaylist s'il existe sinon leve une exception</returns>
 
-        Task<UserFavoritePlaylist> GetExistingPlaylistLike(string userId, int trackId);
+        Task<UserFavoritePlaylist?> GetExistingPlaylistLike(string userId, int trackId);
 
         //-----------------END  Playlist---------------------------------
         //-----------------ARTIST---------------------------------------
@@ -100,20 +100,20 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="ufa">L'objet UserFavoriteArtist représentant le like sur l'artiste à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task RemoveArtistLikeAsync(UserFavoriteArtist ufa);
+        Task<bool> RemoveArtistLikeAsync(UserFavoriteArtist ufa);
         /// <summary>
         /// Retourne tous artistes favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>les artistes favoris d'un utilisateur.</returns>
-        Task<List<Artist>> GetUserFavoriteArtists(string userId);
+        Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId);
 
         /// <summary>
         /// Retourne tous les ids des artistes favoris d'un utilisateur.
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne tous les ids des artistes favoris d'un utilisateur</returns>
-        Task<List<int>> GetUserFavoriteArtistsIdsList(string userId);
+        Task<IEnumerable<int>> GetUserFavoriteArtistsIdsList(string userId);
 
         /// <summary>
         /// Retourne un existingArtistLike.
@@ -122,7 +122,7 @@ namespace TurnupAPI.Interfaces
         /// <param name="artistId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>Retourne un userFavoriteArtist s'il existe sinon leve une exception</returns>
 
-        Task<UserFavoriteArtist> GetExistingArtistLike(string userId, int artistId);
+        Task<UserFavoriteArtist?> GetExistingArtistLike(string userId, int artistId);
 
         //---------------------------END ARTIST---------------------------------
     }

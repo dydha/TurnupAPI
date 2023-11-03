@@ -5,6 +5,7 @@ using TurnupAPI.Models;
 using TurnupAPI.Exceptions;
 using TurnupAPI.Enums;
 using System.Linq.Expressions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace TurnupAPI.Repositories
 {
@@ -29,38 +30,27 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="artist">L'artiste à ajouter.</param>
         public async Task AddAsync(Artist artist)
-        {
-            try
-            {
+        {        
                 _context.Artist.Add(artist);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+                await _context.SaveChangesAsync();            
         }
 
         /// <summary>
         /// Supprime un artiste de la base de données par son ID.
         /// </summary>
         /// <param name="id">L'ID de l'artiste à supprimer.</param>
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            try
+            bool result = false;
+            var artist = await GetAsync(id);
+            if(artist is not null)
             {
-                var artist = await GetAsync(id);
                 _context.Artist.Remove(artist);
                 await _context.SaveChangesAsync();
+                result =  true;
             }
-            catch (NotFoundException)
-            {
-                throw ;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
+                      
         }
 
 
@@ -69,62 +59,58 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="id">L'ID de l'artiste à récupérer.</param>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
-        /// <exception cref="NotFoundException">Si l'artiste n'est pas trouvé.</exception>
-        public async Task<Artist> GetAsync(int id)
+       
+        public async Task<Artist?> GetAsync(int id)
         {
-            var artist = await _context.Artist.Where(a => a.Id == id).Include(a => a.UserFavoriteArtists).FirstOrDefaultAsync(); // Recherche l'artiste par son ID
-            return artist ?? throw new NotFoundException(); // Si l'artiste n'est pas trouvé, lance une exception ArgumentNullException
+            var artist = await _context.Artist.Where(a => a.Id == id)
+                                .Include(a => a.UserFavoriteArtists)
+                                .AsSplitQuery()
+                                .FirstOrDefaultAsync();
+            return artist;
         }
 
         /// <summary>
         /// Récupère un artiste à base de filtre.
         /// </summary>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
-        /// <exception cref="NotFoundException">Si l'artiste n'est pas trouvé.</exception>
-        public async Task<Artist> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter )
+
+        public async Task<Artist?> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter )
         {
-            var artist = await _context.Artist.FirstOrDefaultAsync(filter); // Recherche l'artiste par son ID
-            return artist ?? throw new NotFoundException(); // Si l'artiste n'est pas trouvé, lance une exception ArgumentNullException
+            var artist = await _context.Artist.FirstOrDefaultAsync(filter);
+            return artist;
         }
         /// <summary>
         /// Récupère la liste de tous les artistes.
         /// </summary>
         /// <returns>La liste de tous les artistes ou une liste vide si aucun artiste n'est trouvé.</returns>
-        public async Task<List<Artist>> GetAllAsync()
+        public async Task<IEnumerable<Artist>> GetAllAsync()
         {
-            try
-            {
+           
                 var artists = await _context.Artist
                                                 .Include(a => a.UserFavoriteArtists)
+                                                .Include(a => a.TrackArtists)
+                                                .AsSplitQuery()
                                                 .ToListAsync();
-                return artists ?? throw new EmptyListException();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException( ex.Message);
-            }
+                return artists != null && artists.Count > 0 ? artists : Enumerable.Empty<Artist>();
+           
         }
 
         /// <summary>
         /// Met à jour un artiste dans la base de données.
         /// </summary>
         /// <param name="artist">L'artiste à mettre à jour.</param>
-        public async Task UpdateAsync(Artist artist)
+        public async Task<bool> UpdateAsync(Artist artist)
         {
-            try
+            bool result = false;
+            var existingArtist = await GetAsync(artist.Id);
+            if(existingArtist is not null)
             {
-                var existingArtist = await GetAsync(artist.Id);
                 _context.Artist.Update(existingArtist);
                 await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw ;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
+                
         }
         /// <summary>
         /// Retourne le nom de l'artiste principal d'une musique
@@ -136,9 +122,11 @@ namespace TurnupAPI.Repositories
                                join artist in _context.Artist on ta.ArtistId equals artist.Id
                                where ta.TrackId == trackId && ta.ArtistRole == ArtistRole.Principal
                                select artist.Name
-                             ).FirstOrDefault();
+                             )
+                             .AsNoTracking()
+                             .FirstOrDefault();
 
-            return artistName ?? throw new NotFoundException();
+            return artistName ?? string.Empty;
         }
 
         /// <summary>
@@ -151,24 +139,28 @@ namespace TurnupAPI.Repositories
                                     join artist in _context.Artist on ta.ArtistId equals artist.Id
                                     where ta.TrackId == trackId && ta.ArtistRole == ArtistRole.Principal
                                     select artist.Picture
-                             ).FirstOrDefault();
+                             )
+                             .AsNoTracking()
+                             .FirstOrDefault();
 
-            return artistPicture ?? throw new NotFoundException();
+            return artistPicture ?? string.Empty;
         }
 
         /// <summary>
         /// Retourne les noms des artistes en featuring d'une musique
         /// </summary>
         /// <returns>Les noms des artistes en featuring.</returns>
-        public List<string> GetFeaturingArtistsNamesByTrackId(int trackId)
+        public IEnumerable<string> GetFeaturingArtistsNamesByTrackId(int trackId)
         {
             var artistNames =  (from ta in _context.TrackArtist
                                     join artist in _context.Artist on ta.ArtistId equals artist.Id
                                     where ta.TrackId == trackId && ta.ArtistRole == ArtistRole.Featuring
                                     select artist.Name
-                             ).ToList();
+                             )
+                             .AsNoTracking()
+                             .ToList();
 
-            return artistNames ?? new List<string>();
+            return artistNames is not null && artistNames.Any() ? artistNames : Enumerable.Empty<string>();
         }
 
         /// <summary>

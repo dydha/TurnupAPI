@@ -22,34 +22,34 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="id">L'ID de l'artiste à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
 
         /// <summary>
         /// Obtient un artiste par ID.
         /// </summary>
         /// <param name="id">L'ID de l'artiste à obtenir.</param>
         /// <returns>L'artiste correspondant à l'ID spécifié.</returns>
-        Task<Artist> GetAsync(int id);
+        Task<Artist?> GetAsync(int id);
 
         /// <summary>
         /// Obtient un artiste via un filtre.
         /// </summary>
         /// <param name="filter">L'ID de l'artiste à obtenir.</param>
         /// <returns>L'artiste correspondant à l'ID spécifié.</returns>
-        Task<Artist> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter);
+        Task<Artist?> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter);
 
         /// <summary>
         /// Obtient la liste de tous les artistes.
         /// </summary>
         /// <returns>Une liste d'artistes.</returns>
-        Task<List<Artist>> GetAllAsync();
+        Task<IEnumerable<Artist>> GetAllAsync();
 
         /// <summary>
         /// Met à jour les informations d'un artiste.
         /// </summary>
         /// <param name="artist">L'artiste avec les informations mises à jour.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task UpdateAsync(Artist artist);
+        Task<bool> UpdateAsync(Artist artist);
 
         /// <summary>
         /// retourne le nom de l'artiste principal d'une piste de musique (Track).
@@ -63,7 +63,7 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="trackId">L'id d'une piste de musique.</param>
         /// <returns>Une liste de noms des artistes</returns>
-        List<string> GetFeaturingArtistsNamesByTrackId(int trackId);
+        IEnumerable<string> GetFeaturingArtistsNamesByTrackId(int trackId);
         /// <summary>
         /// retourne la photo de l'artiste principal d'une piste de musique (Track).
         /// </summary>

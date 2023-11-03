@@ -13,7 +13,7 @@
         /// <summary>
         /// le nom de l'album.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// la description de l'album.

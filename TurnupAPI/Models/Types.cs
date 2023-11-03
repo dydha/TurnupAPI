@@ -13,12 +13,12 @@
         /// <summary>
         /// Le nom du type de piste.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Le chemin de l'image du type de piste.
         /// </summary>
-        public string? Picture { get; set; }
+        public string Picture { get; set; } = null!;
 
 
         /// <summary>

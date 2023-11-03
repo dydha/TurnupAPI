@@ -11,7 +11,7 @@ namespace TurnupAPI.Forms
         ///  Définit le nom de la playlist.
         /// </summary>
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Définit une valeur indiquant si la playlist est privée.

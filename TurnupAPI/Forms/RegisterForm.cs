@@ -13,19 +13,19 @@ namespace TurnupAPI.Forms
         /// Définit le prénom de l'utilisateur.
         /// </summary>
         [Required]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
 
         /// <summary>
         /// Définit le nom de famille de l'utilisateur.
         /// </summary>
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; } = null!;
 
         /// <summary>
         /// Définit le pays de l'utilisateur.
         /// </summary>
         [Required]
-        public string? Country { get; set; }
+        public string Country { get; set; } = null!;
 
         
 
@@ -33,7 +33,7 @@ namespace TurnupAPI.Forms
         /// Définit le genre de l'utilisateur.
         /// </summary>
         [Required]
-        public string? Gender { get; set; }
+        public string Gender { get; set; } = null!;
 
         /// <summary>
         /// Définit la date de naissance de l'utilisateur.
@@ -51,18 +51,18 @@ namespace TurnupAPI.Forms
         /// Définit l'adresse e-mail de l'utilisateur.
         /// </summary>
         [Required]
-        public string? Email { get; set; }
+        public string Email { get; set; } = null!;
 
         /// <summary>
         /// Définit le mot de passe de l'utilisateur.
         /// </summary>
         [Required]
-        public string? Password { get; set; }
+        public string Password { get; set; } = null!;
 
         /// <summary>
         /// Définit la confirmation du mot de passe de l'utilisateur.
         /// </summary>
         [Required]
-        public string? ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

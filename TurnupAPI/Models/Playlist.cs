@@ -17,7 +17,7 @@ namespace TurnupAPI.Models
         /// <summary>
         /// Le nom de la playlist.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// La date de création de la playlist.

@@ -16,22 +16,22 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit le nom de l'artiste.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit la description de l'artiste.
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit le pays d'origine de l'artiste.
         /// </summary>
-        public string? Country { get; set; }
+        public string Country { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit l'URL de l'image de l'artiste.
         /// </summary>
-        public string? Picture { get; set; }
+        public string Picture { get; set; } = null!;
         /// <summary>
         ///Définit si l'utilisateur connecté aime cet artiste.
         /// </summary>
@@ -40,5 +40,10 @@ namespace TurnupAPI.DTO
         /// Définit le nombre de fans de l'artiste.
         /// </summary>
         public int FansNumber { get; set; }
+
+        /// <summary>
+        /// Définit le nombre de musique de l'artiste.
+        /// </summary>
+        public int TracksCount { get; set; }
     }
 }

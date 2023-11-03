@@ -1,21 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using TurnupAPI.DTO;
-using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
 using TurnupAPI.Models;
-using TurnupBlazor.Models;
 
 namespace TurnupAPI.Controllers
 {
     /// <summary>
     /// Contrôleur pour la gestion des types.
     /// </summary>
-    [Authorize]
+
     [Route("api/[Controller]")]
     [ApiController]
     public class TypesController : BaseController
@@ -51,11 +48,10 @@ namespace TurnupAPI.Controllers
             try
             {
                 var track = await _typesRepository.GetAsync(id);
-                return Ok(track);
-            }
-            catch (NotFoundException)
-            {
-                _logger.LogWarning("Aucun genre n'a été trouvé.");
+                if( track is not  null ) 
+                {
+                    return Ok(track);
+                }
                 return NotFound();
             }
             catch (Exception ex)
@@ -70,8 +66,9 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <param name="typeVM">Les informations du type à ajouter.</param>
         /// <returns>Une réponse HTTP indiquant le succès de l'ajout ou une réponse BadRequest si les données ne sont pas valides.</returns>
+        [Authorize(Roles ="admin")]
         [HttpPost("add-types")]
-        public async Task<ActionResult> AddTypes([FromForm] TypeForm typeVM)
+        public async Task<ActionResult> AddTypes([FromBody] TypeForm typeVM)
         {
             _logger.LogInformation("Requete pour ajouter un genre.");
             if (!ModelState.IsValid)
@@ -80,6 +77,13 @@ namespace TurnupAPI.Controllers
             }
             try
             {
+                var existingTypes = (await _typesRepository.GetAllAsync())
+                                    .Where(t => t.Name.Equals(typeVM.Name, StringComparison.OrdinalIgnoreCase))
+                                    .FirstOrDefault();
+                if(existingTypes is not  null)
+                {
+                    return Conflict();
+                }
                 Types type = new()
                 {
                     Name = typeVM.Name,
@@ -101,6 +105,7 @@ namespace TurnupAPI.Controllers
         /// <param name="id">L'ID du type à mettre à jour.</param>
         /// <param name="type">Les nouvelles données du type.</param>
         /// <returns>Une réponse HTTP NoContent en cas de succès ou une réponse BadRequest si l'ID ne correspond pas.</returns>
+        [Authorize(Roles = "admin")]
         [HttpPut("update-types/{id}")]
         public async Task<ActionResult> UpdateTypes(int id, Types type)
         {
@@ -109,9 +114,10 @@ namespace TurnupAPI.Controllers
             {
                 return BadRequest();
             }
-
-            await _typesRepository.UpdateAsync(type);
-            return NoContent();
+           
+            bool result =  await _typesRepository.UpdateAsync(type);
+            string message = result ? "Le genre a été mis à jour avec succès." : "Le genre n'a pas pu etre mis à jour.";
+            return Ok(message);
         }
 
         /// <summary>
@@ -119,19 +125,16 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <param name="id">L'ID du type à supprimer.</param>
         /// <returns>Une réponse HTTP NoContent en cas de succès, une réponse NotFound si le type n'est pas trouvé, ou une réponse StatusCode 500 en cas d'erreur interne.</returns>
+        [Authorize(Roles = "admin")]
         [HttpDelete("delete-types/{id}")]
         public async Task<ActionResult> DeleteTypes(int id)
         {
             _logger.LogInformation("Requete pour supprimer un genre.");
             try
             {
-                await _typesRepository.DeleteAsync(id);
-                return NoContent();
-            }
-            catch (ArgumentNullException)
-            {
-                _logger.LogWarning("Le genre n'existe pas.");
-                return NotFound();
+                bool result = await _typesRepository.DeleteAsync(id);
+                string message = result ? "Le genre a été supprimé avec succès." : "Le genre n'a pas pu etre supprimé.";
+                return Ok(message);
             }
             catch (Exception ex)
             {
@@ -145,32 +148,28 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <returns>Une réponse HTTP contenant la liste de tous les types ou une réponse NoContent si la liste est vide.</returns>
         [HttpGet("get-all-types")]
-        public async Task<ActionResult<List<TypesDTO>>> GetAllTypes()
+        public async Task<ActionResult<IEnumerable<TypesDTO>>> GetAllTypes()
         {
             _logger.LogInformation("Requete pour récupérer tous les genres.");
+            var typesDTOs = Enumerable.Empty<TypesDTO>();
             var cacheKey = CacheKeyForTypes();
-            var data = await _distributedCache.GetAsync(cacheKey); // Je récupère les données.
-            if (data != null) //Si les données nes sont pas null je désérialise les données avant de les retourner.
+            var data = await _distributedCache.GetAsync(cacheKey); 
+            if (data is not  null) 
             {
-                var types = DeserializeData<List<TypesDTO>>(data);
-                Console.WriteLine("These types came from cache memory.");
-                return Ok(types);
+                 typesDTOs = DeserializeData<IEnumerable<TypesDTO>>(data);
+                return Ok(typesDTOs);
             }
             else
             {
                 try
                 {
                     var types = await _typesRepository.GetAllAsync();
-                    var typesDTOs = types.Select(t => _mapper.Map<TypesDTO>(t)).ToList();
-
-                    await _distributedCache.SetAsync(cacheKey, SerializeData(typesDTOs), GetCacheOptions());
-                    Console.WriteLine("These types do not came from cache memory.");
+                    if(types.Any())
+                    {
+                        typesDTOs = types.Select(t => _mapper.Map<TypesDTO>(t));
+                        await _distributedCache.SetAsync(cacheKey, SerializeData(typesDTOs), GetCacheOptions());
+                    }
                     return Ok(typesDTOs);
-                }
-                catch (EmptyListException)
-                {
-                    _logger.LogWarning("Aucun genre n'a été trouvé.");
-                    return NoContent();
                 }
                 catch (Exception ex)
                 {

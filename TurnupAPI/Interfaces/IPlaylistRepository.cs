@@ -22,40 +22,40 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="id">L'ID de la playlist à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
 
         /// <summary>
         /// Récupère une playlist en fonction de son ID.
         /// </summary>
         /// <param name="id">L'ID de la playlist à récupérer.</param>
         /// <returns>Une tâche asynchrone qui renvoie l'objet Playlist correspondant à l'ID spécifié.</returns>
-        Task<Playlist> GetAsync(int id);
+        Task<Playlist?> GetAsync(int id);
 
         /// <summary>
         /// Obtient une playlist via un filtre.
         /// </summary>
         /// <param name="filter">L'expression.</param>
         /// <returns>La playlist correspondant à la recherche.</returns>
-        Task<Playlist> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter);
+        Task<Playlist?> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter);
 
         /// <summary>
         /// Récupère toutes les listes de lecture.
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de toutes les listes de lecture disponibles.</returns>
-        Task<List<Playlist>> GetAllAsync();
+        Task<IEnumerable<Playlist>> GetAllAsync();
 
         /// <summary>
         /// Met à jour les informations d'une playlist.
         /// </summary>
         /// <param name="playlist">L'objet Playlist contenant les informations mises à jour.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task UpdateAsync(Playlist playlist);
+        Task<bool> UpdateAsync(Playlist playlist);
 
         /// <summary>
         /// Récupère toutes les playlists d'un utilisateur.
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de toutes les playlists d'un utilisateur.</returns>
 
-        Task<List<Playlist>> GetPlaylistByUserIdAsync(string userId);
+        Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId);
     }
 }

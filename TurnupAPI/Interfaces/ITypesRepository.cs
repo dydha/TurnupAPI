@@ -21,26 +21,26 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="id">L'ID du type de musique à récupérer.</param>
         /// <returns>Une tâche asynchrone qui renvoie l'objet Types correspondant à l'ID spécifié.</returns>
-        Task<Types> GetAsync(int id);
+        Task<Types?> GetAsync(int id);
 
         /// <summary>
         /// Supprime un type de musique en fonction de son ID.
         /// </summary>
         /// <param name="id">L'ID du type de musique à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
 
         /// <summary>
         /// Met à jour les informations d'un type de musique.
         /// </summary>
         /// <param name="type">L'objet Types contenant les informations mises à jour.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        Task UpdateAsync(Types type);
+        Task<bool> UpdateAsync(Types type);
 
         /// <summary>
         /// Récupère tous les types de musique disponibles.
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de tous les types de musique.</returns>
-        Task<List<Types>> GetAllAsync();
+        Task<IEnumerable<Types>> GetAllAsync();
     }
 }

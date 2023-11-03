@@ -16,7 +16,7 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit le nom de la playlist.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit une valeur indiquant si la playlist est privée.
@@ -26,15 +26,15 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit l'id du propriéraire de la playlist.
         /// </summary>
-        public string? OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
         /// <summary>
         /// Obtient ou définit la photo du propriéraire de la playlist.
         /// </summary>
-        public byte[]? OwnerPicture { get; set; }
+        public byte[] OwnerPicture { get; set; } = null!;
         /// <summary>
         /// Obtient ou définit le nom du propriéraire de la playlist.
         /// </summary>
-        public string? OwnerName { get; set; }
+        public string OwnerName { get; set; } = null!;
         /// <summary>
         /// Obtient ou définit si la playlist est déjà aimé par l'utilisateur connecté.
         /// </summary>

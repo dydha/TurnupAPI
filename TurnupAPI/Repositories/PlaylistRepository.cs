@@ -27,40 +27,26 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="playlist">La playlist à ajouter.</param>
         public async Task AddAsync(Playlist playlist)
-        {
-            try
-            {
+        {          
                 _context.Playlist.Add(playlist);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
-
         }
 
         /// <summary>
         /// Supprime une playlist de la base de données par son ID.
         /// </summary>
         /// <param name="id">L'ID de l'artiste à supprimer.</param>
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-           
-            try
+            bool result = false;
+            var playlist = await GetAsync(id);
+            if(playlist is not null)
             {
-                var Playlist = await GetAsync(id);
-                _context.Playlist.Remove(Playlist);
+                _context.Playlist.Remove(playlist);
                 await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
         }
 
         /// <summary>
@@ -69,65 +55,68 @@ namespace TurnupAPI.Repositories
         /// <param name="id">L'ID de la playlist à récupérer.</param>
         /// <returns>La playlist trouvé ou null si elle n'existe pas.</returns>
         /// <exception cref="NotFoundException">Si l'artiste n'est pas trouvé.</exception>
-        public async Task<Playlist> GetAsync(int id)
+        public async Task<Playlist?> GetAsync(int id)
         {
-            var Playlist = await _context.Playlist.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == id);
-            return Playlist ?? throw new NotFoundException();
+            var playlist = await _context.Playlist
+                                .Include(p => p.Users)
+                                .AsSplitQuery()
+                                .FirstOrDefaultAsync(p => p.Id == id);
+            return playlist ;
         }
         /// <summary>
         /// Récupère une playlis à base de filtre.
         /// </summary>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
         /// <exception cref="NotFoundException">Si la playlist n'est pas trouvée.</exception>
-        public async Task<Playlist> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter)
+        public async Task<Playlist?> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter)
         {
-            var playlist = await _context.Playlist.FirstOrDefaultAsync(filter); // Recherche la playlist par son ID
-            return playlist ?? throw new NotFoundException(); // Si la playlistn'est pas trouvé, lance une exception ArgumentNullException
+            var playlist = await _context.Playlist
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(filter); 
+            return playlist; 
         }
         /// <summary>
         /// Récupère la liste de toutes les playlists.
         /// </summary>
         /// <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
-        public async Task<List<Playlist>> GetAllAsync()
+        public async Task<IEnumerable<Playlist>> GetAllAsync()
         {
-            var playlist = await _context.Playlist.ToListAsync();
-            return (playlist != null && playlist.Count > 0) ? playlist : throw new EmptyListException();
+            
+            var playlists = await _context.Playlist
+                                                .AsNoTracking()
+                                                .ToListAsync();
+            return (playlists is not null && playlists.Any()) ? playlists : Enumerable.Empty<Playlist>();
         }
 
         /// <summary>
         /// Met à jour une playlist dans la base de données.
         /// </summary>
         /// <param name="playlist">La plalist à mettre à jour.</param>
-        public async Task UpdateAsync(Playlist playlist)
+        public async Task<bool> UpdateAsync(Playlist playlist)
         {
-           
-            try
+
+            bool result = false;
+            var existingPlaylist = await GetAsync(playlist.Id);
+            if (existingPlaylist is not  null)
             {
-                var existingPlaylist = await GetAsync(playlist.Id);
-                if (existingPlaylist != null)
-                {
-                    _context.Playlist.Update(playlist);
-                    await _context.SaveChangesAsync();
-                }
+                _context.Playlist.Update(playlist);
+                await _context.SaveChangesAsync();
+                result = true;
             }
-            catch (NotFoundException)
-            {
-                throw;
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new DataAccessException(ex.Message);
-            }
+            return result;
         }
 
         /// <summary>
         /// Récupère la liste des playlists d'un utilisateur. 
         /// </summary>
         /// <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
-        public async Task<List<Playlist>> GetPlaylistByUserIdAsync(string userId)
+        public async Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId)
         {
-            var playlist = await _context.Playlist.Where(p => p.UsersId == userId).ToListAsync();
-            return (playlist != null && playlist.Count > 0) ? playlist : throw new EmptyListException();
+            var playlists = await _context.Playlist
+                                        .Where(p => p.UsersId == userId)
+                                        .AsNoTracking()
+                                        .ToListAsync();
+            return (playlists is not null && playlists.Any()) ? playlists : Enumerable.Empty<Playlist>();
         }
     }
 }

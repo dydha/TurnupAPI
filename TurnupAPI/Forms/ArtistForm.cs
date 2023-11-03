@@ -11,7 +11,7 @@ namespace TurnupAPI.Forms
         /// Définit le nom de l'artiste. Ce champ est requis.
         /// </summary>
         [Required(ErrorMessage = "Le nom de l'artiste est requis.")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Définit la description de l'artiste. Ce champ est requis.
@@ -23,11 +23,12 @@ namespace TurnupAPI.Forms
         /// Définit le pays d'origine de l'artiste. Ce champ est requis.
         /// </summary>
         [Required(ErrorMessage = "Le pays d'origine de l'artiste est requis.")]
-        public string? Country { get; set; }
+        public string Country { get; set; } = null!;
 
         /// <summary>
         /// Définit l'image de l'artiste.
         /// </summary>
-        public string? Picture { get; set; }
+         [Required]
+        public string Picture { get; set; } = null!;
     }
 }

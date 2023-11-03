@@ -11,12 +11,12 @@ namespace TurnupAPI.Forms
         /// Définit le nom du type.
         /// </summary>
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Définit l'image associée au type.
         /// </summary>
         [Required]
-        public string? Picture { get; set; }
+        public string Picture { get; set; } = null!;
     }
 }

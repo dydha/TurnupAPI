@@ -32,9 +32,10 @@ namespace TurnupAPI.Controllers
                 IMemoryCache memoryCache,
                 IUserRepository userRepository,
                 TurnupContext context,
-                 IMapper mapper,
-                 ILogger<LikeController> logger
-            ) : base(userRepository,null,null,context,mapper)
+                IMapper mapper,
+                ILogger<LikeController> logger,
+                IArtistRepository artistRepository
+            ) : base(userRepository,artistRepository,null,context,mapper)
         {
             _likeRepository = likeRepository;
             _memoryCache = memoryCache;
@@ -50,34 +51,23 @@ namespace TurnupAPI.Controllers
             {
                 try
                 {
-                    Console.WriteLine($"L'id du track arrivé jusqu'à l'API : {trackId}");
+                   
                     _logger.LogInformation("Requete qui vérife si l'utilisateur connecté aime cette musique.");
                     var loggedUserId = await GetLoggedUserIdAsync();
-                    try
+                    if(!string.IsNullOrEmpty(loggedUserId)) 
                     {
                         var trackExists = await _trackRepository.GetAsync(trackId);
-                        if (trackExists != null)
+                        if (trackExists is not null)
                         {
-                            var isLike = await _likeRepository.IsLoggedUserLikeThisTrack(loggedUserId, trackId);
-                            return Ok(isLike);
+                            var isLiked = await _likeRepository.IsLoggedUserLikeThisTrack(loggedUserId, trackId);
+                            return Ok(isLiked);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Une erreur est survenue.");
-                        return NoContent();
-                    }
-
+                    }                    
                     return NoContent();
-
                 }
-
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Une erreur est survenue.");
-                    //  Utiliser ex.Message pour obtenir le message d'erreur
-                    // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                    // Utiliser ex.StackTrace pour obtenir la pile d'appels
                     return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
                 }
             }
@@ -96,26 +86,23 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation( "Requete pour récupérer les ids des artistes favoris d'un utilisateur.");
-                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                try
+                var loggedUserId = await GetLoggedUserIdAsync(); 
+                if(!string.IsNullOrEmpty(loggedUserId)) 
                 {
-                    //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
                     var ids = await _likeRepository.GetUserFavoriteTracksIdsList(loggedUserId);
                     return Ok(ids);
                 }
-                catch (EmptyListException)
+                else
                 {
-                    _logger.LogWarning( "Aucun id n'a été trouvé.");
+                    _logger.LogWarning("Aucun id n'a été trouvé.");
                     return NoContent(); //StatusCode 204
                 }
+
             }
             
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -125,57 +112,40 @@ namespace TurnupAPI.Controllers
         [HttpPost("like-track")] 
         public async Task<ActionResult> LikeTrack([FromBody] int trackId)
         {
-            Console.WriteLine(trackId);
-          
                 try
                 {
                     _logger.LogInformation("Ajout/Suppression d'une musique aux/des favoris.");
-                    var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                                                                     //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
-                    try
+                    var loggedUserId = await GetLoggedUserIdAsync();
+                    if (!string.IsNullOrEmpty(loggedUserId))
                     {
                         var existingLike = await _likeRepository.GetExistingTrackLike(loggedUserId, trackId);
-                        await _likeRepository.RemoveTrackLikeAsync(existingLike); // Si le loggedUser aime déjà la musique, on supprime le like     
-
-                        return NoContent(); //Indique le dislike
-                    }
-                    catch (NotFoundException) // Si l'utilisateur connecté n'a pas cette musique en favoris.
-                    {
-                        try
+                        if (existingLike is not null)
                         {
-                            var like = new UserFavoriteTrack() // Une UserFavoriteTrack est créee.
+                            await _likeRepository.RemoveTrackLikeAsync(existingLike);  
+                        }
+                        else
+                        {
+                            var like = new UserFavoriteTrack() 
                             {
                                 UsersId = loggedUserId,
                                 TrackId = trackId,
                             };
                             await _likeRepository.AddTrackLikeAsync(like);
-                            return Ok(); //Indique le like
                         }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Une erreur est survenue.");
-                            return StatusCode(500, $"Internal Server Error: {ex.Message}");
-                        }
-                    }
-                    finally
-                    {
-                        // Utilisez userId comme clé de mise en cache
+                        // Suppression du cahce
                         var cacheKey = CacheKeyForUserFavoriteTracks(loggedUserId);
                         if (_memoryCache.TryGetValue(cacheKey, out _))
                         {
                             // La clé existe dans le cache, alors nous pouvons la supprimer
                             _memoryCache.Remove(cacheKey);
                         }
+                       return NoContent();
                     }
-
-
-                }
+                    throw new Exception("L'utilisateur n'a pas été trouvé.");
+                }  
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Une erreur est survenue.");
-                    //  Utiliser ex.Message pour obtenir le message d'erreur
-                    // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                    // Utiliser ex.StackTrace pour obtenir la pile d'appels
                     return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
                 }
            
@@ -187,30 +157,22 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <returns>Retourne  les ids des playlistfavoris d'un utilisateur.</returns>
         [HttpGet("get-logged-user-favorite-playlists-ids")]
-        public async Task<ActionResult<List<int>>> GetLoggedUserFavoritePlaylistsIds()
+        public async Task<ActionResult<IEnumerable<int>>> GetLoggedUserFavoritePlaylistsIds()
         {
             try
             {
                 _logger.LogInformation( "Requete pour récupérer les ids des olaylists favoris d'un utilisateur.");
-                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                try
+                var ids = Enumerable.Empty<int>();
+                var loggedUserId = await GetLoggedUserIdAsync(); 
+                if(!string.IsNullOrEmpty(loggedUserId) ) 
                 {
-                    //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
-                    var ids = await _likeRepository.GetUserFavoritePlaylistsIdsList(loggedUserId);
-                    return Ok(ids);
+                     ids = await _likeRepository.GetUserFavoritePlaylistsIdsList(loggedUserId);    
                 }
-                catch (EmptyListException)
-                {
-                    _logger.LogWarning("Aucun id n'a été trouvé.");
-                    return NoContent(); //StatusCode 204
-                }
+                return Ok(ids);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
 
@@ -221,52 +183,39 @@ namespace TurnupAPI.Controllers
         [HttpPost("like-playlist")]
         public async Task<ActionResult> LikePlaylist([FromBody] int playlistId)
         {    
-                try
+            try
+            {
+                _logger.LogInformation("Requete pour ajouter/supprimer une playlist aux/des favoris.");
+                var loggedUserId = await GetLoggedUserIdAsync(); 
+                if(!string.IsNullOrEmpty (loggedUserId) ) 
                 {
-                    _logger.LogInformation("Requete pour ajouter/supprimer une playlist aux/des favoris.");
-                    var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                                                                 //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
-                    try
+                    var existingLike = await _likeRepository.GetExistingPlaylistLike(loggedUserId, playlistId);
+                    if(existingLike is not  null) 
                     {
-                        var existingLike = await _likeRepository.GetExistingPlaylistLike(loggedUserId, playlistId);
                         await _likeRepository.RemovePlaylistLikeAsync(existingLike);
                     }
-                    catch (NotFoundException)
+                    else
                     {
-                        try
+                        var like = new UserFavoritePlaylist()
                         {
-                            var like = new UserFavoritePlaylist()
-                            {
-                                UsersId = loggedUserId,
-                                PlaylistId = playlistId,
-                                LikedAt = DateTime.Now,
-                            };
-                            await _likeRepository.AddPlaylistLikeAsync(like);
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Une erreur est survenue.");
-                            return StatusCode(500, $"Internal Server Error: {ex.Message}");
-                        }
-
+                            UsersId = loggedUserId,
+                            PlaylistId = playlistId,
+                            LikedAt = DateTime.Now,
+                        };
+                        await _likeRepository.AddPlaylistLikeAsync(like);
                     }
-
                     return NoContent();
                 }
-                
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Une erreur est survenue.");
-                    //  Utiliser ex.Message pour obtenir le message d'erreur
-                    // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                    // Utiliser ex.StackTrace pour obtenir la pile d'appels
-                    return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
-                }
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
+
+            }               
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Une erreur est survenue.");
+                return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
+            }
 
         }
-
-       
-
         //--------------------------------------------END PLAYLIST-----------------------------------------
         //---------------------------ARTIST--------------------------------------------------
         /// <summary>
@@ -274,31 +223,22 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <returns>Retourne  les ids des artistes favoris d'un utilisateur.</returns>
         [HttpGet("get-logged-user-favorite-artists-ids")]
-        public async Task<ActionResult<List<int>>> GetLoggedUserFavoriteArtistsIds()
+        public async Task<ActionResult<IEnumerable<int>>> GetLoggedUserFavoriteArtistsIds()
         {
             try
             {
                 _logger.LogInformation("Requete pour récupérer les ids des artistes favoris d'un utilisateur.");
-                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-               try
+                var ids = Enumerable.Empty<int>();  
+                var loggedUserId = await GetLoggedUserIdAsync(); 
+                if(!string.IsNullOrEmpty(loggedUserId))
                 {
-                    //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
-                    var ids = await _likeRepository.GetUserFavoriteArtistsIdsList(loggedUserId);
-                    return Ok(ids);
+                    ids = await _likeRepository.GetUserFavoriteArtistsIdsList(loggedUserId);
                 }
-                catch (EmptyListException)
-                {
-                    _logger.LogWarning("Aucun id n'a été trouvé.");
-                    return NoContent(); //StatusCode 204
-                }
-            }
-           
+                return Ok(ids);              
+            }         
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -313,18 +253,15 @@ namespace TurnupAPI.Controllers
             try
             {
                 _logger.LogInformation( "Requete pour ajouter/supprimer un artiste aux/des favoris.");
-                var loggedUserId = await GetLoggedUserIdAsync(); // Je récupère l'utilisateur connecté
-                                                             //Je récupère toutes les relations UserFavoriteTrack et je vérifie si l'utilisateur aime déja la musique
-                try
+                var loggedUserId = await GetLoggedUserIdAsync(); 
+                if(!string.IsNullOrEmpty(loggedUserId))
                 {
                     var existingLike = await _likeRepository.GetExistingArtistLike(loggedUserId, artistId);
-                    await _likeRepository.RemoveArtistLikeAsync(existingLike);
-                    return NoContent(); //Indique le dislike
-                }
-                catch (NotFoundException)
-                {
-
-                    try
+                    if(existingLike is not null) 
+                    {
+                        await _likeRepository.RemoveArtistLikeAsync(existingLike);
+                    }
+                    else
                     {
                         var like = new UserFavoriteArtist()
                         {
@@ -334,28 +271,50 @@ namespace TurnupAPI.Controllers
                         };
                         _context.UserFavoriteArtist.Add(like);
                         await _context.SaveChangesAsync();
-                        return Ok(); //Indique le like
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Une erreur est survenue.");
-                        return StatusCode(500, $"Internal Server Error: {ex.Message}");
-                    }
+                    return NoContent();
                 }
+                throw new Exception("L'utilisateur n'a pas été trouvé.");
 
-               
             }          
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
 
-       
+        /// <summary>
+        /// Récupère un artiste et retourne son nombre de fans.
+        /// </summary>
+        /// <returns>Retourne  le nombre de fans d'un artiste.</returns>
+        [HttpGet("get-artist-fans-number/{artistId:int}")]
+        public async Task<ActionResult<int>> GetArtistFansNumber(int artistId)
+        {
+            if(artistId > 0)
+            {
+
+                try
+                {
+                    var artiste = await _artistRepository.GetAsync(artistId);
+                    var fansNumber = 0;
+                    if (artiste is not null)
+                    {
+                        var fans = artiste.UserFavoriteArtists;
+                        fansNumber = fans is not null && fans.Any() ? fans.Count : fansNumber;
+
+                    }
+                    return Ok(fansNumber);
+                }
+                catch (Exception)
+                {
+                    return StatusCode(500);
+                }
+
+            }
+            return StatusCode(500);
+        }
+
         //---------------------------END ARTIST--------------------------------------------------
     }
 }

@@ -47,19 +47,22 @@ namespace TurnupAPI.Controllers
         [HttpGet("get-logged-user")]
         public async Task<ActionResult<UserDTO>> GetLoggedUser()
         {
-            _logger.LogInformation("Requete pour récupérer l'utilisateur connecté.");
+           
             try
             {
+                _logger.LogInformation("Requete pour récupérer l'utilisateur connecté.");
                 var user = await GetLoggedUserAsync();
-                var userDTO = _mapper.Map<UserDTO>(user);
-                return Ok(userDTO);
+                if(user is not null)
+                {
+                    var userDTO = _mapper.Map<UserDTO>(user);
+                    return Ok(userDTO);
+                }
+                return NotFound();
+                
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -79,20 +82,16 @@ namespace TurnupAPI.Controllers
             try
             {
                 var user = await _userRepository.GetUserAsync(id);
-                var userDTO = _mapper.Map<UserDTO>(user);
-                return Ok(userDTO);
-            }
-            catch (NotFoundException)
-            {
-                _logger.LogWarning( "L'utilisateur n'a pas été trouvé.");
+                if (user is not null)
+                {
+                    var userDTO = _mapper.Map<UserDTO>(user);
+                    return Ok(userDTO);
+                }
                 return NotFound();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
         }
@@ -104,15 +103,16 @@ namespace TurnupAPI.Controllers
             try
             {
                 var user = await GetLoggedUserAsync();
-                var userDTO = _mapper.Map<UserDataForm>(user);
-                return Ok(userDTO);
+                if(user is not null) 
+                {
+                    var userDataForm = _mapper.Map<UserDataForm>(user);
+                    return Ok(userDataForm);
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Une erreur est survenue.");
-                //  Utiliser ex.Message pour obtenir le message d'erreur
-                // Utiliser ex.GetType().Name pour obtenir le nom de la classe de l'exception
-                // Utiliser ex.StackTrace pour obtenir la pile d'appels
                 return StatusCode(500, $"Internal Server Error: {ex.GetType().Name} - {ex.Message}");
             }
 
@@ -130,28 +130,31 @@ namespace TurnupAPI.Controllers
                 {
 
                     var loggedUser = await GetLoggedUserAsync();
-                    if (loggedUser.Country != input.Country)
+                    if(loggedUser is not null) 
                     {
-                        loggedUser.Country = input.Country;
-                    }
-                    if (loggedUser.FirstName != input.FirstName)
-                    {
-                        loggedUser.FirstName = input.FirstName;
-                    }
-                    if (loggedUser.LastName != input.LastName)
-                    {
-                        loggedUser.LastName = input.LastName;
-                    }
-                    if (loggedUser.Birthdate != input.Birthdate)
-                    {
-                        loggedUser.Birthdate = input.Birthdate;
-                    }
-                    
+                        if (loggedUser.Country != input.Country)
+                        {
+                            loggedUser.Country = input.Country;
+                        }
+                        if (loggedUser.FirstName != input.FirstName)
+                        {
+                            loggedUser.FirstName = input.FirstName;
+                        }
+                        if (loggedUser.LastName != input.LastName)
+                        {
+                            loggedUser.LastName = input.LastName;
+                        }
+                        if (loggedUser.Birthdate != input.Birthdate)
+                        {
+                            loggedUser.Birthdate = input.Birthdate;
+                        }
+
                         loggedUser.IsDarkTheme = input.IsDarkTheme;
-                    
-                     _context.Users.Update(loggedUser);
-                    await _context.SaveChangesAsync();
-                    return NoContent();
+                        _context.Users.Update(loggedUser);
+                        await _context.SaveChangesAsync();
+                        return NoContent();
+                    }
+                    return NotFound();
 
                 }
                 catch (Exception ex)
@@ -174,16 +177,20 @@ namespace TurnupAPI.Controllers
             try
             {
 
-                var loggedUser = await GetLoggedUserAsync();
-                var changePasswordResult = await _userManager.ChangePasswordAsync(loggedUser, input.OldPassword, input.NewPassword);
-                if (!changePasswordResult.Succeeded)
+               var loggedUser = await GetLoggedUserAsync();
+               if(loggedUser is not null)
                 {
-                    return StatusCode(501);
+                    var changePasswordResult = await _userManager.ChangePasswordAsync(loggedUser, input.OldPassword, input.NewPassword);
+                    if (!changePasswordResult.Succeeded)
+                    {
+                        return StatusCode(501);
+                    }
+                    else
+                    {
+                        return NoContent();
+                    }
                 }
-                else
-                {
-                    return NoContent();
-                }
+                return NotFound();
 
             }
             catch (Exception ex)
@@ -207,19 +214,22 @@ namespace TurnupAPI.Controllers
             {
 
                 var loggedUser = await GetLoggedUserAsync();
-                if (input.Picture != null && input.Picture.Length > 0)
+                if(loggedUser is not null)
                 {
-                    using (var memoryStream = new MemoryStream())
+                    if (input.Picture != null && input.Picture.Length > 0)
                     {
-                        await input.Picture.CopyToAsync(memoryStream);
-                        loggedUser.Picture = memoryStream.ToArray();
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await input.Picture.CopyToAsync(memoryStream);
+                            loggedUser.Picture = memoryStream.ToArray();
+                        }
+
                     }
-
+                    _context.Users.Update(loggedUser);
+                    await _context.SaveChangesAsync();
+                    return NoContent();
                 }
-                _context.Users.Update(loggedUser);
-                await _context.SaveChangesAsync();
-                return NoContent();
-
+                return NotFound();
             }
             catch (Exception ex)
             {

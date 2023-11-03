@@ -10,12 +10,12 @@ namespace TurnupBlazor.Models
         /// <summary>
         /// Obtient ou définit le nom de la liste de lecture.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit la liste des pistes musicales de la liste de lecture.
         /// </summary>
-        public List<TrackDTO>? Tracks { get; set; }
+        public IEnumerable<TrackDTO> Tracks { get; set; } = null!;
 
         /// <summary>
         /// Obtient ou définit l'index de la piste musicale actuellement en cours de lecture.

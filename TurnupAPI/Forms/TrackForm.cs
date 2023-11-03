@@ -13,7 +13,7 @@ namespace TurnupAPI.Forms
         /// Définit le titre de la piste.
         /// </summary>
         [Required]
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
 
         /// <summary>
         /// Définit la durée en minutes de la piste.
@@ -31,7 +31,7 @@ namespace TurnupAPI.Forms
         /// Définit la source de la piste.
         /// </summary>
         [Required]
-        public string? Source { get; set; }
+        public string Source { get; set; } = null!;
 
         /// <summary>
         /// Définit l'ID de l'artiste principal de la piste.
@@ -42,11 +42,11 @@ namespace TurnupAPI.Forms
         /// <summary>
         /// Définit la liste des IDs des artistes en featuring sur la piste.
         /// </summary>
-        public List<int>? FeaturingArtists { get; set; }
+        public IEnumerable<int>? FeaturingArtists { get; set; }
 
         /// <summary>
         /// Définit la liste des IDs des types de la piste.
         /// </summary>
-        public List<int>? TrackTypes { get; set; }
+        public IEnumerable<int>? TrackTypes { get; set; }
     }
 }

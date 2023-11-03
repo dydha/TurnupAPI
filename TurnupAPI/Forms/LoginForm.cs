@@ -12,13 +12,13 @@ namespace TurnupAPI.Forms
         /// </summary>
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string? Email { get; set; }
+        public string Email { get; set; } = null!;
 
         /// <summary>
         /// Définit le mot de passe de l'utilisateur.
         /// </summary>
         [Required]
         [DataType(DataType.Password)]
-        public string? Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

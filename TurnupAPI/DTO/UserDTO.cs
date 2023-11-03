@@ -12,18 +12,18 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit l'identifiant unique de l'utilisateur.
         /// </summary>
-        public string? Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtient ou définit le genre de l'utilisateur.
         /// </summary>
-        public string? Gender { get; set; }
+        public string Gender { get; set; } = string.Empty;
 
 
         /// <summary>
         /// Obtient ou définit le pays de résidence de l'utilisateur.
         /// </summary>
-        public string? Country { get; set; }
+        public string Country { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtient ou définit l'image de profil de l'utilisateur sous forme de tableau d'octets.
@@ -33,7 +33,7 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit le nom complet de l'utilisateur.
         /// </summary>
-        public string? FullName { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtient ou définit une valeur indiquant si l'utilisateur utilise un thème sombre.

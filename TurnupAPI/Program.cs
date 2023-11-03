@@ -11,34 +11,37 @@ using TurnupAPI.Repository;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using Microsoft.AspNetCore.Identity;
+using TurnupAPI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("TurnupContextConnection") ?? throw new InvalidOperationException("Connection string 'TurnupContextConnection' not found.");
 
 // SERILOG
 var logger = new LoggerConfiguration()
-     .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message:lj}{NewLine}{Exception}")
+     .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}]  [{UserId}]  {Message:lj}{NewLine}{Exception}")
      .WriteTo.Console(theme: AnsiConsoleTheme.Code)
     .Enrich.FromLogContext()
     .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
+
 //Fin serilog
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddDbContext<TurnupContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContextPool<TurnupContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<ITrackRepository, TrackRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITypesRepository, TypesRepository>();
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<IPlaylistRepository, PlaylistRepository>();
 builder.Services.AddScoped<ILikeRepository, LikeRepository>();
+builder.Services.AddScoped<CheckIdleTimeout>();
 //Ajout de de MemoryCache
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddDefaultIdentity<Users>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Users>(options => options.SignIn.RequireConfirmedAccount = false)
                  .AddRoles<IdentityRole>()
                  .AddEntityFrameworkStores<TurnupContext>()
                  .AddDefaultTokenProviders();
@@ -90,6 +93,16 @@ builder.Services.AddSwaggerGen(c =>
             }
         });
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy", builder =>
+    {
+        builder.WithOrigins("http://example.com")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 
@@ -99,11 +112,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("MyCorsPolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

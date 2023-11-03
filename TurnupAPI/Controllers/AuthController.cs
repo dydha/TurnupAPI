@@ -12,11 +12,13 @@ using TurnupAPI.Areas.Identity.Data;
 using TurnupAPI.Forms;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Cors;
 
 namespace TurnupAPI.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
+    [EnableCors("MyCorsPolicy")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<Users> _userManager;
@@ -86,7 +88,7 @@ namespace TurnupAPI.Controllers
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
             if (!string.IsNullOrEmpty(Input.Password))
             {
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.CreateAsync(user, Input.Password);
 
             }
             return Ok(new { Message = "Utilisateur enregistré avec succès." });
@@ -113,7 +115,6 @@ namespace TurnupAPI.Controllers
         public ActionResult<bool> ValidateCaptcha([FromBody] string input)
         {
             string storedCaptchaText = _memoryCache.Get<string>("CaptchaText");
-            Console.WriteLine(storedCaptchaText + " " + input);
             bool captchaVerified = string.Equals(input, storedCaptchaText);
             return Ok(captchaVerified);
 
@@ -124,6 +125,7 @@ namespace TurnupAPI.Controllers
         /// </summary>
         /// <param name="model">Les informations de connexion de l'utilisateur.</param>
         /// <returns>Un résultat HTTP indiquant le succès de la connexion.</returns>
+    
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginForm model)
         {
@@ -229,9 +231,9 @@ namespace TurnupAPI.Controllers
             using (var graphics = Graphics.FromImage(image))
             {
                 // Personnalisez la génération de l'image, par exemple, définissez la couleur de fond, la police, etc.
-                graphics.Clear(Color.White);
+                graphics.Clear(Color.DarkOliveGreen);
                 using (var font = new Font("Arial", 20))
-                using (var brush = new SolidBrush(Color.Black))
+                using (var brush = new SolidBrush(Color.White))
                 {
                     graphics.DrawString(captchaText, font, brush, 10, 10);
                 }

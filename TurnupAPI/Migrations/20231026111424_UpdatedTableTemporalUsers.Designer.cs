@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TurnupAPI.Data;
 
@@ -11,9 +12,11 @@ using TurnupAPI.Data;
 namespace TurnupAPI.Migrations
 {
     [DbContext(typeof(TurnupContext))]
-    partial class TurnupContextModelSnapshot : ModelSnapshot
+    [Migration("20231026111424_UpdatedTableTemporalUsers")]
+    partial class UpdatedTableTemporalUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,7 +293,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Album", (string)null);
+                    b.ToTable("Album");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.Artist", b =>
@@ -318,7 +321,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artist", (string)null);
+                    b.ToTable("Artist");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.ArtistAlbum", b =>
@@ -344,7 +347,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("ArtistAlbum", (string)null);
+                    b.ToTable("ArtistAlbum");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.Playlist", b =>
@@ -372,7 +375,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("Playlist", (string)null);
+                    b.ToTable("Playlist");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.PlaylistTrack", b =>
@@ -398,7 +401,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("TrackId");
 
-                    b.ToTable("PlaylistTrack", (string)null);
+                    b.ToTable("PlaylistTrack");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.Track", b =>
@@ -433,7 +436,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.ToTable("Track", (string)null);
+                    b.ToTable("Track");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.TrackArtist", b =>
@@ -459,7 +462,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("TrackId");
 
-                    b.ToTable("TrackArtist", (string)null);
+                    b.ToTable("TrackArtist");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.TrackType", b =>
@@ -482,7 +485,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("TrackType", (string)null);
+                    b.ToTable("TrackType");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.Types", b =>
@@ -503,7 +506,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Types", (string)null);
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.UserFavoriteArtist", b =>
@@ -529,7 +532,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserFavoriteArtist", (string)null);
+                    b.ToTable("UserFavoriteArtist");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.UserFavoritePlaylist", b =>
@@ -555,7 +558,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserFavoritePlaylist", (string)null);
+                    b.ToTable("UserFavoritePlaylist");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.UserFavoriteTrack", b =>
@@ -581,7 +584,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserFavoriteTrack", (string)null);
+                    b.ToTable("UserFavoriteTrack");
                 });
 
             modelBuilder.Entity("TurnupAPI.Models.UserListennedTrack", b =>
@@ -607,7 +610,7 @@ namespace TurnupAPI.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("UserListennedTrack", (string)null);
+                    b.ToTable("UserListennedTrack");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

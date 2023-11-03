@@ -16,11 +16,11 @@ namespace TurnupAPI.DTO
         /// <summary>
         /// Obtient ou définit le nom du type.
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Obtient ou définit l'URL de l'image du type.
         /// </summary>
-        public string? Picture { get; set; }
+        public string Picture { get; set; } = string.Empty;
     }
 }

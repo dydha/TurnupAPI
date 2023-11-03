@@ -17,6 +17,7 @@ namespace TurnupAPI.Controllers
 {
    
     [ApiController]
+
     public class BaseController : ControllerBase
     {
         protected readonly IUserRepository _userRepository;
@@ -44,18 +45,15 @@ namespace TurnupAPI.Controllers
         /// Récucupère l'utilisateur connecté.
         /// </summary>
         /// <returns>retourne l'utilisateur connecté</returns>
-        protected async Task<Users> GetLoggedUserAsync()
+        protected async Task<Users?> GetLoggedUserAsync()
         {
             var email = GetLoggedUserEmail();
-            if (string.IsNullOrEmpty(email))
+            Users? user = null;
+            if(!string.IsNullOrEmpty(email)) 
             {
-                throw new DataAccessException();
-            }
-            else
-            {
-                var user = await _userRepository.GetLoggedUserAsync(email);
-                return user;
-            }
+                user = await _userRepository.GetLoggedUserAsync(email);
+            }   
+            return user;          
         }
         /// <summary>
         /// Récucupère l'id de l'utilisateur connecté.
@@ -64,21 +62,18 @@ namespace TurnupAPI.Controllers
         protected async Task<string> GetLoggedUserIdAsync()
         {
             var email = GetLoggedUserEmail();
+            var userId = string.Empty;
             if (!string.IsNullOrEmpty(email))
             {
-                var userId = await _userRepository.GetLoggedUserIdAsync(email);
-                return userId;
+                userId = await _userRepository.GetLoggedUserIdAsync(email);
             }
-            else
-            {
-                throw new Exception();
-            }
+            return userId;
 
         }
         /// <summary>
         /// Convertit un en List.
         /// </summary>
-        protected List<ArtistDTO> MapToListArtistsDTO(List<Artist> artists)
+        protected IEnumerable<ArtistDTO> MapToListArtistsDTO(IEnumerable<Artist> artists)
         {
             var artistsDTO = artists.Select(a => _mapper.Map<ArtistDTO>(a)).ToList();
             return artistsDTO;
@@ -102,7 +97,7 @@ namespace TurnupAPI.Controllers
         /// Convertit une List<Playlist> en List<PlaylistDTO>
         /// </summary>
         /// <returns>retourne une List<PlaylistDTO></returns>
-        protected List<PlaylistDTO> MapToListPlaylistDTO(List<Playlist> playlists)
+        protected IEnumerable<PlaylistDTO> MapToListPlaylistDTO(IEnumerable<Playlist> playlists)
         {
             var playlistsDTO = playlists.Select(p => _mapper.Map<PlaylistDTO>(p)).ToList();
             return playlistsDTO;
@@ -127,7 +122,7 @@ namespace TurnupAPI.Controllers
         /// Convertit une List<Track> en List<TrackDTO>
         /// </summary>
         /// <returns>retourne une List<TrackDTO></returns>
-        protected List<TrackDTO> MapToListTrackDTO(List<Track> tracks, string userId)
+        protected IEnumerable<TrackDTO> MapToListTrackDTO(IEnumerable<Track> tracks, string userId)
         {
             var tracksDTO = tracks.Select(t => MapToTrackDTO(t, userId)).ToList();
 
@@ -162,7 +157,6 @@ namespace TurnupAPI.Controllers
                 Title = t.Title,
                 Duration = new TimeSpan(0, t.Minutes, t.Seconds),
                 Source = t.Source,
-                IsLiked = t.UserFavoriteTracks?.Where(uft => uft.UsersId == userId).FirstOrDefault() != null,
                 ArtistName = _artistRepository.GetPrincipalArtistNameByTrackId(t.Id),
                 ArtistPicture = _artistRepository.GetPrincipalArtistPictureByTrackId(t.Id),
                 FeaturingArtists = _artistRepository.GetFeaturingArtistsNamesByTrackId(t.Id),
@@ -237,6 +231,10 @@ namespace TurnupAPI.Controllers
             };
 
             return cacheOptions;
+        }
+        protected static bool LoggedUserNotAuthorizedToSeeThisPlaylist(Playlist playlist, string loggedUserId)
+        {
+            return playlist.IsPrivate && playlist.UsersId != loggedUserId;
         }
     }
    

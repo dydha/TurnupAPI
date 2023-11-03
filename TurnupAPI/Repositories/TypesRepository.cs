@@ -38,11 +38,17 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="id">L'ID du type à supprimer.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
+            bool result = false;
             var types = await GetAsync(id);
-            _context.Types.Remove(types);
-            await _context.SaveChangesAsync();
+            if(types is not null)
+            {
+                _context.Types.Remove(types);
+                await _context.SaveChangesAsync();
+                result = true;
+            }
+            return result;
         }
 
         /// <summary>
@@ -50,20 +56,20 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="id">L'ID du type à récupérer.</param>
         /// <returns>Le type récupéré.</returns>
-        public async Task<Types> GetAsync(int id)
+        public async Task<Types?> GetAsync(int id)
         {
-            var types = await _context.Types.FindAsync(id);
-            return types ?? throw new ArgumentNullException();
+            var types = await _context.Types.FirstOrDefaultAsync(t => t.Id == id);
+            return types;
         }
 
         /// <summary>
         /// Récupère tous les types de la base de données.
         /// </summary>
         /// <returns>Une liste de tous les types.</returns>
-        public async Task<List<Types>> GetAllAsync()
+        public async Task<IEnumerable<Types>> GetAllAsync()
         {
-            var types = await _context.Types.ToListAsync();
-            return (types != null && types.Count > 0) ? types : throw new EmptyListException();
+            var typesList = await _context.Types.AsNoTracking().ToListAsync();
+            return typesList is not null && typesList.Any() ? typesList : Enumerable.Empty<Types>();
         }
 
         /// <summary>
@@ -71,10 +77,17 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="type">Le type à mettre à jour.</param>
         /// <returns>Une tâche asynchrone.</returns>
-        public async Task UpdateAsync(Types type)
+        public async Task<bool> UpdateAsync(Types type)
         {
-            _context.Types.Update(type);
-            await _context.SaveChangesAsync();
+            bool result = false;
+            var existingTypes = await _context.Types.FirstOrDefaultAsync(t => t.Id == type.Id);
+            if (existingTypes is not null)
+            {
+                _context.Types.Update(type);
+                await _context.SaveChangesAsync();
+                result = true;
+            }
+            return result;
         }
     }
 }
