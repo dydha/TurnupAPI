@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TurnupAPI.Forms;
 using TurnupAPI.Models;
 
 namespace TurnupAPI.Interfaces
@@ -41,6 +42,7 @@ namespace TurnupAPI.Interfaces
         /// Récupère tous les types de musique disponibles.
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de tous les types de musique.</returns>
-        Task<IEnumerable<Types>> GetAllAsync();
+        Task<IEnumerable<Types>> GetAllAsync(int offset, int limit);
+        Task<bool> TypesExistsAsync(TypeForm input);
     }
 }

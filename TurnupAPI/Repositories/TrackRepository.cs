@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using TurnupAPI.Data;
+using TurnupAPI.DTO;
 using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
@@ -53,7 +55,7 @@ namespace TurnupAPI.Repositories
         /// <param name="id">L'ID de la Track à supprimer.</param>
         public async Task<bool> DeleteAsync(int id)
         {
-            bool result = false;
+            bool result = true;
             var track = await GetAsync(id);
             if(track is not null)
             {
@@ -89,11 +91,22 @@ namespace TurnupAPI.Repositories
         {
          
             var tracks = await _context.Track
-                                    .Include(t => t.UserListennedTracks)
                                     .Skip(offset)
                                     .Take(limit)
                                     .AsNoTracking()                                   
                                     .ToListAsync();
+            return (tracks is not null && tracks.Any()) ? tracks : Enumerable.Empty<Track>();
+        }
+        public async Task<IEnumerable<Track>> GetNewTracks(int offset, int limit)
+        {
+            var lastMonth = DateTime.Now.AddMonths(-1);
+            var tracks = await _context.Track
+                            .Where(t => t.AddedAt >= lastMonth)
+                            .OrderByDescending(t => t.AddedAt)
+                            .Skip(offset)
+                            .Take(limit)  
+                            .AsNoTracking()
+                            .ToListAsync();
             return (tracks is not null && tracks.Any()) ? tracks : Enumerable.Empty<Track>();
         }
         /// <summary>
@@ -269,6 +282,33 @@ namespace TurnupAPI.Repositories
                                 .Select(item => item.TrackId)
                                 .ToListAsync();
             return ids is not null && ids.Any() ? ids : new List<int>();
+        }
+        public TrackDTO? GetTrackDTO(int trackId)
+        {
+            var trackDTO = (from track in _context.Track
+                            where track.Id == trackId // Assurez-vous que trackId est correctement défini
+                            join taPrincipal in _context.TrackArtist on track.Id equals taPrincipal.TrackId
+                            where taPrincipal.ArtistRole == Enums.ArtistRole.Principal
+                            join aPrincipal in _context.Artist on taPrincipal.ArtistId equals aPrincipal.Id
+                            join taFeaturing in _context.TrackArtist on track.Id equals taFeaturing.TrackId
+                            where taFeaturing.ArtistRole == Enums.ArtistRole.Featuring
+                            join aFeaturing in _context.Artist on taFeaturing.ArtistId equals aFeaturing.Id
+                            join ult in _context.UserListennedTrack on track.Id equals ult.TrackId into userListenings
+                            select new TrackDTO
+                            {
+                                Id = track.Id, // Utilisez track.Id pour obtenir l'ID de la piste
+                                Title = track.Title,
+                                Duration = new TimeSpan(0, track.Minutes, track.Seconds),
+                                Source = track.Source,
+                                ArtistName = aPrincipal.Name, // Nom de l'artiste principal
+                                FeaturingArtists = new List<string> { aFeaturing.Name }, // Liste des artistes en featuring
+                                ArtistPicture = aPrincipal.Picture,
+                                // Vous pouvez inclure les informations d'écoute de l'utilisateur si nécessaire
+                                ListeningCount = userListenings.Count()
+                            })
+                .FirstOrDefault(); // Vous pouvez utiliser FirstOrDefault() si vous ne vous attendez qu'à un seul résultat
+
+            return trackDTO;
         }
     }
 }

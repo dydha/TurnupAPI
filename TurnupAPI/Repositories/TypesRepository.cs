@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TurnupAPI.Data;
 using TurnupAPI.Exceptions;
+using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
 using TurnupAPI.Models;
 
@@ -66,9 +68,13 @@ namespace TurnupAPI.Repositories
         /// Récupère tous les types de la base de données.
         /// </summary>
         /// <returns>Une liste de tous les types.</returns>
-        public async Task<IEnumerable<Types>> GetAllAsync()
+        public async Task<IEnumerable<Types>> GetAllAsync(int offset, int limit)
         {
-            var typesList = await _context.Types.AsNoTracking().ToListAsync();
+            var typesList = await _context.Types
+                                            .Skip(offset)
+                                            .Take(limit)
+                                            .AsNoTracking()
+                                            .ToListAsync();
             return typesList is not null && typesList.Any() ? typesList : Enumerable.Empty<Types>();
         }
 
@@ -88,6 +94,13 @@ namespace TurnupAPI.Repositories
                 result = true;
             }
             return result;
+        }
+        public async Task<bool> TypesExistsAsync(TypeForm input)
+        {
+            var types = await _context.Types
+                                    .Where(t => t.Name.Equals(input.Name, StringComparison.OrdinalIgnoreCase))
+                                    .FirstOrDefaultAsync();
+            return types is not null;
         }
     }
 }

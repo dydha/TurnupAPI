@@ -6,6 +6,7 @@ using TurnupAPI.Exceptions;
 using TurnupAPI.Enums;
 using System.Linq.Expressions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TurnupAPI.Forms;
 
 namespace TurnupAPI.Repositories
 {
@@ -74,22 +75,24 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
 
-        public async Task<Artist?> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter )
+        public async Task<Artist?> ArtistExistsAsync(ArtistForm artistForm)
         {
-            var artist = await _context.Artist.FirstOrDefaultAsync(filter);
+            var artist = await _context.Artist.FirstOrDefaultAsync(a => (!string.IsNullOrEmpty(a.Name) && !string.IsNullOrEmpty(artistForm.Name) && a.Name.Equals(artistForm.Name, StringComparison.OrdinalIgnoreCase))
+                                                                                                 && ((!string.IsNullOrEmpty(a.Country) && !string.IsNullOrEmpty(artistForm.Country) && a.Country.Equals(artistForm.Country, StringComparison.OrdinalIgnoreCase))));
             return artist;
         }
         /// <summary>
         /// Récupère la liste de tous les artistes.
         /// </summary>
         /// <returns>La liste de tous les artistes ou une liste vide si aucun artiste n'est trouvé.</returns>
-        public async Task<IEnumerable<Artist>> GetAllAsync()
+        public async Task<IEnumerable<Artist>> GetAllAsync(int offset, int limit)
         {
            
                 var artists = await _context.Artist
                                                 .Include(a => a.UserFavoriteArtists)
                                                 .Include(a => a.TrackArtists)
-                                                .AsSplitQuery()
+                                                .Skip(offset)
+                                                .Take(limit)
                                                 .ToListAsync();
                 return artists != null && artists.Count > 0 ? artists : Enumerable.Empty<Artist>();
            

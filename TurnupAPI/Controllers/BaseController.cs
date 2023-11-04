@@ -8,7 +8,6 @@ using System.Text;
 using TurnupAPI.Areas.Identity.Data;
 using TurnupAPI.Data;
 using TurnupAPI.DTO;
-using TurnupAPI.Exceptions;
 using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
 using TurnupAPI.Models;
@@ -73,7 +72,7 @@ namespace TurnupAPI.Controllers
         /// <summary>
         /// Convertit un en List.
         /// </summary>
-        protected IEnumerable<ArtistDTO> MapToListArtistsDTO(IEnumerable<Artist> artists)
+        protected IEnumerable<ArtistDTO> MapToEnumerableArtistsDTO(IEnumerable<Artist> artists)
         {
             var artistsDTO = artists.Select(a => _mapper.Map<ArtistDTO>(a)).ToList();
             return artistsDTO;
@@ -97,7 +96,7 @@ namespace TurnupAPI.Controllers
         /// Convertit une List<Playlist> en List<PlaylistDTO>
         /// </summary>
         /// <returns>retourne une List<PlaylistDTO></returns>
-        protected IEnumerable<PlaylistDTO> MapToListPlaylistDTO(IEnumerable<Playlist> playlists)
+        protected IEnumerable<PlaylistDTO> MapToEnumerablePlaylistDTO(IEnumerable<Playlist> playlists)
         {
             var playlistsDTO = playlists.Select(p => _mapper.Map<PlaylistDTO>(p)).ToList();
             return playlistsDTO;
@@ -122,9 +121,9 @@ namespace TurnupAPI.Controllers
         /// Convertit une List<Track> en List<TrackDTO>
         /// </summary>
         /// <returns>retourne une List<TrackDTO></returns>
-        protected IEnumerable<TrackDTO> MapToListTrackDTO(IEnumerable<Track> tracks, string userId)
+        protected IEnumerable<TrackDTO> MapToEnumerableTrackDTO(IEnumerable<Track> tracks)
         {
-            var tracksDTO = tracks.Select(t => MapToTrackDTO(t, userId)).ToList();
+            var tracksDTO = tracks.Select(t => MapToTrackDTO(t)).ToList();
 
             return tracksDTO;
         }
@@ -148,19 +147,19 @@ namespace TurnupAPI.Controllers
         /// Convertit une Track en TrackDTO
         /// </summary>
         /// <returns>retourne une TrackDTO</returns>
-        protected TrackDTO MapToTrackDTO(Track t, string userId)
+        protected TrackDTO MapToTrackDTO(Track track)
         {
 
             var trackDTO = new TrackDTO
             {
-                Id = t.Id,
-                Title = t.Title,
-                Duration = new TimeSpan(0, t.Minutes, t.Seconds),
-                Source = t.Source,
-                ArtistName = _artistRepository.GetPrincipalArtistNameByTrackId(t.Id),
-                ArtistPicture = _artistRepository.GetPrincipalArtistPictureByTrackId(t.Id),
-                FeaturingArtists = _artistRepository.GetFeaturingArtistsNamesByTrackId(t.Id),
-                ListeningCount = _trackRepository.GetTrackListeningNumber(t.Id),
+                Id = track.Id,
+                Title = track.Title,
+                Duration = new TimeSpan(0, track.Minutes, track.Seconds),
+                Source = track.Source,
+                ArtistName = _artistRepository.GetPrincipalArtistNameByTrackId(track.Id),
+                ArtistPicture = _artistRepository.GetPrincipalArtistPictureByTrackId(track.Id),
+                FeaturingArtists = _artistRepository.GetFeaturingArtistsNamesByTrackId(track.Id),
+                ListeningCount = _trackRepository.GetTrackListeningNumber(track.Id),
 
             };
             return trackDTO;
@@ -172,7 +171,10 @@ namespace TurnupAPI.Controllers
         /// <returns>etourne le cacheKey de la dernière list de musique écoutée par l'utilisateur connecté</returns>
         protected string CacheKeyForUserLastPlayingTracks(string userId) => $"lastplayingtracks_{userId}"; //Methode qui génère le cacheKey pour la dernière liste d'écoute  d'un utilisateur.
         protected string CacheKeyForUserFavoriteTracks(string userId) => $"favoritetracks_{userId}"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
-        protected string CacheKeyForUserListeningHistory(string userId) => $"listeninghistory_{userId}"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
+        protected string CacheKeyForPopularTracks() => $"populartracks"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
+        protected string CacheKeyForDiscoveryTracks() => $"discoverytracks"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
+        protected string CacheKeyForNewTracks() => $"newtracks"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
+        protected string CacheKeyForTop20Tracks() => $"top20tracks"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
         protected string CacheKeyForTypesTracks(int typesId) => $"tracksfortype_{typesId}"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
         protected string CacheKeyForTypes() => $"types"; //Methode qui génère le cacheKey pour les types.
         protected string CacheKeyForArtistTracks(int artistId) => $"tracksforartist_{artistId}"; //Methode qui génère le cacheKey pour les tracks favoris  d'un utilisateur.
@@ -186,7 +188,6 @@ namespace TurnupAPI.Controllers
         {
             var jsonString = Encoding.UTF8.GetString(data);
             var deserializedData = JsonConvert.DeserializeObject<T>(jsonString);
-
             return deserializedData!;
 
         }

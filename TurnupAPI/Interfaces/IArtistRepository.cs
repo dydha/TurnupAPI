@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using TurnupAPI.Forms;
 using TurnupAPI.Models;
 
 namespace TurnupAPI.Interfaces
@@ -36,13 +37,13 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="filter">L'ID de l'artiste à obtenir.</param>
         /// <returns>L'artiste correspondant à l'ID spécifié.</returns>
-        Task<Artist?> GetFilteredArtistAsync(Expression<Func<Artist, bool>> filter);
+        Task<Artist?> ArtistExistsAsync(ArtistForm artistForm);
 
         /// <summary>
         /// Obtient la liste de tous les artistes.
         /// </summary>
         /// <returns>Une liste d'artistes.</returns>
-        Task<IEnumerable<Artist>> GetAllAsync();
+        Task<IEnumerable<Artist>> GetAllAsync(int offset, int limit);
 
         /// <summary>
         /// Met à jour les informations d'un artiste.

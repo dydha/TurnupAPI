@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TurnupAPI.DTO;
 using TurnupAPI.Forms;
 using TurnupAPI.Models;
 
@@ -87,5 +88,7 @@ namespace TurnupAPI.Interfaces
         /// Vérifie si une musique existe.
         /// </summary>
         Task<bool> TrackExists(int id);
+        TrackDTO? GetTrackDTO(int trackId);
+        Task<IEnumerable<Track>> GetNewTracks(int offset, int limit);
     }
 }

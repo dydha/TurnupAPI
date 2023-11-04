@@ -141,7 +141,7 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des artistes en favoris d'un utilisateur</returns>
-        public async Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId)
+        public async Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId, int offset, int limit)
         {
             var artists = Enumerable.Empty<Artist>();
             var userFavoriteArtistsIds = await GetUserFavoriteArtistsIdsList(userId);
@@ -149,6 +149,8 @@ namespace TurnupAPI.Repositories
             {
                  artists = await _context.Artist
                             .Where(a => userFavoriteArtistsIds.Contains(a.Id))
+                            .Skip(offset)
+                            .Take(limit)
                             .AsNoTracking()
                             .ToListAsync();
             }
@@ -216,7 +218,7 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <param name="userId">L'id de l'utilisateur.</param>
         /// <returns>La liste des playlists en favoris d'un utilisateur</returns>
-        public async Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId)
+        public async Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId, int offset, int limit)
         {
             var playlists = Enumerable.Empty<Playlist>();
            var userFavoritePlaylistsIds = await GetUserFavoritePlaylistsIdsList(userId);
@@ -224,6 +226,8 @@ namespace TurnupAPI.Repositories
             {
                 playlists = await _context.Playlist
                                 .Where(p => userFavoritePlaylistsIds.Contains(p.Id))
+                                .Skip(offset)
+                                .Take(limit)
                                 .AsNoTracking()
                                 .ToListAsync();
             }

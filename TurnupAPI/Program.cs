@@ -103,6 +103,8 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+builder.Services.AddResponseCaching();
 var app = builder.Build();
 
 
@@ -117,5 +119,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthorization();
 app.MapControllers();
-
+app.UseResponseCaching();
 app.Run();

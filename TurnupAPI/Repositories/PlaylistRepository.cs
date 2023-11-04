@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using TurnupAPI.Data;
 using TurnupAPI.Exceptions;
+using TurnupAPI.Forms;
 using TurnupAPI.Interfaces;
 using TurnupAPI.Models;
 
@@ -68,21 +69,23 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
         /// <exception cref="NotFoundException">Si la playlist n'est pas trouvée.</exception>
-        public async Task<Playlist?> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter)
+        public async Task<Playlist?> PlaylistExistsAsync(PlaylistForm input, string loggedUserId)
         {
             var playlist = await _context.Playlist
                                     .AsNoTracking()
-                                    .FirstOrDefaultAsync(filter); 
+                                    .FirstOrDefaultAsync(p => ((!string.IsNullOrEmpty(p.Name) && input.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase)) && p.UsersId == loggedUserId)); 
             return playlist; 
         }
         /// <summary>
         /// Récupère la liste de toutes les playlists.
         /// </summary>
         /// <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
-        public async Task<IEnumerable<Playlist>> GetAllAsync()
+        public async Task<IEnumerable<Playlist>> GetAllAsync(int offset, int limit)
         {
             
             var playlists = await _context.Playlist
+                                                .Skip(offset)
+                                                .Take(limit)
                                                 .AsNoTracking()
                                                 .ToListAsync();
             return (playlists is not null && playlists.Any()) ? playlists : Enumerable.Empty<Playlist>();
@@ -110,10 +113,12 @@ namespace TurnupAPI.Repositories
         /// Récupère la liste des playlists d'un utilisateur. 
         /// </summary>
         /// <returns>La liste de toutes les playlists ou une liste vide si aucune playlist n'est trouvée.</returns>
-        public async Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId)
+        public async Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId, int offset, int limit)
         {
             var playlists = await _context.Playlist
                                         .Where(p => p.UsersId == userId)
+                                        .Skip(offset)
+                                        .Take(limit)
                                         .AsNoTracking()
                                         .ToListAsync();
             return (playlists is not null && playlists.Any()) ? playlists : Enumerable.Empty<Playlist>();

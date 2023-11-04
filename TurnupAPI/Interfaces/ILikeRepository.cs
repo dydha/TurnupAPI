@@ -68,7 +68,7 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>les playlists favoris d'un utilisateur.</returns>
-        Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId);
+        Task<IEnumerable<Playlist>> GetUserFavoritePlaylists(string userId, int offset , int limit);
 
         /// <summary>
         /// Retourne tous les ids des playlist aimé par un utilisateur.
@@ -106,7 +106,7 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="userId"> userId représente l'identifiant de l'utilisateur.</param>
         /// <returns>les artistes favoris d'un utilisateur.</returns>
-        Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId);
+        Task<IEnumerable<Artist>> GetUserFavoriteArtists(string userId, int offset, int limit);
 
         /// <summary>
         /// Retourne tous les ids des artistes favoris d'un utilisateur.

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using TurnupAPI.Forms;
 using TurnupAPI.Models;
 
 namespace TurnupAPI.Interfaces
@@ -36,13 +37,13 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="filter">L'expression.</param>
         /// <returns>La playlist correspondant à la recherche.</returns>
-        Task<Playlist?> GetFilteredPlaylistAsync(Expression<Func<Playlist, bool>> filter);
+        Task<Playlist?> PlaylistExistsAsync(PlaylistForm input, string loggedUserId);
 
         /// <summary>
         /// Récupère toutes les listes de lecture.
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de toutes les listes de lecture disponibles.</returns>
-        Task<IEnumerable<Playlist>> GetAllAsync();
+        Task<IEnumerable<Playlist>> GetAllAsync(int offset, int limit);
 
         /// <summary>
         /// Met à jour les informations d'une playlist.
@@ -56,6 +57,6 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <returns>Une tâche asynchrone qui renvoie une liste de toutes les playlists d'un utilisateur.</returns>
 
-        Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId);
+        Task<IEnumerable<Playlist>> GetPlaylistByUserIdAsync(string userId, int offset, int limit);
     }
 }
