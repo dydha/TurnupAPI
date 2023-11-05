@@ -75,11 +75,11 @@ namespace TurnupAPI.Repositories
         /// </summary>
         /// <returns>L'artiste trouvé ou null s'il n'existe pas.</returns>
 
-        public async Task<Artist?> ArtistExistsAsync(ArtistForm artistForm)
+        public async Task<bool> ArtistExistsAsync(ArtistForm artistForm)
         {
             var artist = await _context.Artist.FirstOrDefaultAsync(a => (!string.IsNullOrEmpty(a.Name) && !string.IsNullOrEmpty(artistForm.Name) && a.Name.Equals(artistForm.Name, StringComparison.OrdinalIgnoreCase))
                                                                                                  && ((!string.IsNullOrEmpty(a.Country) && !string.IsNullOrEmpty(artistForm.Country) && a.Country.Equals(artistForm.Country, StringComparison.OrdinalIgnoreCase))));
-            return artist;
+            return artist != null;
         }
         /// <summary>
         /// Récupère la liste de tous les artistes.

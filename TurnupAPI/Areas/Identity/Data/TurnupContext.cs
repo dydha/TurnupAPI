@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TurnupAPI.Areas.Identity.Data;
 using TurnupAPI.Models;
 
@@ -30,5 +31,8 @@ public class TurnupContext : IdentityDbContext<Users>
     {
         base.OnModelCreating(builder);
         builder.Entity<Users>().ToTable(nameof(Users), tableBuilder => tableBuilder.IsTemporal());
+       
     }
+    
+    
 }

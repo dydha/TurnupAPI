@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurnupAPI", "TurnupAPI\TurnupAPI.csproj", "{80BFFD62-AA77-4570-BC81-A55F63FE3CDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurnupTest", "TurnupTest\TurnupTest.csproj", "{C2391A0F-E849-47AA-B791-4A30EDEB582E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{80BFFD62-AA77-4570-BC81-A55F63FE3CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80BFFD62-AA77-4570-BC81-A55F63FE3CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80BFFD62-AA77-4570-BC81-A55F63FE3CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2391A0F-E849-47AA-B791-4A30EDEB582E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2391A0F-E849-47AA-B791-4A30EDEB582E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2391A0F-E849-47AA-B791-4A30EDEB582E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2391A0F-E849-47AA-B791-4A30EDEB582E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

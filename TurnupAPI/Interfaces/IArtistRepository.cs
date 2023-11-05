@@ -37,7 +37,7 @@ namespace TurnupAPI.Interfaces
         /// </summary>
         /// <param name="filter">L'ID de l'artiste à obtenir.</param>
         /// <returns>L'artiste correspondant à l'ID spécifié.</returns>
-        Task<Artist?> ArtistExistsAsync(ArtistForm artistForm);
+        Task<bool> ArtistExistsAsync(ArtistForm artistForm);
 
         /// <summary>
         /// Obtient la liste de tous les artistes.

@@ -20,7 +20,7 @@ namespace TurnupAPI.Controllers
         private readonly ITypesRepository _typesRepository;
         private readonly IDistributedCache _distributedCache;
         private readonly IMemoryCache _memoryCache;
-        private readonly ILogger<TrackController> _logger;
+        private readonly ILogger<AdminController> _logger;
         private readonly IPlaylistRepository _playlistRepository;
         /// <summary>
         /// Constructeur du contrôleur de l'artiste.
@@ -33,7 +33,7 @@ namespace TurnupAPI.Controllers
             IUserRepository userRepository,
             IDistributedCache distributedCache,
             IMemoryCache memoryCache,
-            ILogger<TrackController> logger,
+            ILogger<AdminController> logger,
             IMapper mapper,
             IPlaylistRepository playlistRepository
 
@@ -64,15 +64,16 @@ namespace TurnupAPI.Controllers
             {
 
                 var existingArtist = await _artistRepository.ArtistExistsAsync(artistForm);
-                if (existingArtist is null)
+                if (existingArtist)
                 {
-                    _logger.LogInformation("Ajout d'un nouvel artiste.");
-                    var artist = _mapper.Map<Artist>(artistForm);
-                    await _artistRepository.AddAsync(artist);
-                    return NoContent();
+                    _logger.LogWarning("Un artiste avec ce nom existe déja.");
+                    return Conflict(); // StatusCode 409
                 }
-                _logger.LogWarning("Un artiste avec ce nom existe déja.");
-                return Conflict(); // StatusCode 409
+                _logger.LogInformation("Ajout d'un nouvel artiste.");
+                var artist = _mapper.Map<Artist>(artistForm);
+                await _artistRepository.AddAsync(artist);
+                return NoContent();
+              
             }
             catch (Exception ex)
             {

@@ -55,7 +55,7 @@ namespace TurnupAPI.Repositories
         /// <param name="id">L'ID de la Track à supprimer.</param>
         public async Task<bool> DeleteAsync(int id)
         {
-            bool result = true;
+            bool result = false;
             var track = await GetAsync(id);
             if(track is not null)
             {
